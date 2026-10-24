@@ -43,6 +43,15 @@ calidad (FineWeb-2 `spa_Latn` + Wikipedia) no alcanza por sí solo el billón de
 tokens; el resto de la mezcla debe ser inglés educativo, código y matemáticas,
 lo cual es habitual y también mejora el razonamiento en español.
 
+## Evidencia propia: más parámetros sin más datos no ayudan
+
+Barrido real en la sesión (`reports/scaling_sweep*.json`): tres tamaños con
+los mismos 4,1 M tokens. 2,9 M → 3,813; 8,6 M → **3,668**; 18,9 M → 3,711
+(3,704 con un LR menor). El modelo grande no gana porque le faltan datos.
+Antes de cada salto de escala conviene repetir este tipo de barrido corto
+(tamaño × tokens × LR) en la infraestructura real: cuesta una fracción mínima
+del entrenamiento completo y evita gastar en un tamaño que los datos no sostienen.
+
 ## Recomendación
 
 Sin conocer tu presupuesto, recomiendo una **escalera con validación en cada peldaño**:

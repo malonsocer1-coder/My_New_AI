@@ -1,2 +1,38 @@
 [modelo] 18.88M parámetros (18.88M activos), paralelismo=none, mundo=1, dispositivo=cpu, dtype=fp32
 [datos] 4,096 tokens/paso, 1000 pasos -> 4.1M tokens
+paso    100 | pérdida 7.0733 | lr 6.00e-04 | ‖g‖ 1.42 | 1,765 tok/s | ETA 34.8 min | $0.00
+paso    200 | pérdida 5.4424 | lr 5.84e-04 | ‖g‖ 0.93 | 2,318 tok/s | ETA 27.2 min | $0.00
+paso    300 | pérdida 4.7733 | lr 5.37e-04 | ‖g‖ 0.80 | 2,384 tok/s | ETA 22.6 min | $0.00
+paso    400 | pérdida 4.4184 | lr 4.66e-04 | ‖g‖ 1.02 | 2,319 tok/s | ETA 18.9 min | $0.00
+paso    500 | pérdida 4.2671 | lr 3.78e-04 | ‖g‖ 0.89 | 2,299 tok/s | ETA 15.6 min | $0.00
+paso    600 | pérdida 4.1397 | lr 2.84e-04 | ‖g‖ 0.93 | 2,337 tok/s | ETA 12.3 min | $0.00
+paso    700 | pérdida 3.9496 | lr 1.96e-04 | ‖g‖ 0.87 | 2,255 tok/s | ETA 9.2 min | $0.00
+paso    800 | pérdida 3.8047 | lr 1.24e-04 | ‖g‖ 0.84 | 2,310 tok/s | ETA 6.1 min | $0.00
+paso    900 | pérdida 3.7765 | lr 7.66e-05 | ‖g‖ 0.90 | 2,319 tok/s | ETA 3.0 min | $0.00
+paso   1000 | pérdida 3.7842 | lr 6.00e-05 | ‖g‖ 0.93 | 2,273 tok/s | ETA 0.0 min | $0.00
+[eval] paso 1000 | code: 3.9152 (2.090 bpb) | en: 4.5494 (1.963 bpb) | es: 3.7751 (1.422 bpb) | math: 0.9582 (0.531 bpb) | multi: 5.3199 (2.034 bpb) | _mean: 3.7035
+[checkpoint] runs/sweep_m_lr6e-4/checkpoints/step_00001000
+{'size': 'm', 'lr': 0.0006, 'params': 18880896, 'non_embedding_params': 12589440, 'tokens': 4096000, 'hours': 0.507, 'val_mean_loss': 3.7035, 'val_bpb': {'code': 2.0903, 'en': 1.9635, 'es': 1.4221, 'math': 0.5307, 'multi': 2.0343}, 'tokens_per_step': 4096}
+{
+  "rows": [
+    {
+      "size": "m",
+      "lr": 0.0006,
+      "params": 18880896,
+      "non_embedding_params": 12589440,
+      "tokens": 4096000,
+      "hours": 0.507,
+      "val_mean_loss": 3.7035,
+      "val_bpb": {
+        "code": 2.0903,
+        "en": 1.9635,
+        "es": 1.4221,
+        "math": 0.5307,
+        "multi": 2.0343
+      },
+      "tokens_per_step": 4096
+    }
+  ],
+  "loglog_slope_loss_vs_nonembedding_params": null,
+  "note": "mismos datos, tokens y programación de LR; CPU de la sesión en la nube"
+}

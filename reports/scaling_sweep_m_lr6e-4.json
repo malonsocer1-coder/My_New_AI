@@ -1,0 +1,23 @@
+{
+  "rows": [
+    {
+      "size": "m",
+      "lr": 0.0006,
+      "params": 18880896,
+      "non_embedding_params": 12589440,
+      "tokens": 4096000,
+      "hours": 0.507,
+      "val_mean_loss": 3.7035,
+      "val_bpb": {
+        "code": 2.0903,
+        "en": 1.9635,
+        "es": 1.4221,
+        "math": 0.5307,
+        "multi": 2.0343
+      },
+      "tokens_per_step": 4096
+    }
+  ],
+  "loglog_slope_loss_vs_nonembedding_params": null,
+  "note": "mismos datos, tokens y programación de LR; CPU de la sesión en la nube"
+}

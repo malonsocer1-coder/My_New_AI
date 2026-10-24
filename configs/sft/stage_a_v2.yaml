@@ -1,0 +1,8 @@
+# Versión 2: añade el escenario missing_file (honestidad ante archivos inexistentes).
+# Datos SFT de la Etapa A: conversaciones sintéticas verificadas (herramientas + aritmética).
+tokenizer: data/stage_a/tokenizer
+seq_len: 768
+output_dir: data/sft_stage_a_v2
+files: [data/sft_raw_v2/*.jsonl]
+val_fraction: 0.05
+seed: 0

@@ -1,0 +1,16 @@
+# DPO v2: sobre el SFT v2 (que ya incluye el escenario missing_file).
+# Objetivo: preferir respuestas fieles a las herramientas y honestas ante errores,
+# negativas de permiso y preguntas sin respuesta.
+init_from: runs/sft_stage_a_v2
+data: data/dpo_raw/train.jsonl
+eval_data: data/dpo_raw/eval.jsonl
+out_dir: runs/dpo_stage_a_v2
+beta: 0.1
+lr: 2.0e-5
+steps: 150
+batch_size: 8
+warmup_steps: 15
+log_interval: 10
+seed: 0
+device: cpu
+num_threads: 4
