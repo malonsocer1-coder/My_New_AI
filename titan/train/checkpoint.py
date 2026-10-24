@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import json
 import os
-import time
 import random
 import shutil
 from pathlib import Path
@@ -153,14 +152,7 @@ class CheckpointManager:
                                                "world_size": self.world_size})
             if final.exists():
                 shutil.rmtree(final)
-            for attempt in range(5):  # en Windows el antivirus puede retener un archivo un instante
-                try:
-                    os.replace(tmp, final)
-                    break
-                except PermissionError:
-                    if attempt == 4:
-                        raise
-                    time.sleep(1 + attempt)
+            os.replace(tmp, final)
             atomic_write_text(self.root / "LATEST", final.name + "\n")
             self._prune()
         self._barrier()
