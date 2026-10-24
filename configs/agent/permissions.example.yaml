@@ -1,0 +1,20 @@
+# Política de permisos del agente TITAN. Cópiela a D:\TITAN_AI\config\permissions.yaml
+# (fuera del espacio de trabajo del agente: ninguna herramienta puede leerla ni editarla).
+#
+# Niveles: allow (permitir), ask (preguntar cada vez), deny (denegar).
+# file_delete, credentials, cloud_resources, spend_money y publish SIEMPRE
+# preguntan, aunque se pongan en "allow".
+permissions:
+  file_read: allow
+  file_write: ask
+  file_delete: ask
+  code_exec: ask
+  network: ask
+  credentials: ask
+  install_deps: ask
+  external_tools: ask
+  cloud_resources: ask
+  spend_money: ask
+  publish: ask
+  memory_read: allow
+  memory_write: ask

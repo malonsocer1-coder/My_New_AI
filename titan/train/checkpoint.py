@@ -32,6 +32,16 @@ from safetensors.torch import load_file, save_file
 from ..utils.io import atomic_write_text, read_json, sha256_file, write_json
 
 
+def resolve_weights_dir(path: str | Path) -> Path:
+    """Ejecución (runs/x) -> último checkpoint; directorio de checkpoints -> LATEST; si no, tal cual."""
+    p = Path(path)
+    if (p / "checkpoints").is_dir():
+        p = p / "checkpoints"
+    if (p / "LATEST").exists():
+        p = p / (p / "LATEST").read_text().strip()
+    return p
+
+
 def model_state_for_save(model: torch.nn.Module) -> dict[str, torch.Tensor]:
     sd = model.state_dict()
     tied = getattr(getattr(model, "cfg", None), "tie_embeddings", False)
@@ -44,7 +54,7 @@ def model_state_for_save(model: torch.nn.Module) -> dict[str, torch.Tensor]:
 
 
 def load_model_weights(model: torch.nn.Module, path: str | Path, strict: bool = True) -> None:
-    path = Path(path)
+    path = resolve_weights_dir(path)
     if path.is_dir():
         path = path / "model.safetensors"
     sd = load_file(str(path))

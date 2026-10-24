@@ -84,6 +84,46 @@ def cmd_serve(args) -> None:
     serve(args.model, host=args.host, port=args.port, device=args.device, agent_config=args.agent_config)
 
 
+def cmd_grow(args) -> None:
+    from .train import grow
+    cfg, sd = grow.load_model_dir(args.source)
+    if args.op == "depth":
+        new_cfg, new_sd = grow.grow_depth(cfg, sd, args.layers, args.method)
+    elif args.op == "upcycle":
+        new_cfg, new_sd = grow.upcycle_to_moe(cfg, sd, args.experts, args.top_k)
+    else:
+        raise SystemExit(f"Operación desconocida: {args.op}")
+    grow.save_model_dir(new_cfg, new_sd, args.out, {"op": args.op, "source": args.source}, args.tokenizer)
+    print(json.dumps(grow.describe(new_cfg), indent=2))
+
+
+def cmd_merge(args) -> None:
+    from .train import grow
+    loaded = [grow.load_model_dir(b) for b in args.branches]
+    new_cfg, new_sd = grow.merge_branches([c for c, _ in loaded], [s for _, s in loaded], top_k=args.top_k)
+    grow.save_model_dir(new_cfg, new_sd, args.out, {"op": "merge_experts", "branches": args.branches},
+                        args.tokenizer)
+    print(json.dumps(grow.describe(new_cfg), indent=2))
+
+
+def cmd_plan(args) -> None:
+    from .train.plan import Plan
+    plan = Plan(args.plan, args.workdir)
+    if args.action == "status":
+        for row in plan.status():
+            res = row.get("result") or {}
+            extra = f" | {res.get('stop_reason', '')} {res.get('steps', '')}" if res else ""
+            print(f"{row['id']:<16} {row['type']:<14} {row['status']}{extra}")
+    else:
+        plan.run(only=args.only, session_max_hours=args.hours)
+
+
+def cmd_bench(args) -> None:
+    from .train.bench import bench
+    print(json.dumps(bench(args.config, args.steps, overrides=_parse_overrides(args.set),
+                           target_tokens=args.tokens), indent=2))
+
+
 def cmd_cloud(args) -> None:
     from .cloud.cli import run_cloud_command
     run_cloud_command(args)
@@ -154,6 +194,39 @@ def build_parser() -> argparse.ArgumentParser:
     v.add_argument("--device", default="auto")
     v.add_argument("--agent-config", default=None)
     v.set_defaults(func=cmd_serve)
+
+    gr = sub.add_parser("grow", help="agrandar un modelo (más capas) o convertirlo en MoE")
+    gr.add_argument("op", choices=["depth", "upcycle"])
+    gr.add_argument("--source", required=True)
+    gr.add_argument("--out", required=True)
+    gr.add_argument("--layers", type=int, help="nuevo número de capas (depth)")
+    gr.add_argument("--method", default="copy_zero", choices=["copy_zero", "stack"])
+    gr.add_argument("--experts", type=int, default=4)
+    gr.add_argument("--top-k", type=int, default=2)
+    gr.add_argument("--tokenizer")
+    gr.set_defaults(func=cmd_grow)
+
+    me = sub.add_parser("merge-experts", help="unir ramas entrenadas por separado en un MoE (BTX)")
+    me.add_argument("--branches", nargs="+", required=True)
+    me.add_argument("--out", required=True)
+    me.add_argument("--top-k", type=int, default=2)
+    me.add_argument("--tokenizer")
+    me.set_defaults(func=cmd_merge)
+
+    pl = sub.add_parser("plan", help="ejecutar un plan de entrenamiento por fases")
+    pl.add_argument("action", choices=["run", "status"])
+    pl.add_argument("--plan", required=True)
+    pl.add_argument("--workdir")
+    pl.add_argument("--only", nargs="*", help="ejecutar solo estas fases")
+    pl.add_argument("--hours", type=float, help="límite de horas para esta sesión")
+    pl.set_defaults(func=cmd_plan)
+
+    be = sub.add_parser("bench", help="medir tokens/s y memoria en este equipo")
+    be.add_argument("--config", required=True)
+    be.add_argument("--steps", type=int, default=10)
+    be.add_argument("--tokens", type=float, help="tokens objetivo para proyectar horas")
+    be.add_argument("--set", nargs="*")
+    be.set_defaults(func=cmd_bench)
 
     c = sub.add_parser("cloud", help="infraestructura GPU en la nube")
     c.add_argument("action", choices=["providers", "offers", "plan", "launch", "status", "stop", "watch", "sync"])

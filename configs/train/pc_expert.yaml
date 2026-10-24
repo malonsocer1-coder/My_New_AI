@@ -1,0 +1,25 @@
+# Fase 2: rama experta. Parte de la base y se especializa con domain_weights
+# (los fija el plan). ~500 M tokens por rama.
+model_config: configs/model/titan_100m.yaml
+train:
+  task: pretrain
+  data: data/pc_es/manifest.json
+  tokenizer: data/pc_es/tokenizer
+  seq_len: 1024
+  micro_batch_size: 4
+  grad_accum_steps: 32
+  max_steps: 3800
+  lr: 3.0e-4
+  min_lr: 3.0e-5
+  warmup_steps: 100
+  schedule: cosine
+  weight_decay: 0.1
+  dtype: bf16
+  device: auto
+  eval_interval: 1000
+  eval_windows: 64
+  eval_batch_size: 8
+  log_interval: 20
+  ckpt_interval: 500
+  keep_last: 2
+  seed: 4321

@@ -1,0 +1,13 @@
+# Base de ~100.7 M parámetros para entrenar en una GPU de 8 GB (RTX 5070 Laptop).
+# Compatible con el formato Llama (exportable a GGUF / llama.cpp).
+name: titan-100m
+vocab_size: 32768
+dim: 768
+n_layers: 12
+n_heads: 12
+n_kv_heads: 4
+multiple_of: 256        # ffn_dim = 2048
+max_seq_len: 1024
+rope_theta: 10000.0
+tie_embeddings: true    # ahorra 25 M parámetros a esta escala
+activation_checkpointing: false

@@ -47,6 +47,7 @@ class SourceSpec:
     doc_chars: int | None = None  # trocear textos largos en documentos de ~N caracteres
     weight: float = 1.0  # peso de muestreo del dominio en el entrenamiento
     scrub_pii: bool = False
+    enabled: bool = True
 
     @classmethod
     def from_dict(cls, d: dict) -> "SourceSpec":
@@ -178,10 +179,20 @@ def _iter_hf(spec: SourceSpec, cache_dir: Path) -> Iterator[tuple[str, str]]:
     except ImportError as e:  # pragma: no cover
         raise RuntimeError("El cargador 'hf' requiere `pip install datasets` y acceso a huggingface.co") from e
     p = spec.params
-    ds = load_dataset(p["path"], name=p.get("name"), split=p.get("split", "train"), streaming=True)
+    kw = {k: p[k] for k in ("name", "data_dir", "revision") if p.get(k)}
+    ds = load_dataset(p["path"], split=p.get("split", "train"), streaming=True, **kw)
     field_name = p.get("text_field", "text")
+    filters: dict = p.get("filter", {})  # {campo: [valores permitidos]}; listas: basta una coincidencia
     for i, row in enumerate(ds):
-        yield row[field_name], f"{p['path']}:{i}"
+        ok = True
+        for fld, allowed in filters.items():
+            val = row.get(fld)
+            vals = val if isinstance(val, list) else [val]
+            if not any(v in allowed for v in vals):
+                ok = False
+                break
+        if ok:
+            yield row[field_name], f"{p['path']}:{i}"
 
 
 def _iter_synthetic(spec: SourceSpec, cache_dir: Path) -> Iterator[tuple[str, str]]:

@@ -1,0 +1,21 @@
+# Alternativa: crecimiento progresivo 100 M -> 176 M (12 -> 24 capas) en el PC.
+# La fase "grow" preserva exactamente lo aprendido; después se sigue entrenando.
+name: pc_grow
+workdir: runs/pc_grow
+phases:
+  - id: base
+    type: train
+    config: configs/train/pc_base_100m.yaml
+  - id: grow
+    type: grow_depth
+    source: "@base"
+    new_n_layers: 24
+    method: copy_zero
+    tokenizer: data/pc_es/tokenizer
+  - id: continue
+    type: train
+    config: configs/train/pc_expert.yaml
+    init_from: "@grow"
+    model_from: "@grow"
+    model_set: {activation_checkpointing: true}
+    set: {max_steps: 7600, micro_batch_size: 2, grad_accum_steps: 64, lr: 4.0e-4}

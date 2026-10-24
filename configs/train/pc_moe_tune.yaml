@@ -1,0 +1,26 @@
+# Fase 4: ajuste conjunto del MoE unido (enrutador + expertos). ~300 M tokens.
+# El plan toma la arquitectura del modelo unido (model_from) y activa el
+# recálculo de activaciones para caber en 8 GB.
+model_config: configs/model/titan_100m.yaml   # se sustituye por la del modelo unido
+train:
+  task: pretrain
+  data: data/pc_es/manifest.json
+  tokenizer: data/pc_es/tokenizer
+  seq_len: 1024
+  micro_batch_size: 2
+  grad_accum_steps: 64
+  max_steps: 2300
+  lr: 2.0e-4
+  min_lr: 2.0e-5
+  warmup_steps: 100
+  schedule: cosine
+  weight_decay: 0.1
+  dtype: bf16
+  device: auto
+  eval_interval: 500
+  eval_windows: 64
+  eval_batch_size: 4
+  log_interval: 20
+  ckpt_interval: 250
+  keep_last: 2
+  seed: 999

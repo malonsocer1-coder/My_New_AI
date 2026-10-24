@@ -49,6 +49,7 @@ class TrainConfig:
     resume: bool = True
     verify_checkpoints: bool = True
     init_from: str | None = None  # checkpoint/pesos base para SFT o continuación
+    freeze_patterns: list[str] = field(default_factory=list)  # p. ej. ["layers.*.attention.*"]
     skip_samples_on_resume: int = 0  # saltar datos tras un pico de pérdida
     max_bad_steps: int = 10
     sample_prompts: list[str] = field(default_factory=list)
@@ -58,7 +59,8 @@ class TrainConfig:
     # Presupuesto y límites
     gpu_hour_usd: float = 0.0
     budget_usd: float | None = None
-    max_hours: float | None = None
+    max_hours: float | None = None          # tiempo total acumulado del entrenamiento
+    session_max_hours: float | None = None  # tiempo de esta sesión (entrenar "por ratos")
     peak_flops_per_device: float | None = None
 
     def to_dict(self) -> dict[str, Any]:

@@ -23,7 +23,7 @@ import torch.distributed as dist
 
 from ..model import ModelConfig, Transformer
 from ..utils.io import append_jsonl, write_json
-from .checkpoint import CheckpointManager, load_model_weights
+from .checkpoint import CheckpointManager, load_model_weights, resolve_weights_dir
 from .config import TrainConfig
 from .distributed import (DistInfo, all_reduce_mean, apply_fsdp, cleanup_distributed, resolve_parallel,
                           setup_distributed)
@@ -187,9 +187,7 @@ def train(model_cfg: ModelConfig, cfg: TrainConfig, log=None) -> dict:
     raw_model = model
 
     if cfg.init_from:
-        src = Path(cfg.init_from)
-        if src.is_dir() and (src / "LATEST").exists():
-            src = src / (src / "LATEST").read_text().strip()
+        src = resolve_weights_dir(cfg.init_from)
         say(f"[init] cargando pesos base propios desde {src}")
         if parallel == "fsdp":
             from safetensors.torch import load_file
@@ -199,6 +197,15 @@ def train(model_cfg: ModelConfig, cfg: TrainConfig, log=None) -> dict:
                                                                      broadcast_from_rank0=True))
         else:
             load_model_weights(model, src)
+
+    if cfg.freeze_patterns:
+        import fnmatch
+        frozen = 0
+        for name, p in model.named_parameters():
+            if any(fnmatch.fnmatch(name, pat) for pat in cfg.freeze_patterns):
+                p.requires_grad_(False)
+                frozen += p.numel()
+        say(f"[congelado] {frozen / 1e6:.2f}M parámetros no se actualizan ({cfg.freeze_patterns})")
 
     optimizer = build_optimizer(model, cfg, device)
     scaler = torch.amp.GradScaler("cuda") if (dtype == torch.float16 and parallel != "fsdp") else None
@@ -301,7 +308,8 @@ def train(model_cfg: ModelConfig, cfg: TrainConfig, log=None) -> dict:
                 aux_loss += out.aux_loss.detach() / cfg.grad_accum_steps
         if scaler is not None:
             scaler.unscale_(optimizer)
-        grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), cfg.grad_clip)
+        grad_norm = torch.nn.utils.clip_grad_norm_([p for p in model.parameters() if p.requires_grad],
+                                                   cfg.grad_clip)
         if hasattr(grad_norm, "full_tensor"):
             grad_norm = grad_norm.full_tensor()
         step_loss = all_reduce_mean(step_loss, dinfo.world_size)
@@ -381,6 +389,8 @@ def train(model_cfg: ModelConfig, cfg: TrainConfig, log=None) -> dict:
             stop["reason"] = stop["reason"] or "budget"
         if cfg.max_hours is not None and elapsed >= cfg.max_hours * 3600:
             stop["reason"] = stop["reason"] or "time_limit"
+        if cfg.session_max_hours is not None and time.time() - t_session >= cfg.session_max_hours * 3600:
+            stop["reason"] = stop["reason"] or "session_time_limit"
         if dinfo.distributed:
             flag = torch.tensor([1.0 if stop["reason"] else 0.0], device=device)
             dist.all_reduce(flag, op=dist.ReduceOp.MAX)

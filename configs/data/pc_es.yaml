@@ -1,0 +1,95 @@
+# Datos para entrenar en el PC (Windows, con Internet sin restricciones).
+# Objetivo: ~2.5-3 mil millones de tokens, mayoritariamente español.
+# Verifique en data/pc_es/data_card.json los tokens reales y ajuste max_docs.
+#
+# Requisitos: pip install -e ".[cloud]"   (instala `datasets`)
+# Los conjuntos de Hugging Face se leen en streaming; no hace falta descargarlos enteros.
+name: pc_es
+output_dir: data/pc_es
+cache_dir: cache
+val_fraction: 0.005
+seed: 1234
+vocab_size: 32768
+tokenizer_train_chars: 400000000   # ~400 MB de texto: suficiente para 32k y cabe en 16 GB de RAM
+shard_tokens: 100000000
+exact_dedup: true
+# FineWeb-2, FineWeb-Edu y Wikipedia ya vienen deduplicados con MinHash por sus autores;
+# repetirlo en Python puro tardaría horas en una laptop. Actívelo si añade fuentes crudas.
+minhash_dedup: false
+decontam_ngram: 13
+eval_files:
+  - titan/eval/data/*.jsonl
+sources:
+  - name: fineweb2_es
+    domain: es
+    language: es
+    loader: hf
+    license: "ODC-By 1.0 (FineWeb-2, HuggingFaceFW) + términos de uso de Common Crawl"
+    scrub_pii: true
+    max_docs: 1400000
+    weight: 0.50
+    params: {path: HuggingFaceFW/fineweb-2, name: spa_Latn, split: train, text_field: text}
+  - name: wikipedia_es
+    domain: es
+    language: es
+    loader: hf
+    license: "CC BY-SA 4.0 / GFDL (Wikipedia en español): requiere atribución"
+    max_docs: 500000
+    weight: 0.50
+    params: {path: wikimedia/wikipedia, name: 20231101.es, split: train, text_field: text}
+  - name: fineweb_edu_en
+    domain: en
+    language: en
+    loader: hf
+    license: "ODC-By 1.0 (FineWeb-Edu, HuggingFaceFW)"
+    max_docs: 600000
+    weight: 0.25
+    params: {path: HuggingFaceFW/fineweb-edu, name: sample-10BT, split: train, text_field: text}
+  - name: open_web_math
+    domain: math
+    language: multi
+    loader: hf
+    license: "ODC-By 1.0 (OpenWebMath)"
+    max_docs: 120000
+    weight: 0.15
+    params: {path: open-web-math/open-web-math, split: train, text_field: text}
+  - name: arithmetic_synthetic
+    domain: math
+    language: multi
+    kind: synthetic
+    loader: synthetic
+    license: "Propio (generado y verificado por titan.sft.synthetic)"
+    weight: 0.15
+    params:
+      generator: arithmetic_documents
+      kwargs: {n_docs: 30000, problems_per_doc: 16, seed: 11, max_digits: 4,
+               exclude_file: titan/eval/data/arith_es.jsonl}
+  - name: python_stdlib
+    domain: code
+    language: code
+    kind: code
+    loader: local_glob
+    license: "PSF-2.0 (biblioteca estándar de CPython)"
+    weight: 0.05   # pocos datos de código: peso bajo para no memorizarlos
+    params:
+      patterns: ["{stdlib}/**/*.py"]
+      exclude: ["*/test/*", "*/tests/*", "*/idle_test/*", "*/site-packages/*"]
+      max_file_bytes: 300000
+  # Código con licencias permisivas de The Stack. Requiere aceptar los términos en
+  # https://huggingface.co/datasets/bigcode/the-stack-smol y definir HF_TOKEN.
+  # Verifique los nombres de columnas antes de activarlo (enabled: true) y suba
+  # el peso del dominio "code" a ~0.15.
+  - name: the_stack_smol_python
+    enabled: false
+    domain: code
+    language: code
+    kind: code
+    loader: hf
+    license: "Licencias permisivas por archivo (MIT/Apache-2.0/BSD), The Stack (BigCode); respetar términos"
+    weight: 0.15
+    params:
+      path: bigcode/the-stack-smol
+      data_dir: data/python
+      split: train
+      text_field: content
+      filter: {max_stars_repo_licenses: [MIT, Apache-2.0, BSD-3-Clause, BSD-2-Clause, ISC]}

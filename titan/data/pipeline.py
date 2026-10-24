@@ -54,6 +54,7 @@ class DataConfig:
     def load(cls, path: str) -> "DataConfig":
         d = read_yaml(path)
         d["sources"] = [SourceSpec.from_dict(s) for s in d["sources"]]
+        d["sources"] = [s for s in d["sources"] if s.enabled]
         return cls(**d)
 
     def fingerprint(self) -> str:
@@ -210,7 +211,7 @@ def tokenize_stage(cfg: DataConfig, tok: TitanTokenizer, domains: list[str], log
                 arr = np.concatenate(buf).astype(dtype)
                 path = tok_out / split / f"{d}_{idx:05d}.bin"
                 arr.tofile(path)
-                shards.append({"path": str(path.relative_to(out)), "split": split, "domain": d,
+                shards.append({"path": path.relative_to(out).as_posix(), "split": split, "domain": d,
                                "num_tokens": int(arr.size), "dtype": np.dtype(dtype).name,
                                "sha256": sha256_file(path)})
                 buf, buf_len = [], 0

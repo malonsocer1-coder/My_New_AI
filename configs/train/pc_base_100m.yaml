@@ -1,0 +1,35 @@
+# Fase 1 del plan para PC: base de 100 M sobre datos mezclados (~2 000 M tokens).
+# Memoria estimada en GPU: ~5-6 GB con micro_batch 4 x 1024 (mida con `titan bench`).
+model_config: configs/model/titan_100m.yaml
+train:
+  run_name: pc_base_100m
+  out_dir: runs/pc_base_100m
+  task: pretrain
+  data: data/pc_es/manifest.json
+  tokenizer: data/pc_es/tokenizer
+  seq_len: 1024
+  micro_batch_size: 4
+  grad_accum_steps: 32        # 131 072 tokens por paso
+  max_steps: 15000            # ~1 970 M tokens
+  lr: 6.0e-4
+  min_lr: 6.0e-5
+  warmup_steps: 500
+  schedule: wsd               # meseta + caída final: se puede alargar sin reiniciar
+  wsd_decay_frac: 0.15
+  weight_decay: 0.1
+  grad_clip: 1.0
+  dtype: bf16
+  compile: false              # en Windows torch.compile requiere triton-windows
+  device: auto
+  eval_interval: 1000
+  eval_windows: 64
+  eval_batch_size: 8
+  log_interval: 20
+  ckpt_interval: 500          # ~1.2 GB por checkpoint (pesos fp32 + AdamW)
+  keep_last: 2
+  keep_every: 5000
+  sample_prompts:
+    - "La Ciudad de México es"
+    - "Pregunta: ¿Cuánto es 48 + 27?\nRespuesta:"
+    - "def es_par(n):"
+  seed: 1234
