@@ -250,9 +250,10 @@ def build_parser() -> argparse.ArgumentParser:
     be.set_defaults(func=cmd_bench)
 
     c = sub.add_parser("cloud", help="infraestructura GPU en la nube")
-    c.add_argument("action", choices=["providers", "offers", "plan", "launch", "status", "stop", "watch", "sync"])
+    c.add_argument("action", choices=["providers", "offers", "plan", "launch", "status", "stop", "watch", "spend"])
+    c.add_argument("--instance", help="ID de la instancia (status/stop/watch)")
     c.add_argument("--job", help="YAML del trabajo")
-    c.add_argument("--provider")
+    c.add_argument("--provider", default="runpod")
     c.add_argument("--gpu", default="H100")
     c.add_argument("--num-gpus", type=int, default=8)
     c.add_argument("--approve", action="store_true", help="autoriza explícitamente el gasto del plan")

@@ -1,0 +1,42 @@
+# Mezcla principal para modelos de 1 B a 8 B (cientos de miles de millones de tokens).
+# Recomendación: ejecutar esta preparación en una máquina CPU barata (o en su PC) y
+# subir data/cloud_main a almacenamiento remoto; las GPU no deben esperar a los datos.
+# Ajuste max_docs según los tokens objetivo (ver data_card.json tras una prueba pequeña).
+name: cloud_main
+output_dir: data/cloud_main
+cache_dir: cache
+val_fraction: 0.001
+vocab_size: 65536
+tokenizer_train_chars: 2000000000
+shard_tokens: 500000000
+exact_dedup: true
+minhash_dedup: false   # las fuentes ya están deduplicadas por sus autores
+eval_files: [titan/eval/data/*.jsonl]
+sources:
+  - {name: fineweb2_es, domain: es, language: es, loader: hf, scrub_pii: true, max_docs: 40000000, weight: 0.30,
+     license: "ODC-By 1.0 (FineWeb-2) + términos de Common Crawl",
+     params: {path: HuggingFaceFW/fineweb-2, name: spa_Latn, split: train, text_field: text}}
+  - {name: wikipedia_es, domain: es, language: es, loader: hf, max_docs: 2000000, weight: 0.30,
+     license: "CC BY-SA 4.0 / GFDL (Wikipedia)",
+     params: {path: wikimedia/wikipedia, name: 20231101.es, split: train, text_field: text}}
+  - {name: fineweb_edu_en, domain: en, language: en, loader: hf, max_docs: 40000000, weight: 0.33,
+     license: "ODC-By 1.0 (FineWeb-Edu)",
+     params: {path: HuggingFaceFW/fineweb-edu, name: default, split: train, text_field: text}}
+  - {name: fineweb2_multi_pt, domain: multi, language: multi, loader: hf, max_docs: 3000000, weight: 0.04,
+     license: "ODC-By 1.0 (FineWeb-2)", params: {path: HuggingFaceFW/fineweb-2, name: por_Latn, split: train}}
+  - {name: fineweb2_multi_fr, domain: multi, language: multi, loader: hf, max_docs: 3000000, weight: 0.04,
+     license: "ODC-By 1.0 (FineWeb-2)", params: {path: HuggingFaceFW/fineweb-2, name: fra_Latn, split: train}}
+  - {name: open_web_math, domain: math, language: multi, loader: hf, max_docs: 6000000, weight: 0.10,
+     license: "ODC-By 1.0 (OpenWebMath)", params: {path: open-web-math/open-web-math, split: train}}
+  - {name: arithmetic_synthetic, domain: math, language: multi, kind: synthetic, loader: synthetic, weight: 0.10,
+     license: "Propio (generado y verificado)",
+     params: {generator: arithmetic_documents,
+              kwargs: {n_docs: 2000000, problems_per_doc: 16, seed: 21, max_digits: 6,
+                       exclude_file: titan/eval/data/arith_es.jsonl}}}
+  # Código: requiere aceptar los términos de The Stack en Hugging Face y HF_TOKEN.
+  - {name: the_stack_python, enabled: false, domain: code, language: code, kind: code, loader: hf, weight: 0.20,
+     max_docs: 20000000, license: "Licencias permisivas por archivo (The Stack, BigCode)",
+     params: {path: bigcode/the-stack-dedup, data_dir: data/python, split: train, text_field: content,
+              filter: {max_stars_repo_licenses: [MIT, Apache-2.0, BSD-3-Clause, BSD-2-Clause, ISC]}}}
+  - {name: python_stdlib, domain: code, language: code, kind: code, loader: local_glob, weight: 0.20,
+     license: "PSF-2.0", params: {patterns: ["{stdlib}/**/*.py"], exclude: ["*/test/*", "*/tests/*", "*/site-packages/*"]}}

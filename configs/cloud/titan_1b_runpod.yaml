@@ -1,0 +1,19 @@
+# Trabajo de ejemplo: preentrenar TITAN-1B en 8×H100.
+#   titan cloud plan   --job configs/cloud/titan_1b_runpod.yaml
+#   titan cloud launch --job configs/cloud/titan_1b_runpod.yaml --approve   # gasta dinero
+# Requiere en su equipo: RUNPOD_API_KEY y, si usa almacenamiento remoto, rclone configurado.
+name: titan-1b-pretrain
+provider: runpod          # runpod | vastai | lambda
+gpu: H100
+num_gpus: 8
+image: pytorch/pytorch:2.9.1-cuda12.8-cudnn9-devel   # verifique que la etiqueta existe en Docker Hub
+disk_gb: 1000
+train_config: configs/train/titan_1b.yaml
+data_config: configs/data/cloud_main.yaml
+run_dir: runs/titan-1b
+budget_usd: 1500          # límite duro: el guardián detiene y apaga al llegar
+max_hours: 80
+max_price_per_gpu_hour: 3.50
+remote_storage: "r2:titan-ai/runs"   # destino rclone; deje vacío para no sincronizar
+env_passthrough: [HF_TOKEN]
+cloud_type: SECURE
