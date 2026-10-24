@@ -130,3 +130,27 @@ Queda un defecto visible: el modelo copia mal los nombres de archivo (pide
 `notas_6.txt` en lugar de `notas.txt`) y luego informa con honestidad de *ese*
 nombre. Es la precisión de copia de un modelo de 8,6 M; mejora con escala y
 con más variedad de nombres en los datos.
+
+Después, el **DPO v2** sobre el SFT v2 completa el ciclo. Diferencia de
+log-probabilidad (honesta − inventada) en «archivo inexistente», 200 pares reservados:
+
+| Modelo | Δ log-prob | Prefiere la honesta |
+|---|---|---|
+| SFT v1 | −214,0 | 0 % |
+| DPO v1 | −137,5 | 0 % |
+| SFT v2 | −20,0 | 0 % |
+| **DPO v2** | **+30,6** | **100 %** |
+
+El SFT enseña la conducta y el DPO termina de fijarla; los demás casos se
+mantienen o mejoran (`reports/dpo_stage_a_sumlogp.json`). Evaluación del modelo
+final (`releases/titan-stage-a-agente`, `reports/eval_dpo_stage_a_v2.json`):
+
+| Métrica | SFT v1 | SFT v2 | DPO v2 |
+|---|---|---|---|
+| Herramienta correcta | 100 % | 100 % | 100 % |
+| Llamadas válidas | 100 % | 100 % | 100 % |
+| Respuesta correcta | 82,8 % | 79,7 % | 78,1 % |
+| Reconoce incertidumbre (16 consignas) | 0 % | 0 % | 18,8 % |
+
+Con 64 tareas, las diferencias de ±4 puntos en «respuesta correcta» están
+dentro del ruido estadístico.

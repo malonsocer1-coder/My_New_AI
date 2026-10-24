@@ -49,7 +49,10 @@ Windows (D:\TITAN_AI): `scripts/windows/install.ps1` → ver
 [docs/PC_ENTRENAMIENTO_POR_PARTES.md](docs/PC_ENTRENAMIENTO_POR_PARTES.md) y
 [docs/DESPLIEGUE_WINDOWS.md](docs/DESPLIEGUE_WINDOWS.md).
 
-Probar el modelo ya entrenado sin entrenar nada:
+Modelos propios publicados en el repositorio (pesos bf16 + GGUF Q8_0, con SHA-256):
+`releases/titan-stage-a` (base), `releases/titan-stage-a-sft` (SFT v1) y
+`releases/titan-stage-a-agente` (SFT v2 + DPO v2, el mejor agente de la Etapa A).
+Probarlos sin entrenar nada:
 `titan generate --checkpoint releases/titan-stage-a --prompt "El Parlamento Europeo"`.
 
 ## Documentación

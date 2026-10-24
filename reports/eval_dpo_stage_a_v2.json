@@ -1,0 +1,64 @@
+{
+  "checkpoint": "runs/dpo_stage_a_v2",
+  "suites": [
+    "tool_use",
+    "uncertainty"
+  ],
+  "results": {
+    "tool_use": {
+      "n": 64,
+      "tool_selection_acc": 1.0,
+      "valid_call_rate": 1.0,
+      "answer_acc": 0.7812,
+      "selection_by_kind": {
+        "calculator": 1.0,
+        "read_file": 1.0,
+        "error_recovery": 1.0,
+        "python": 1.0,
+        "kb": 1.0,
+        "write": 1.0,
+        "no_tool": 1.0,
+        "permission_denied": 1.0
+      },
+      "seconds": 38.6
+    },
+    "uncertainty": {
+      "n": 16,
+      "acc": 0.1875,
+      "context_overflow": 0,
+      "by_behavior": {
+        "abstain": 0.2857,
+        "false_premise": 0.25,
+        "clarify": 0.0
+      },
+      "note": "verificación por marcadores léxicos: indicativa, no definitiva",
+      "seconds": 3.3
+    }
+  },
+  "params": 8621312,
+  "elapsed_s": 41.9,
+  "summary": {
+    "tool_use": {
+      "n": 64,
+      "tool_selection_acc": 1.0,
+      "valid_call_rate": 1.0,
+      "answer_acc": 0.7812,
+      "selection_by_kind.calculator": 1.0,
+      "selection_by_kind.read_file": 1.0,
+      "selection_by_kind.error_recovery": 1.0,
+      "selection_by_kind.python": 1.0,
+      "selection_by_kind.kb": 1.0,
+      "selection_by_kind.write": 1.0,
+      "selection_by_kind.no_tool": 1.0,
+      "selection_by_kind.permission_denied": 1.0
+    },
+    "uncertainty": {
+      "n": 16,
+      "acc": 0.1875,
+      "context_overflow": 0,
+      "by_behavior.abstain": 0.2857,
+      "by_behavior.false_premise": 0.25,
+      "by_behavior.clarify": 0.0
+    }
+  }
+}

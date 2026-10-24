@@ -121,6 +121,7 @@ interfaz web funciona de extremo a extremo con este modelo
 | Entrenamiento por partes a igual cómputo | denso continuado **1,338** < crecimiento 1,343 < base 1,346 < BTX 1,355 (bpb medio) | el crecimiento preserva la calidad exacta; BTX no gana a esta escala; `reports/btx_stage_a.json` |
 | DPO sobre el SFT | 94,5 % de preferencia en pares reservados | mueve todas las preferencias, no crea conductas ausentes; `reports/dpo_stage_a*.json` |
 | SFT v2 con el escenario «archivo inexistente» | respuestas honestas 0/3 → **3/3** | ver `docs/EVALUACION.md` |
+| DPO v2 sobre el SFT v2 | preferencia por la respuesta honesta 0 % → **100 %**; incertidumbre 0 → 18,8 % | modelo publicado en `releases/titan-stage-a-agente` |
 
 ## 9. Siguiente paso viable
 

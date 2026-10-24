@@ -1,0 +1,33 @@
+{
+  "info": {
+    "source": "runs/dpo_stage_a_v2",
+    "pipeline": "Etapa A -> SFT v2 (herramientas + honestidad) -> DPO v2",
+    "note": "Mejor modelo de agente de la Etapa A; contexto 768; usar con las 7 herramientas del entrenamiento"
+  },
+  "files": {
+    "MODEL_CARD.md": {
+      "sha256": "441f31cbc2d8160e9b2b6f66c9ec40c5ef0ae113dfe44400d6ff414dd435acd3",
+      "bytes": 698
+    },
+    "generation_config.json": {
+      "sha256": "d7182112e19509ce86ecda7fbed8a1a15178fa297ac130a85117777c337061e2",
+      "bytes": 82
+    },
+    "model.safetensors": {
+      "sha256": "a5dbdf044f04c1790a26d925536295e869d585514140d73130b460c548a0d853",
+      "bytes": 17248216
+    },
+    "model_config.json": {
+      "sha256": "379340462a86a8201539a16392a646f20748ba82279092913ec616d101df667d",
+      "bytes": 441
+    },
+    "titan-stage-a-agente-Q8_0.gguf": {
+      "sha256": "de849bc7eec5ba9d3ba3c76260bd105c97f9083a85ca76dbb2f4a576428c5623",
+      "bytes": 9442752
+    },
+    "tokenizer.json": {
+      "sha256": "7a8c3630fa3f9aaf53d793cbe63f252de8170e74166f4cc78d551388f95bd4dd",
+      "bytes": 551183
+    }
+  }
+}
