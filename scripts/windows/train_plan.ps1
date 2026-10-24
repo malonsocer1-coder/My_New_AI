@@ -34,6 +34,8 @@ $log = Join-Path $App ("logs\plan_" + (Get-Date -Format "yyyyMMdd_HHmmss") + ".l
 $cmdArgs = @("-m", "titan.cli", "plan", "run", "--plan", $Plan)
 if ($Hours -gt 0) { $cmdArgs += @("--hours", "$Hours") }
 
+# Python escribe avisos en stderr; con "Stop" PowerShell 5.1 los trataría como errores fatales.
+$ErrorActionPreference = "Continue"
 Write-Host "Registro: $log"
 Write-Host "Pulse Ctrl+C para detener: se guardará un checkpoint al terminar el paso en curso."
 & $VPy @cmdArgs 2>&1 | Tee-Object -FilePath $log

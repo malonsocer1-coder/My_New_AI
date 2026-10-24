@@ -71,11 +71,12 @@ instala PyTorch con CUDA 12.8 (necesario para las RTX 50) y comprueba que la
 GPU es visible. `-NoSleep` evita que la laptop se suspenda con el cargador
 conectado durante entrenamientos largos.
 
-### 2. Medir tu GPU
+### 2. Diagnosticar y medir tu GPU
 
 ```powershell
 cd D:\TITAN_AI\app
 .\.venv\Scripts\Activate.ps1
+titan doctor                                   # GPU, CUDA, bf16, VRAM, RAM, disco, acceso a Hugging Face
 titan bench --config configs/train/pc_base_100m.yaml --steps 10
 ```
 

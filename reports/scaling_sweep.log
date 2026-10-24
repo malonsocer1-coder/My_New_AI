@@ -1,0 +1,4 @@
+[modelo] 2.88M parámetros (2.88M activos), paralelismo=none, mundo=1, dispositivo=cpu, dtype=fp32
+[datos] 4,096 tokens/paso, 1000 pasos -> 4.1M tokens
+paso    100 | pérdida 7.4576 | lr 1.50e-03 | ‖g‖ 0.86 | 7,206 tok/s | ETA 8.5 min | $0.00
+paso    200 | pérdida 5.4798 | lr 1.46e-03 | ‖g‖ 0.90 | 9,921 tok/s | ETA 6.5 min | $0.00

@@ -61,10 +61,14 @@ if (-not (Get-Command py -ErrorAction SilentlyContinue)) {
     throw "No se encontró el lanzador 'py'. Instale Python 3.12 con: winget install --id Python.Python.3.12 -e"
 }
 $pyver = $null
+# En Windows PowerShell 5.1, redirigir stderr de un programa con "Stop" aborta el script:
+# se relaja solo durante la sonda de versiones.
+$ErrorActionPreference = "Continue"
 foreach ($v in @("3.12", "3.11")) {
-    & py "-$v" -c "import sys" 2>$null
+    & py "-$v" -c "import sys" *> $null
     if ($LASTEXITCODE -eq 0) { $pyver = $v; break }
 }
+$ErrorActionPreference = "Stop"
 if (-not $pyver) {
     throw "No se encontró Python 3.12 ni 3.11. Instálelo con: winget install --id Python.Python.3.12 -e"
 }
@@ -104,8 +108,10 @@ if (-not (Test-Path $perm)) {
 }
 
 # 5. Verificación ----------------------------------------------------------
-Step "Verificando GPU"
-& $VPy -c "import torch; ok=torch.cuda.is_available(); print('CUDA disponible:', ok); print('GPU:', torch.cuda.get_device_name(0) if ok else 'ninguna'); print('PyTorch:', torch.__version__, '| CUDA:', torch.version.cuda); print('BF16:', ok and torch.cuda.is_bf16_supported())"
+Step "Diagnóstico del equipo (titan doctor)"
+$ErrorActionPreference = "Continue"
+& $VPy -m titan.cli doctor
+$ErrorActionPreference = "Stop"
 
 if ($NoSleep) {
     Step "Desactivando la suspensión con corriente (para entrenamientos largos)"

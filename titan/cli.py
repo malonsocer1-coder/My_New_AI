@@ -140,6 +140,15 @@ def cmd_bench(args) -> None:
                            target_tokens=args.tokens), indent=2))
 
 
+def cmd_doctor(args) -> None:
+    from .doctor import print_doctor, run_doctor
+    rep = run_doctor()
+    if args.json:
+        print(json.dumps(rep, indent=2))
+    else:
+        print_doctor(rep)
+
+
 def cmd_cloud(args) -> None:
     from .cloud.cli import run_cloud_command
     run_cloud_command(args)
@@ -261,6 +270,10 @@ def build_parser() -> argparse.ArgumentParser:
     be.add_argument("--tokens", type=float, help="tokens objetivo para proyectar horas")
     be.add_argument("--set", nargs="*")
     be.set_defaults(func=cmd_bench)
+
+    dr = sub.add_parser("doctor", help="diagnosticar el equipo (GPU, CUDA, memoria, disco, red)")
+    dr.add_argument("--json", action="store_true")
+    dr.set_defaults(func=cmd_doctor)
 
     c = sub.add_parser("cloud", help="infraestructura GPU en la nube")
     c.add_argument("action", choices=["providers", "offers", "plan", "launch", "status", "stop", "watch", "spend"])

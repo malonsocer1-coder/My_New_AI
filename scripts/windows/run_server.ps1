@@ -26,4 +26,5 @@ if (-not $Model) {
 }
 Write-Host "Modelo: $Model"
 Start-Job -ScriptBlock { param($p) Start-Sleep 6; Start-Process "http://127.0.0.1:$p" } -ArgumentList $Port | Out-Null
+$ErrorActionPreference = "Continue"   # los avisos de Python en stderr no deben abortar el servidor
 & $VPy -m titan.cli serve --model $Model --port $Port --agent-config $Config
