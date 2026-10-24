@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Inicia la interfaz web local de TITAN y abre el navegador.
 .EXAMPLE

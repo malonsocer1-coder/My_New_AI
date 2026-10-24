@@ -78,6 +78,22 @@ el rango supone un aprovechamiento del 24–50 %. **Mídelo** en el paso 2.
 
 ## Paso a paso
 
+### Atajo: todo en uno
+
+Con Git y Python 3.12 instalados, dos comandos hacen los pasos 1 a 4 (cada paso
+se omite si ya está hecho, así que se puede repetir sin miedo):
+
+```powershell
+git clone -b claude/adoring-hypatia-oc7bdz https://github.com/malonsocer1-coder/My_New_AI.git D:\TITAN_AI\app
+powershell -ExecutionPolicy Bypass -File D:\TITAN_AI\app\scripts\windows\entrenar_todo.ps1 -Horas 8 -Programar -Hora 23:00
+```
+
+`-Programar` crea la tarea de Windows `TITAN_Entrenamiento`, que continúa el
+plan cada día a las 23:00 durante 8 h (despierta el equipo si está suspendido)
+sin que tengas que estar delante; se quita con
+`Unregister-ScheduledTask -TaskName TITAN_Entrenamiento -Confirm:$false`.
+El portátil debe quedarse encendido o suspendido (no apagado) y con el cargador.
+
 ### 1. Instalar (una vez)
 
 ```powershell

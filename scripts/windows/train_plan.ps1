@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Ejecuta (o continúa) el plan de entrenamiento por partes en el PC.
 

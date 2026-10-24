@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Instala TITAN AI en Windows (por defecto en D:\TITAN_AI) con soporte para GPU NVIDIA.
 
