@@ -59,7 +59,8 @@ def cmd_generate(args) -> None:
 
 def cmd_eval(args) -> None:
     from .eval.harness import run_suite
-    res = run_suite(args.checkpoint, args.suite, out_path=args.out, device=args.device, limit=args.limit)
+    res = run_suite(args.checkpoint, args.suite, out_path=args.out, device=args.device, limit=args.limit,
+                    data=args.data)
     print(json.dumps(res["summary"], indent=2, ensure_ascii=False))
 
 
@@ -159,6 +160,7 @@ def build_parser() -> argparse.ArgumentParser:
     e.add_argument("--suite", default="all")
     e.add_argument("--out")
     e.add_argument("--limit", type=int)
+    e.add_argument("--data", help="manifest.json para la suite bpb")
     e.add_argument("--device", default="auto")
     e.set_defaults(func=cmd_eval)
 

@@ -31,11 +31,19 @@ DEFAULT_SYSTEM = (
 )
 
 
+def _sig(params: dict) -> str:
+    props = params.get("properties", {})
+    req = set(params.get("required", []))
+    return ", ".join(f"{k}{'' if k in req else '?'}: {v.get('type', 'any')}" for k, v in props.items())
+
+
 def tools_block(tools: list[dict]) -> str:
-    lines = ["Herramientas disponibles (llámalas con <tool_call> y JSON válido):"]
+    """Bloque compacto (una línea por herramienta): los esquemas JSON completos
+    no caben en el contexto de modelos pequeños. Los argumentos se validan
+    igualmente contra el esquema completo al ejecutar."""
+    lines = ["Herramientas (responde con una llamada JSON {\"name\", \"arguments\"} si necesitas una):"]
     for t in tools:
-        lines.append(json.dumps({"name": t["name"], "description": t.get("description", ""),
-                                 "parameters": t.get("parameters", {})}, ensure_ascii=False))
+        lines.append(f"- {t['name']}({_sig(t.get('parameters', {}))}): {t.get('description', '')}")
     return "\n".join(lines)
 
 
