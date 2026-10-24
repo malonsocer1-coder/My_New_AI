@@ -1,0 +1,60 @@
+{"id": "mc-0", "question": "¿Cuál es la capital de México?", "choices": ["Guadalajara", "Monterrey", "Ciudad de México", "Puebla"], "answer": 2, "category": "geografía"}
+{"id": "mc-1", "question": "¿Cuántos estados tiene México, sin contar la Ciudad de México?", "choices": ["29", "31", "32", "33"], "answer": 1, "category": "geografía"}
+{"id": "mc-2", "question": "¿En qué año inició la Independencia de México?", "choices": ["1810", "1821", "1910", "1492"], "answer": 0, "category": "historia"}
+{"id": "mc-3", "question": "¿Qué océano baña la costa occidental de México?", "choices": ["Atlántico", "Índico", "Pacífico", "Ártico"], "answer": 2, "category": "geografía"}
+{"id": "mc-4", "question": "¿Cuál es el planeta más grande del sistema solar?", "choices": ["Marte", "Júpiter", "Saturno", "Tierra"], "answer": 1, "category": "ciencia"}
+{"id": "mc-5", "question": "¿Cuál es la fórmula química del agua?", "choices": ["CO2", "H2O", "NaCl", "O2"], "answer": 1, "category": "ciencia"}
+{"id": "mc-6", "question": "¿Cuántos lados tiene un hexágono?", "choices": ["5", "6", "7", "8"], "answer": 1, "category": "matemáticas"}
+{"id": "mc-7", "question": "¿Cuál es el resultado de 7 × 8?", "choices": ["54", "56", "58", "64"], "answer": 1, "category": "matemáticas"}
+{"id": "mc-8", "question": "¿Quién escribió «Cien años de soledad»?", "choices": ["Octavio Paz", "Gabriel García Márquez", "Mario Vargas Llosa", "Carlos Fuentes"], "answer": 1, "category": "literatura"}
+{"id": "mc-9", "question": "¿Qué gas absorben las plantas para realizar la fotosíntesis?", "choices": ["Oxígeno", "Nitrógeno", "Dióxido de carbono", "Helio"], "answer": 2, "category": "ciencia"}
+{"id": "mc-10", "question": "¿Cuál es el río más largo de América del Sur?", "choices": ["Orinoco", "Paraná", "Amazonas", "Magdalena"], "answer": 2, "category": "geografía"}
+{"id": "mc-11", "question": "¿Cuál es la velocidad aproximada de la luz en el vacío?", "choices": ["300 km/s", "300 000 km/s", "30 000 km/s", "3 000 km/s"], "answer": 1, "category": "ciencia"}
+{"id": "mc-12", "question": "¿Qué órgano bombea la sangre en el cuerpo humano?", "choices": ["Hígado", "Pulmón", "Corazón", "Riñón"], "answer": 2, "category": "ciencia"}
+{"id": "mc-13", "question": "¿Cuántos minutos tiene una hora?", "choices": ["30", "60", "90", "100"], "answer": 1, "category": "matemáticas"}
+{"id": "mc-14", "question": "¿Qué lenguaje se usa principalmente para dar estilo visual a las páginas web?", "choices": ["CSS", "SQL", "C", "Fortran"], "answer": 0, "category": "tecnología"}
+{"id": "mc-15", "question": "¿Qué civilización construyó Chichén Itzá?", "choices": ["Azteca", "Maya", "Inca", "Olmeca"], "answer": 1, "category": "historia"}
+{"id": "mc-16", "question": "¿Cuál es la raíz cuadrada de 144?", "choices": ["10", "11", "12", "14"], "answer": 2, "category": "matemáticas"}
+{"id": "mc-17", "question": "¿Cuál de estos números es primo?", "choices": ["21", "27", "29", "33"], "answer": 2, "category": "matemáticas"}
+{"id": "mc-18", "question": "¿Quién pintó «Las dos Fridas»?", "choices": ["Diego Rivera", "Frida Kahlo", "José Clemente Orozco", "Rufino Tamayo"], "answer": 1, "category": "arte"}
+{"id": "mc-19", "question": "¿Qué elemento químico tiene el símbolo Fe?", "choices": ["Flúor", "Fósforo", "Hierro", "Francio"], "answer": 2, "category": "ciencia"}
+{"id": "mc-20", "question": "¿Cuál es el punto de ebullición del agua al nivel del mar, en grados Celsius?", "choices": ["90", "100", "110", "120"], "answer": 1, "category": "ciencia"}
+{"id": "mc-21", "question": "¿En qué unidad se mide la resistencia eléctrica?", "choices": ["Voltio", "Amperio", "Ohmio", "Vatio"], "answer": 2, "category": "ciencia"}
+{"id": "mc-22", "question": "¿Cuál es la montaña más alta de México?", "choices": ["Popocatépetl", "Iztaccíhuatl", "Pico de Orizaba", "Nevado de Toluca"], "answer": 2, "category": "geografía"}
+{"id": "mc-23", "question": "¿Qué estructura de datos sigue el principio LIFO (último en entrar, primero en salir)?", "choices": ["Cola", "Pila", "Árbol", "Grafo"], "answer": 1, "category": "tecnología"}
+{"id": "mc-24", "question": "¿Cuál es el valor de π redondeado a dos decimales?", "choices": ["3.12", "3.14", "3.16", "3.41"], "answer": 1, "category": "matemáticas"}
+{"id": "mc-25", "question": "¿Qué país tiene la mayor población hispanohablante del mundo?", "choices": ["España", "Colombia", "México", "Argentina"], "answer": 2, "category": "geografía"}
+{"id": "mc-26", "question": "¿Cuál es la moneda oficial de México?", "choices": ["Dólar", "Peso", "Euro", "Sol"], "answer": 1, "category": "economía"}
+{"id": "mc-27", "question": "¿Cuántos bits tiene un byte?", "choices": ["4", "8", "16", "32"], "answer": 1, "category": "tecnología"}
+{"id": "mc-28", "question": "¿Qué científico propuso la teoría de la relatividad?", "choices": ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Charles Darwin"], "answer": 1, "category": "ciencia"}
+{"id": "mc-29", "question": "¿Cuál es la mitad de 250?", "choices": ["120", "125", "130", "150"], "answer": 1, "category": "matemáticas"}
+{"id": "mc-30", "question": "¿Cuál es el antónimo de «rápido»?", "choices": ["Veloz", "Ligero", "Lento", "Ágil"], "answer": 2, "category": "lengua"}
+{"id": "mc-31", "question": "¿Cuál es el plural de «lápiz»?", "choices": ["Lápizes", "Lápices", "Lápiz", "Lapizs"], "answer": 1, "category": "lengua"}
+{"id": "mc-32", "question": "¿Qué tipo de palabra es «correr»?", "choices": ["Sustantivo", "Adjetivo", "Verbo", "Preposición"], "answer": 2, "category": "lengua"}
+{"id": "mc-33", "question": "¿Cuál es el hueso más largo del cuerpo humano?", "choices": ["Húmero", "Fémur", "Tibia", "Radio"], "answer": 1, "category": "ciencia"}
+{"id": "mc-34", "question": "¿Qué planeta es conocido como el planeta rojo?", "choices": ["Venus", "Marte", "Mercurio", "Neptuno"], "answer": 1, "category": "ciencia"}
+{"id": "mc-35", "question": "¿En qué año llegó el ser humano a la Luna por primera vez?", "choices": ["1959", "1969", "1979", "1989"], "answer": 1, "category": "historia"}
+{"id": "mc-36", "question": "¿Qué función de Python muestra texto en la pantalla?", "choices": ["echo", "print", "printf", "write"], "answer": 1, "category": "tecnología"}
+{"id": "mc-37", "question": "¿Cuánto es 2 elevado a la potencia 10?", "choices": ["512", "1000", "1024", "2048"], "answer": 2, "category": "matemáticas"}
+{"id": "mc-38", "question": "¿Cuál es el estado más grande de México por superficie?", "choices": ["Sonora", "Coahuila", "Chihuahua", "Durango"], "answer": 2, "category": "geografía"}
+{"id": "mc-39", "question": "¿Qué escritor mexicano recibió el Premio Nobel de Literatura en 1990?", "choices": ["Juan Rulfo", "Octavio Paz", "Carlos Fuentes", "Alfonso Reyes"], "answer": 1, "category": "literatura"}
+{"id": "mc-40", "question": "¿Qué parte de la célula eucariota contiene la mayor parte del material genético?", "choices": ["Membrana", "Núcleo", "Ribosoma", "Citoplasma"], "answer": 1, "category": "ciencia"}
+{"id": "mc-41", "question": "¿Cuánto suman los ángulos internos de un triángulo?", "choices": ["90°", "180°", "270°", "360°"], "answer": 1, "category": "matemáticas"}
+{"id": "mc-42", "question": "¿Qué protocolo se usa para navegar por páginas web de forma cifrada?", "choices": ["FTP", "HTTP", "HTTPS", "SMTP"], "answer": 2, "category": "tecnología"}
+{"id": "mc-43", "question": "¿Cuál es el idioma oficial de Brasil?", "choices": ["Español", "Portugués", "Francés", "Inglés"], "answer": 1, "category": "geografía"}
+{"id": "mc-44", "question": "¿Qué causa principalmente las estaciones del año?", "choices": ["Solo la distancia variable al Sol", "La inclinación del eje terrestre", "Las mareas", "La rotación de la Luna"], "answer": 1, "category": "ciencia"}
+{"id": "mc-45", "question": "¿Cuál es el máximo común divisor de 12 y 18?", "choices": ["3", "6", "9", "12"], "answer": 1, "category": "matemáticas"}
+{"id": "mc-46", "question": "Si un tren recorre 120 km en 2 horas, ¿cuál es su velocidad media?", "choices": ["40 km/h", "60 km/h", "80 km/h", "240 km/h"], "answer": 1, "category": "matemáticas"}
+{"id": "mc-47", "question": "¿Qué complejidad temporal tiene la búsqueda binaria en un arreglo ordenado?", "choices": ["O(1)", "O(log n)", "O(n)", "O(n²)"], "answer": 1, "category": "tecnología"}
+{"id": "mc-48", "question": "¿Cuál es el gas más abundante en la atmósfera terrestre?", "choices": ["Oxígeno", "Dióxido de carbono", "Nitrógeno", "Argón"], "answer": 2, "category": "ciencia"}
+{"id": "mc-49", "question": "¿Qué sistema numérico usan las computadoras a nivel de hardware?", "choices": ["Decimal", "Binario", "Romano", "Sexagesimal"], "answer": 1, "category": "tecnología"}
+{"id": "mc-50", "question": "¿Cuál es un sinónimo de «feliz»?", "choices": ["Triste", "Contento", "Cansado", "Enojado"], "answer": 1, "category": "lengua"}
+{"id": "mc-51", "question": "¿Cuál es la capital del estado de Jalisco?", "choices": ["Zapopan", "Guadalajara", "Tlaquepaque", "Puerto Vallarta"], "answer": 1, "category": "geografía"}
+{"id": "mc-52", "question": "¿Qué tratado puso fin a la guerra entre México y Estados Unidos en 1848?", "choices": ["Tratado de Córdoba", "Tratado de Guadalupe Hidalgo", "Tratado de Versalles", "Tratado de Tordesillas"], "answer": 1, "category": "historia"}
+{"id": "mc-53", "question": "¿Cuánto es el 15 % de 200?", "choices": ["15", "20", "30", "45"], "answer": 2, "category": "matemáticas"}
+{"id": "mc-54", "question": "¿Qué función cumple un compilador?", "choices": ["Fabricar hardware", "Traducir código fuente a código máquina", "Diseñar interfaces gráficas", "Almacenar archivos"], "answer": 1, "category": "tecnología"}
+{"id": "mc-55", "question": "¿Cuál es el resultado de 1000 − 357?", "choices": ["643", "653", "743", "657"], "answer": 0, "category": "matemáticas"}
+{"id": "mc-56", "question": "¿Qué vitamina sintetiza la piel con la exposición al sol?", "choices": ["A", "C", "D", "K"], "answer": 2, "category": "ciencia"}
+{"id": "mc-57", "question": "¿Cuál es la unidad básica de la vida?", "choices": ["Átomo", "Célula", "Tejido", "Órgano"], "answer": 1, "category": "ciencia"}
+{"id": "mc-58", "question": "¿Cuál es el país más grande del mundo por superficie?", "choices": ["Canadá", "China", "Rusia", "Estados Unidos"], "answer": 2, "category": "geografía"}
+{"id": "mc-59", "question": "¿Qué símbolo químico tiene el oro?", "choices": ["Ag", "Au", "Or", "Go"], "answer": 1, "category": "ciencia"}

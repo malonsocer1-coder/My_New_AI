@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+/cache/
+/runs/
+/data/
+/models/
+/logs/
+*.bin
+*.safetensors
+*.gguf
+*.pt
+.env
+secrets/
+/config/credentials*

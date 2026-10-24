@@ -1,0 +1,20 @@
+{"id": "if-0", "prompt": "Describe la Ciudad de México en no más de 40 palabras.", "checks": [{"type": "max_words", "value": 40}, {"type": "language", "value": "es"}]}
+{"id": "if-1", "prompt": "Escribe exactamente tres viñetas con consejos para estudiar. Usa el formato '- ' al inicio de cada viñeta.", "checks": [{"type": "num_bullets", "value": 3}]}
+{"id": "if-2", "prompt": "Responde solo con la palabra SÍ o NO: ¿el agua moja?", "checks": [{"type": "one_of", "value": ["SÍ", "NO", "Sí", "No", "sí", "no"]}]}
+{"id": "if-3", "prompt": "Escribe una oración sobre el mar que incluya la palabra «horizonte».", "checks": [{"type": "contains", "value": "horizonte"}]}
+{"id": "if-4", "prompt": "Escribe un saludo completamente en minúsculas.", "checks": [{"type": "lowercase"}]}
+{"id": "if-5", "prompt": "Devuelve un objeto JSON con las claves \"nombre\" y \"edad\" para una persona ficticia.", "checks": [{"type": "json_keys", "value": ["nombre", "edad"]}]}
+{"id": "if-6", "prompt": "Escribe una frase sobre el café sin usar comas.", "checks": [{"type": "no_comma"}, {"type": "min_words", "value": 4}]}
+{"id": "if-7", "prompt": "Termina tu respuesta con la frase exacta: «¿Algo más?». Explica qué es un volcán.", "checks": [{"type": "ends_with", "value": "¿Algo más?"}]}
+{"id": "if-8", "prompt": "Empieza tu respuesta con «Claro:» y luego di qué es la fotosíntesis.", "checks": [{"type": "starts_with", "value": "Claro:"}]}
+{"id": "if-9", "prompt": "Escribe una lista numerada de 4 frutas (1., 2., 3., 4.).", "checks": [{"type": "num_numbered", "value": 4}]}
+{"id": "if-10", "prompt": "Responde en inglés: what is the capital of France?", "checks": [{"type": "language", "value": "en"}, {"type": "contains", "value": "Paris"}]}
+{"id": "if-11", "prompt": "Escribe una respuesta de al menos 60 palabras sobre la importancia del agua.", "checks": [{"type": "min_words", "value": 60}]}
+{"id": "if-12", "prompt": "Escribe el título de un cuento en MAYÚSCULAS.", "checks": [{"type": "uppercase"}]}
+{"id": "if-13", "prompt": "Explica qué es un algoritmo en dos párrafos separados por una línea en blanco.", "checks": [{"type": "num_paragraphs", "value": 2}]}
+{"id": "if-14", "prompt": "Escribe la palabra «gracias» exactamente dos veces y nada más.", "checks": [{"type": "count_word", "value": ["gracias", 2]}, {"type": "max_words", "value": 4}]}
+{"id": "if-15", "prompt": "Menciona un estado de México y su capital, sin usar la letra «z».", "checks": [{"type": "no_letter", "value": "z"}]}
+{"id": "if-16", "prompt": "Escribe una oración que contenga las palabras «sol» y «luna».", "checks": [{"type": "contains", "value": "sol"}, {"type": "contains", "value": "luna"}]}
+{"id": "if-17", "prompt": "Responde con un número entero solamente: ¿cuántos días tiene una semana?", "checks": [{"type": "regex", "value": "^\\s*7\\s*$"}]}
+{"id": "if-18", "prompt": "Escribe un haiku (tres líneas) sobre la lluvia.", "checks": [{"type": "num_lines", "value": 3}]}
+{"id": "if-19", "prompt": "Da una definición de «democracia» que ocupe una sola línea.", "checks": [{"type": "num_lines", "value": 1}]}

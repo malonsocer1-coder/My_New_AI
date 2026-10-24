@@ -1,0 +1,300 @@
+{"id": "arith-0", "a": 118, "b": 384, "op": "+", "question": "¿Cuánto es 118 + 384?", "answer": "502", "prompt": "Pregunta: ¿Cuánto es 118 + 384?\nRespuesta:"}
+{"id": "arith-1", "a": 1, "b": 56, "op": "+", "question": "¿Cuánto es 1 + 56?", "answer": "57", "prompt": "Pregunta: ¿Cuánto es 1 + 56?\nRespuesta:"}
+{"id": "arith-2", "a": 439, "b": 5, "op": "-", "question": "Ana tenía 439 libros y regaló 5. ¿Cuántos libros le quedan?", "answer": "434", "prompt": "Pregunta: Ana tenía 439 libros y regaló 5. ¿Cuántos libros le quedan?\nRespuesta:"}
+{"id": "arith-3", "a": 79, "b": 22, "op": "+", "question": "Ricardo tiene 79 libros y le dan 22 más. ¿Cuántos libros tiene en total?", "answer": "101", "prompt": "Pregunta: Ricardo tiene 79 libros y le dan 22 más. ¿Cuántos libros tiene en total?\nRespuesta:"}
+{"id": "arith-4", "a": 694, "b": 4, "op": "-", "question": "Valeria tenía 694 manzanas y regaló 4. ¿Cuántos manzanas le quedan?", "answer": "690", "prompt": "Pregunta: Valeria tenía 694 manzanas y regaló 4. ¿Cuántos manzanas le quedan?\nRespuesta:"}
+{"id": "arith-5", "a": 449, "b": 32, "op": "-", "question": "¿Cuánto es 449 - 32?", "answer": "417", "prompt": "Pregunta: ¿Cuánto es 449 - 32?\nRespuesta:"}
+{"id": "arith-6", "a": 938, "b": 425, "op": "-", "question": "¿Cuánto es 938 - 425?", "answer": "513", "prompt": "Pregunta: ¿Cuánto es 938 - 425?\nRespuesta:"}
+{"id": "arith-7", "a": 8, "b": 1, "op": "-", "question": "¿Cuánto es 8 - 1?", "answer": "7", "prompt": "Pregunta: ¿Cuánto es 8 - 1?\nRespuesta:"}
+{"id": "arith-8", "a": 540, "b": 9, "op": "+", "question": "¿Cuánto es 540 + 9?", "answer": "549", "prompt": "Pregunta: ¿Cuánto es 540 + 9?\nRespuesta:"}
+{"id": "arith-9", "a": 675, "b": 76, "op": "-", "question": "José tenía 675 lápices y regaló 76. ¿Cuántos lápices le quedan?", "answer": "599", "prompt": "Pregunta: José tenía 675 lápices y regaló 76. ¿Cuántos lápices le quedan?\nRespuesta:"}
+{"id": "arith-10", "a": 75, "b": 21, "op": "*", "question": "¿Cuánto es 75 * 21?", "answer": "1575", "prompt": "Pregunta: ¿Cuánto es 75 * 21?\nRespuesta:"}
+{"id": "arith-11", "a": 5, "b": 71, "op": "*", "question": "¿Cuánto es 5 * 71?", "answer": "355", "prompt": "Pregunta: ¿Cuánto es 5 * 71?\nRespuesta:"}
+{"id": "arith-12", "a": 84, "b": 2, "op": "-", "question": "¿Cuánto es 84 - 2?", "answer": "82", "prompt": "Pregunta: ¿Cuánto es 84 - 2?\nRespuesta:"}
+{"id": "arith-13", "a": 35, "b": 87, "op": "+", "question": "Valeria tiene 35 pesos y le dan 87 más. ¿Cuántos pesos tiene en total?", "answer": "122", "prompt": "Pregunta: Valeria tiene 35 pesos y le dan 87 más. ¿Cuántos pesos tiene en total?\nRespuesta:"}
+{"id": "arith-14", "a": 3, "b": 0, "op": "-", "question": "¿Cuánto es 3 - 0?", "answer": "3", "prompt": "Pregunta: ¿Cuánto es 3 - 0?\nRespuesta:"}
+{"id": "arith-15", "a": 137, "b": 28, "op": "-", "question": "José tenía 137 pesos y regaló 28. ¿Cuántos pesos le quedan?", "answer": "109", "prompt": "Pregunta: José tenía 137 pesos y regaló 28. ¿Cuántos pesos le quedan?\nRespuesta:"}
+{"id": "arith-16", "a": 9, "b": 7, "op": "-", "question": "José tenía 9 libros y regaló 7. ¿Cuántos libros le quedan?", "answer": "2", "prompt": "Pregunta: José tenía 9 libros y regaló 7. ¿Cuántos libros le quedan?\nRespuesta:"}
+{"id": "arith-17", "a": 908, "b": 8, "op": "-", "question": "¿Cuánto es 908 - 8?", "answer": "900", "prompt": "Pregunta: ¿Cuánto es 908 - 8?\nRespuesta:"}
+{"id": "arith-18", "a": 742, "b": 4, "op": "-", "question": "¿Cuánto es 742 - 4?", "answer": "738", "prompt": "Pregunta: ¿Cuánto es 742 - 4?\nRespuesta:"}
+{"id": "arith-19", "a": 7, "b": 67, "op": "+", "question": "¿Cuánto es 7 + 67?", "answer": "74", "prompt": "Pregunta: ¿Cuánto es 7 + 67?\nRespuesta:"}
+{"id": "arith-20", "a": 21, "b": 681, "op": "+", "question": "¿Cuánto es 21 + 681?", "answer": "702", "prompt": "Pregunta: ¿Cuánto es 21 + 681?\nRespuesta:"}
+{"id": "arith-21", "a": 717, "b": 8, "op": "+", "question": "¿Cuánto es 717 + 8?", "answer": "725", "prompt": "Pregunta: ¿Cuánto es 717 + 8?\nRespuesta:"}
+{"id": "arith-22", "a": 93, "b": 33, "op": "+", "question": "Luis tiene 93 naranjas y le dan 33 más. ¿Cuántos naranjas tiene en total?", "answer": "126", "prompt": "Pregunta: Luis tiene 93 naranjas y le dan 33 más. ¿Cuántos naranjas tiene en total?\nRespuesta:"}
+{"id": "arith-23", "a": 4, "b": 7, "op": "*", "question": "¿Cuánto es 4 * 7?", "answer": "28", "prompt": "Pregunta: ¿Cuánto es 4 * 7?\nRespuesta:"}
+{"id": "arith-24", "a": 190, "b": 0, "op": "-", "question": "¿Cuánto es 190 - 0?", "answer": "190", "prompt": "Pregunta: ¿Cuánto es 190 - 0?\nRespuesta:"}
+{"id": "arith-25", "a": 0, "b": 34, "op": "+", "question": "¿Cuánto es 0 + 34?", "answer": "34", "prompt": "Pregunta: ¿Cuánto es 0 + 34?\nRespuesta:"}
+{"id": "arith-26", "a": 5, "b": 0, "op": "-", "question": "¿Cuánto es 5 - 0?", "answer": "5", "prompt": "Pregunta: ¿Cuánto es 5 - 0?\nRespuesta:"}
+{"id": "arith-27", "a": 95, "b": 80, "op": "+", "question": "¿Cuánto es 95 + 80?", "answer": "175", "prompt": "Pregunta: ¿Cuánto es 95 + 80?\nRespuesta:"}
+{"id": "arith-28", "a": 46, "b": 40, "op": "-", "question": "Ximena tenía 46 libros y regaló 40. ¿Cuántos libros le quedan?", "answer": "6", "prompt": "Pregunta: Ximena tenía 46 libros y regaló 40. ¿Cuántos libros le quedan?\nRespuesta:"}
+{"id": "arith-29", "a": 5, "b": 1, "op": "-", "question": "¿Cuánto es 5 - 1?", "answer": "4", "prompt": "Pregunta: ¿Cuánto es 5 - 1?\nRespuesta:"}
+{"id": "arith-30", "a": 7, "b": 4, "op": "-", "question": "¿Cuánto es 7 - 4?", "answer": "3", "prompt": "Pregunta: ¿Cuánto es 7 - 4?\nRespuesta:"}
+{"id": "arith-31", "a": 640, "b": 92, "op": "*", "question": "¿Cuánto es 640 * 92?", "answer": "58880", "prompt": "Pregunta: ¿Cuánto es 640 * 92?\nRespuesta:"}
+{"id": "arith-32", "a": 52, "b": 93, "op": "+", "question": "¿Cuánto es 52 + 93?", "answer": "145", "prompt": "Pregunta: ¿Cuánto es 52 + 93?\nRespuesta:"}
+{"id": "arith-33", "a": 127, "b": 3, "op": "+", "question": "¿Cuánto es 127 + 3?", "answer": "130", "prompt": "Pregunta: ¿Cuánto es 127 + 3?\nRespuesta:"}
+{"id": "arith-34", "a": 764, "b": 11, "op": "-", "question": "Jorge tenía 764 lápices y regaló 11. ¿Cuántos lápices le quedan?", "answer": "753", "prompt": "Pregunta: Jorge tenía 764 lápices y regaló 11. ¿Cuántos lápices le quedan?\nRespuesta:"}
+{"id": "arith-35", "a": 473, "b": 8, "op": "-", "question": "¿Cuánto es 473 - 8?", "answer": "465", "prompt": "Pregunta: ¿Cuánto es 473 - 8?\nRespuesta:"}
+{"id": "arith-36", "a": 431, "b": 36, "op": "-", "question": "Luis tenía 431 boletos y regaló 36. ¿Cuántos boletos le quedan?", "answer": "395", "prompt": "Pregunta: Luis tenía 431 boletos y regaló 36. ¿Cuántos boletos le quedan?\nRespuesta:"}
+{"id": "arith-37", "a": 88, "b": 3, "op": "+", "question": "Ximena tiene 88 boletos y le dan 3 más. ¿Cuántos boletos tiene en total?", "answer": "91", "prompt": "Pregunta: Ximena tiene 88 boletos y le dan 3 más. ¿Cuántos boletos tiene en total?\nRespuesta:"}
+{"id": "arith-38", "a": 16, "b": 54, "op": "*", "question": "¿Cuánto es 16 * 54?", "answer": "864", "prompt": "Pregunta: ¿Cuánto es 16 * 54?\nRespuesta:"}
+{"id": "arith-39", "a": 919, "b": 849, "op": "-", "question": "¿Cuánto es 919 - 849?", "answer": "70", "prompt": "Pregunta: ¿Cuánto es 919 - 849?\nRespuesta:"}
+{"id": "arith-40", "a": 98, "b": 91, "op": "*", "question": "¿Cuánto es 98 * 91?", "answer": "8918", "prompt": "Pregunta: ¿Cuánto es 98 * 91?\nRespuesta:"}
+{"id": "arith-41", "a": 497, "b": 2, "op": "+", "question": "Luis tiene 497 tacos y le dan 2 más. ¿Cuántos tacos tiene en total?", "answer": "499", "prompt": "Pregunta: Luis tiene 497 tacos y le dan 2 más. ¿Cuántos tacos tiene en total?\nRespuesta:"}
+{"id": "arith-42", "a": 8, "b": 81, "op": "+", "question": "Lupita tiene 8 canicas y le dan 81 más. ¿Cuántos canicas tiene en total?", "answer": "89", "prompt": "Pregunta: Lupita tiene 8 canicas y le dan 81 más. ¿Cuántos canicas tiene en total?\nRespuesta:"}
+{"id": "arith-43", "a": 0, "b": 74, "op": "*", "question": "¿Cuánto es 0 * 74?", "answer": "0", "prompt": "Pregunta: ¿Cuánto es 0 * 74?\nRespuesta:"}
+{"id": "arith-44", "a": 67, "b": 4, "op": "-", "question": "¿Cuánto es 67 - 4?", "answer": "63", "prompt": "Pregunta: ¿Cuánto es 67 - 4?\nRespuesta:"}
+{"id": "arith-45", "a": 7, "b": 16, "op": "+", "question": "¿Cuánto es 7 + 16?", "answer": "23", "prompt": "Pregunta: ¿Cuánto es 7 + 16?\nRespuesta:"}
+{"id": "arith-46", "a": 875, "b": 858, "op": "-", "question": "¿Cuánto es 875 - 858?", "answer": "17", "prompt": "Pregunta: ¿Cuánto es 875 - 858?\nRespuesta:"}
+{"id": "arith-47", "a": 63, "b": 3, "op": "*", "question": "¿Cuánto es 63 * 3?", "answer": "189", "prompt": "Pregunta: ¿Cuánto es 63 * 3?\nRespuesta:"}
+{"id": "arith-48", "a": 57, "b": 1, "op": "-", "question": "¿Cuánto es 57 - 1?", "answer": "56", "prompt": "Pregunta: ¿Cuánto es 57 - 1?\nRespuesta:"}
+{"id": "arith-49", "a": 1, "b": 6, "op": "+", "question": "¿Cuánto es 1 + 6?", "answer": "7", "prompt": "Pregunta: ¿Cuánto es 1 + 6?\nRespuesta:"}
+{"id": "arith-50", "a": 65, "b": 0, "op": "-", "question": "¿Cuánto es 65 - 0?", "answer": "65", "prompt": "Pregunta: ¿Cuánto es 65 - 0?\nRespuesta:"}
+{"id": "arith-51", "a": 41, "b": 646, "op": "+", "question": "¿Cuánto es 41 + 646?", "answer": "687", "prompt": "Pregunta: ¿Cuánto es 41 + 646?\nRespuesta:"}
+{"id": "arith-52", "a": 52, "b": 90, "op": "+", "question": "Lupita tiene 52 naranjas y le dan 90 más. ¿Cuántos naranjas tiene en total?", "answer": "142", "prompt": "Pregunta: Lupita tiene 52 naranjas y le dan 90 más. ¿Cuántos naranjas tiene en total?\nRespuesta:"}
+{"id": "arith-53", "a": 20, "b": 7, "op": "-", "question": "Carlos tenía 20 pesos y regaló 7. ¿Cuántos pesos le quedan?", "answer": "13", "prompt": "Pregunta: Carlos tenía 20 pesos y regaló 7. ¿Cuántos pesos le quedan?\nRespuesta:"}
+{"id": "arith-54", "a": 54, "b": 5, "op": "+", "question": "¿Cuánto es 54 + 5?", "answer": "59", "prompt": "Pregunta: ¿Cuánto es 54 + 5?\nRespuesta:"}
+{"id": "arith-55", "a": 5, "b": 74, "op": "+", "question": "¿Cuánto es 5 + 74?", "answer": "79", "prompt": "Pregunta: ¿Cuánto es 5 + 74?\nRespuesta:"}
+{"id": "arith-56", "a": 699, "b": 2, "op": "-", "question": "¿Cuánto es 699 - 2?", "answer": "697", "prompt": "Pregunta: ¿Cuánto es 699 - 2?\nRespuesta:"}
+{"id": "arith-57", "a": 46, "b": 23, "op": "-", "question": "Camila tenía 46 pesos y regaló 23. ¿Cuántos pesos le quedan?", "answer": "23", "prompt": "Pregunta: Camila tenía 46 pesos y regaló 23. ¿Cuántos pesos le quedan?\nRespuesta:"}
+{"id": "arith-58", "a": 695, "b": 1, "op": "-", "question": "¿Cuánto es 695 - 1?", "answer": "694", "prompt": "Pregunta: ¿Cuánto es 695 - 1?\nRespuesta:"}
+{"id": "arith-59", "a": 7, "b": 3, "op": "-", "question": "Diego tenía 7 libros y regaló 3. ¿Cuántos libros le quedan?", "answer": "4", "prompt": "Pregunta: Diego tenía 7 libros y regaló 3. ¿Cuántos libros le quedan?\nRespuesta:"}
+{"id": "arith-60", "a": 8, "b": 917, "op": "+", "question": "¿Cuánto es 8 + 917?", "answer": "925", "prompt": "Pregunta: ¿Cuánto es 8 + 917?\nRespuesta:"}
+{"id": "arith-61", "a": 3, "b": 71, "op": "+", "question": "¿Cuánto es 3 + 71?", "answer": "74", "prompt": "Pregunta: ¿Cuánto es 3 + 71?\nRespuesta:"}
+{"id": "arith-62", "a": 67, "b": 88, "op": "*", "question": "¿Cuánto es 67 * 88?", "answer": "5896", "prompt": "Pregunta: ¿Cuánto es 67 * 88?\nRespuesta:"}
+{"id": "arith-63", "a": 8, "b": 754, "op": "+", "question": "¿Cuánto es 8 + 754?", "answer": "762", "prompt": "Pregunta: ¿Cuánto es 8 + 754?\nRespuesta:"}
+{"id": "arith-64", "a": 127, "b": 102, "op": "+", "question": "Ximena tiene 127 lápices y le dan 102 más. ¿Cuántos lápices tiene en total?", "answer": "229", "prompt": "Pregunta: Ximena tiene 127 lápices y le dan 102 más. ¿Cuántos lápices tiene en total?\nRespuesta:"}
+{"id": "arith-65", "a": 674, "b": 472, "op": "+", "question": "Miguel tiene 674 canicas y le dan 472 más. ¿Cuántos canicas tiene en total?", "answer": "1146", "prompt": "Pregunta: Miguel tiene 674 canicas y le dan 472 más. ¿Cuántos canicas tiene en total?\nRespuesta:"}
+{"id": "arith-66", "a": 583, "b": 2, "op": "+", "question": "¿Cuánto es 583 + 2?", "answer": "585", "prompt": "Pregunta: ¿Cuánto es 583 + 2?\nRespuesta:"}
+{"id": "arith-67", "a": 2, "b": 341, "op": "+", "question": "Jorge tiene 2 lápices y le dan 341 más. ¿Cuántos lápices tiene en total?", "answer": "343", "prompt": "Pregunta: Jorge tiene 2 lápices y le dan 341 más. ¿Cuántos lápices tiene en total?\nRespuesta:"}
+{"id": "arith-68", "a": 1, "b": 69, "op": "+", "question": "¿Cuánto es 1 + 69?", "answer": "70", "prompt": "Pregunta: ¿Cuánto es 1 + 69?\nRespuesta:"}
+{"id": "arith-69", "a": 367, "b": 59, "op": "*", "question": "¿Cuánto es 367 * 59?", "answer": "21653", "prompt": "Pregunta: ¿Cuánto es 367 * 59?\nRespuesta:"}
+{"id": "arith-70", "a": 323, "b": 317, "op": "+", "question": "¿Cuánto es 323 + 317?", "answer": "640", "prompt": "Pregunta: ¿Cuánto es 323 + 317?\nRespuesta:"}
+{"id": "arith-71", "a": 94, "b": 220, "op": "+", "question": "Sofía tiene 94 pesos y le dan 220 más. ¿Cuántos pesos tiene en total?", "answer": "314", "prompt": "Pregunta: Sofía tiene 94 pesos y le dan 220 más. ¿Cuántos pesos tiene en total?\nRespuesta:"}
+{"id": "arith-72", "a": 38, "b": 9, "op": "+", "question": "¿Cuánto es 38 + 9?", "answer": "47", "prompt": "Pregunta: ¿Cuánto es 38 + 9?\nRespuesta:"}
+{"id": "arith-73", "a": 895, "b": 17, "op": "+", "question": "¿Cuánto es 895 + 17?", "answer": "912", "prompt": "Pregunta: ¿Cuánto es 895 + 17?\nRespuesta:"}
+{"id": "arith-74", "a": 951, "b": 949, "op": "-", "question": "Ricardo tenía 951 libros y regaló 949. ¿Cuántos libros le quedan?", "answer": "2", "prompt": "Pregunta: Ricardo tenía 951 libros y regaló 949. ¿Cuántos libros le quedan?\nRespuesta:"}
+{"id": "arith-75", "a": 15, "b": 56, "op": "+", "question": "Fernanda tiene 15 boletos y le dan 56 más. ¿Cuántos boletos tiene en total?", "answer": "71", "prompt": "Pregunta: Fernanda tiene 15 boletos y le dan 56 más. ¿Cuántos boletos tiene en total?\nRespuesta:"}
+{"id": "arith-76", "a": 5, "b": 75, "op": "+", "question": "Diego tiene 5 canicas y le dan 75 más. ¿Cuántos canicas tiene en total?", "answer": "80", "prompt": "Pregunta: Diego tiene 5 canicas y le dan 75 más. ¿Cuántos canicas tiene en total?\nRespuesta:"}
+{"id": "arith-77", "a": 24, "b": 72, "op": "+", "question": "Miguel tiene 24 canicas y le dan 72 más. ¿Cuántos canicas tiene en total?", "answer": "96", "prompt": "Pregunta: Miguel tiene 24 canicas y le dan 72 más. ¿Cuántos canicas tiene en total?\nRespuesta:"}
+{"id": "arith-78", "a": 114, "b": 1, "op": "-", "question": "¿Cuánto es 114 - 1?", "answer": "113", "prompt": "Pregunta: ¿Cuánto es 114 - 1?\nRespuesta:"}
+{"id": "arith-79", "a": 919, "b": 4, "op": "+", "question": "¿Cuánto es 919 + 4?", "answer": "923", "prompt": "Pregunta: ¿Cuánto es 919 + 4?\nRespuesta:"}
+{"id": "arith-80", "a": 75, "b": 19, "op": "*", "question": "¿Cuánto es 75 * 19?", "answer": "1425", "prompt": "Pregunta: ¿Cuánto es 75 * 19?\nRespuesta:"}
+{"id": "arith-81", "a": 969, "b": 654, "op": "-", "question": "Miguel tenía 969 boletos y regaló 654. ¿Cuántos boletos le quedan?", "answer": "315", "prompt": "Pregunta: Miguel tenía 969 boletos y regaló 654. ¿Cuántos boletos le quedan?\nRespuesta:"}
+{"id": "arith-82", "a": 8, "b": 0, "op": "*", "question": "¿Cuánto es 8 * 0?", "answer": "0", "prompt": "Pregunta: ¿Cuánto es 8 * 0?\nRespuesta:"}
+{"id": "arith-83", "a": 11, "b": 9, "op": "+", "question": "¿Cuánto es 11 + 9?", "answer": "20", "prompt": "Pregunta: ¿Cuánto es 11 + 9?\nRespuesta:"}
+{"id": "arith-84", "a": 447, "b": 32, "op": "*", "question": "¿Cuánto es 447 * 32?", "answer": "14304", "prompt": "Pregunta: ¿Cuánto es 447 * 32?\nRespuesta:"}
+{"id": "arith-85", "a": 43, "b": 799, "op": "+", "question": "¿Cuánto es 43 + 799?", "answer": "842", "prompt": "Pregunta: ¿Cuánto es 43 + 799?\nRespuesta:"}
+{"id": "arith-86", "a": 57, "b": 90, "op": "+", "question": "¿Cuánto es 57 + 90?", "answer": "147", "prompt": "Pregunta: ¿Cuánto es 57 + 90?\nRespuesta:"}
+{"id": "arith-87", "a": 582, "b": 9, "op": "+", "question": "Ximena tiene 582 lápices y le dan 9 más. ¿Cuántos lápices tiene en total?", "answer": "591", "prompt": "Pregunta: Ximena tiene 582 lápices y le dan 9 más. ¿Cuántos lápices tiene en total?\nRespuesta:"}
+{"id": "arith-88", "a": 636, "b": 76, "op": "+", "question": "Sofía tiene 636 lápices y le dan 76 más. ¿Cuántos lápices tiene en total?", "answer": "712", "prompt": "Pregunta: Sofía tiene 636 lápices y le dan 76 más. ¿Cuántos lápices tiene en total?\nRespuesta:"}
+{"id": "arith-89", "a": 8, "b": 43, "op": "*", "question": "¿Cuánto es 8 * 43?", "answer": "344", "prompt": "Pregunta: ¿Cuánto es 8 * 43?\nRespuesta:"}
+{"id": "arith-90", "a": 750, "b": 91, "op": "-", "question": "¿Cuánto es 750 - 91?", "answer": "659", "prompt": "Pregunta: ¿Cuánto es 750 - 91?\nRespuesta:"}
+{"id": "arith-91", "a": 5, "b": 4, "op": "+", "question": "María tiene 5 libros y le dan 4 más. ¿Cuántos libros tiene en total?", "answer": "9", "prompt": "Pregunta: María tiene 5 libros y le dan 4 más. ¿Cuántos libros tiene en total?\nRespuesta:"}
+{"id": "arith-92", "a": 20, "b": 961, "op": "+", "question": "Fernanda tiene 20 libros y le dan 961 más. ¿Cuántos libros tiene en total?", "answer": "981", "prompt": "Pregunta: Fernanda tiene 20 libros y le dan 961 más. ¿Cuántos libros tiene en total?\nRespuesta:"}
+{"id": "arith-93", "a": 841, "b": 554, "op": "+", "question": "Miguel tiene 841 naranjas y le dan 554 más. ¿Cuántos naranjas tiene en total?", "answer": "1395", "prompt": "Pregunta: Miguel tiene 841 naranjas y le dan 554 más. ¿Cuántos naranjas tiene en total?\nRespuesta:"}
+{"id": "arith-94", "a": 856, "b": 4, "op": "-", "question": "Sofía tenía 856 tacos y regaló 4. ¿Cuántos tacos le quedan?", "answer": "852", "prompt": "Pregunta: Sofía tenía 856 tacos y regaló 4. ¿Cuántos tacos le quedan?\nRespuesta:"}
+{"id": "arith-95", "a": 229, "b": 3, "op": "+", "question": "Ana tiene 229 libros y le dan 3 más. ¿Cuántos libros tiene en total?", "answer": "232", "prompt": "Pregunta: Ana tiene 229 libros y le dan 3 más. ¿Cuántos libros tiene en total?\nRespuesta:"}
+{"id": "arith-96", "a": 774, "b": 0, "op": "-", "question": "¿Cuánto es 774 - 0?", "answer": "774", "prompt": "Pregunta: ¿Cuánto es 774 - 0?\nRespuesta:"}
+{"id": "arith-97", "a": 48, "b": 7, "op": "+", "question": "Juan tiene 48 pesos y le dan 7 más. ¿Cuántos pesos tiene en total?", "answer": "55", "prompt": "Pregunta: Juan tiene 48 pesos y le dan 7 más. ¿Cuántos pesos tiene en total?\nRespuesta:"}
+{"id": "arith-98", "a": 793, "b": 6, "op": "-", "question": "¿Cuánto es 793 - 6?", "answer": "787", "prompt": "Pregunta: ¿Cuánto es 793 - 6?\nRespuesta:"}
+{"id": "arith-99", "a": 8, "b": 11, "op": "*", "question": "¿Cuánto es 8 * 11?", "answer": "88", "prompt": "Pregunta: ¿Cuánto es 8 * 11?\nRespuesta:"}
+{"id": "arith-100", "a": 26, "b": 3, "op": "-", "question": "¿Cuánto es 26 - 3?", "answer": "23", "prompt": "Pregunta: ¿Cuánto es 26 - 3?\nRespuesta:"}
+{"id": "arith-101", "a": 705, "b": 14, "op": "+", "question": "Valeria tiene 705 naranjas y le dan 14 más. ¿Cuántos naranjas tiene en total?", "answer": "719", "prompt": "Pregunta: Valeria tiene 705 naranjas y le dan 14 más. ¿Cuántos naranjas tiene en total?\nRespuesta:"}
+{"id": "arith-102", "a": 96, "b": 43, "op": "*", "question": "¿Cuánto es 96 * 43?", "answer": "4128", "prompt": "Pregunta: ¿Cuánto es 96 * 43?\nRespuesta:"}
+{"id": "arith-103", "a": 633, "b": 25, "op": "+", "question": "Ricardo tiene 633 pesos y le dan 25 más. ¿Cuántos pesos tiene en total?", "answer": "658", "prompt": "Pregunta: Ricardo tiene 633 pesos y le dan 25 más. ¿Cuántos pesos tiene en total?\nRespuesta:"}
+{"id": "arith-104", "a": 8, "b": 89, "op": "*", "question": "¿Cuánto es 8 * 89?", "answer": "712", "prompt": "Pregunta: ¿Cuánto es 8 * 89?\nRespuesta:"}
+{"id": "arith-105", "a": 954, "b": 41, "op": "-", "question": "¿Cuánto es 954 - 41?", "answer": "913", "prompt": "Pregunta: ¿Cuánto es 954 - 41?\nRespuesta:"}
+{"id": "arith-106", "a": 582, "b": 45, "op": "*", "question": "¿Cuánto es 582 * 45?", "answer": "26190", "prompt": "Pregunta: ¿Cuánto es 582 * 45?\nRespuesta:"}
+{"id": "arith-107", "a": 25, "b": 51, "op": "+", "question": "María tiene 25 pesos y le dan 51 más. ¿Cuántos pesos tiene en total?", "answer": "76", "prompt": "Pregunta: María tiene 25 pesos y le dan 51 más. ¿Cuántos pesos tiene en total?\nRespuesta:"}
+{"id": "arith-108", "a": 2, "b": 8, "op": "+", "question": "María tiene 2 tacos y le dan 8 más. ¿Cuántos tacos tiene en total?", "answer": "10", "prompt": "Pregunta: María tiene 2 tacos y le dan 8 más. ¿Cuántos tacos tiene en total?\nRespuesta:"}
+{"id": "arith-109", "a": 8, "b": 4, "op": "-", "question": "¿Cuánto es 8 - 4?", "answer": "4", "prompt": "Pregunta: ¿Cuánto es 8 - 4?\nRespuesta:"}
+{"id": "arith-110", "a": 37, "b": 37, "op": "*", "question": "¿Cuánto es 37 * 37?", "answer": "1369", "prompt": "Pregunta: ¿Cuánto es 37 * 37?\nRespuesta:"}
+{"id": "arith-111", "a": 67, "b": 54, "op": "*", "question": "¿Cuánto es 67 * 54?", "answer": "3618", "prompt": "Pregunta: ¿Cuánto es 67 * 54?\nRespuesta:"}
+{"id": "arith-112", "a": 740, "b": 6, "op": "-", "question": "¿Cuánto es 740 - 6?", "answer": "734", "prompt": "Pregunta: ¿Cuánto es 740 - 6?\nRespuesta:"}
+{"id": "arith-113", "a": 552, "b": 13, "op": "-", "question": "Fernanda tenía 552 naranjas y regaló 13. ¿Cuántos naranjas le quedan?", "answer": "539", "prompt": "Pregunta: Fernanda tenía 552 naranjas y regaló 13. ¿Cuántos naranjas le quedan?\nRespuesta:"}
+{"id": "arith-114", "a": 9, "b": 3, "op": "-", "question": "Jorge tenía 9 naranjas y regaló 3. ¿Cuántos naranjas le quedan?", "answer": "6", "prompt": "Pregunta: Jorge tenía 9 naranjas y regaló 3. ¿Cuántos naranjas le quedan?\nRespuesta:"}
+{"id": "arith-115", "a": 3, "b": 968, "op": "+", "question": "¿Cuánto es 3 + 968?", "answer": "971", "prompt": "Pregunta: ¿Cuánto es 3 + 968?\nRespuesta:"}
+{"id": "arith-116", "a": 85, "b": 79, "op": "*", "question": "¿Cuánto es 85 * 79?", "answer": "6715", "prompt": "Pregunta: ¿Cuánto es 85 * 79?\nRespuesta:"}
+{"id": "arith-117", "a": 8, "b": 5, "op": "-", "question": "Luis tenía 8 boletos y regaló 5. ¿Cuántos boletos le quedan?", "answer": "3", "prompt": "Pregunta: Luis tenía 8 boletos y regaló 5. ¿Cuántos boletos le quedan?\nRespuesta:"}
+{"id": "arith-118", "a": 51, "b": 44, "op": "*", "question": "¿Cuánto es 51 * 44?", "answer": "2244", "prompt": "Pregunta: ¿Cuánto es 51 * 44?\nRespuesta:"}
+{"id": "arith-119", "a": 73, "b": 1, "op": "+", "question": "¿Cuánto es 73 + 1?", "answer": "74", "prompt": "Pregunta: ¿Cuánto es 73 + 1?\nRespuesta:"}
+{"id": "arith-120", "a": 56, "b": 90, "op": "*", "question": "¿Cuánto es 56 * 90?", "answer": "5040", "prompt": "Pregunta: ¿Cuánto es 56 * 90?\nRespuesta:"}
+{"id": "arith-121", "a": 71, "b": 2, "op": "+", "question": "¿Cuánto es 71 + 2?", "answer": "73", "prompt": "Pregunta: ¿Cuánto es 71 + 2?\nRespuesta:"}
+{"id": "arith-122", "a": 152, "b": 6, "op": "+", "question": "¿Cuánto es 152 + 6?", "answer": "158", "prompt": "Pregunta: ¿Cuánto es 152 + 6?\nRespuesta:"}
+{"id": "arith-123", "a": 198, "b": 0, "op": "+", "question": "¿Cuánto es 198 + 0?", "answer": "198", "prompt": "Pregunta: ¿Cuánto es 198 + 0?\nRespuesta:"}
+{"id": "arith-124", "a": 5, "b": 824, "op": "+", "question": "Fernanda tiene 5 tacos y le dan 824 más. ¿Cuántos tacos tiene en total?", "answer": "829", "prompt": "Pregunta: Fernanda tiene 5 tacos y le dan 824 más. ¿Cuántos tacos tiene en total?\nRespuesta:"}
+{"id": "arith-125", "a": 9, "b": 8, "op": "+", "question": "Luis tiene 9 manzanas y le dan 8 más. ¿Cuántos manzanas tiene en total?", "answer": "17", "prompt": "Pregunta: Luis tiene 9 manzanas y le dan 8 más. ¿Cuántos manzanas tiene en total?\nRespuesta:"}
+{"id": "arith-126", "a": 356, "b": 1, "op": "-", "question": "¿Cuánto es 356 - 1?", "answer": "355", "prompt": "Pregunta: ¿Cuánto es 356 - 1?\nRespuesta:"}
+{"id": "arith-127", "a": 318, "b": 1, "op": "-", "question": "¿Cuánto es 318 - 1?", "answer": "317", "prompt": "Pregunta: ¿Cuánto es 318 - 1?\nRespuesta:"}
+{"id": "arith-128", "a": 256, "b": 39, "op": "-", "question": "¿Cuánto es 256 - 39?", "answer": "217", "prompt": "Pregunta: ¿Cuánto es 256 - 39?\nRespuesta:"}
+{"id": "arith-129", "a": 94, "b": 2, "op": "-", "question": "José tenía 94 manzanas y regaló 2. ¿Cuántos manzanas le quedan?", "answer": "92", "prompt": "Pregunta: José tenía 94 manzanas y regaló 2. ¿Cuántos manzanas le quedan?\nRespuesta:"}
+{"id": "arith-130", "a": 881, "b": 249, "op": "-", "question": "José tenía 881 naranjas y regaló 249. ¿Cuántos naranjas le quedan?", "answer": "632", "prompt": "Pregunta: José tenía 881 naranjas y regaló 249. ¿Cuántos naranjas le quedan?\nRespuesta:"}
+{"id": "arith-131", "a": 3, "b": 6, "op": "+", "question": "Valeria tiene 3 boletos y le dan 6 más. ¿Cuántos boletos tiene en total?", "answer": "9", "prompt": "Pregunta: Valeria tiene 3 boletos y le dan 6 más. ¿Cuántos boletos tiene en total?\nRespuesta:"}
+{"id": "arith-132", "a": 325, "b": 9, "op": "-", "question": "¿Cuánto es 325 - 9?", "answer": "316", "prompt": "Pregunta: ¿Cuánto es 325 - 9?\nRespuesta:"}
+{"id": "arith-133", "a": 78, "b": 96, "op": "+", "question": "¿Cuánto es 78 + 96?", "answer": "174", "prompt": "Pregunta: ¿Cuánto es 78 + 96?\nRespuesta:"}
+{"id": "arith-134", "a": 459, "b": 5, "op": "+", "question": "Lupita tiene 459 naranjas y le dan 5 más. ¿Cuántos naranjas tiene en total?", "answer": "464", "prompt": "Pregunta: Lupita tiene 459 naranjas y le dan 5 más. ¿Cuántos naranjas tiene en total?\nRespuesta:"}
+{"id": "arith-135", "a": 38, "b": 95, "op": "*", "question": "¿Cuánto es 38 * 95?", "answer": "3610", "prompt": "Pregunta: ¿Cuánto es 38 * 95?\nRespuesta:"}
+{"id": "arith-136", "a": 938, "b": 49, "op": "*", "question": "¿Cuánto es 938 * 49?", "answer": "45962", "prompt": "Pregunta: ¿Cuánto es 938 * 49?\nRespuesta:"}
+{"id": "arith-137", "a": 172, "b": 543, "op": "+", "question": "Luis tiene 172 libros y le dan 543 más. ¿Cuántos libros tiene en total?", "answer": "715", "prompt": "Pregunta: Luis tiene 172 libros y le dan 543 más. ¿Cuántos libros tiene en total?\nRespuesta:"}
+{"id": "arith-138", "a": 620, "b": 122, "op": "-", "question": "¿Cuánto es 620 - 122?", "answer": "498", "prompt": "Pregunta: ¿Cuánto es 620 - 122?\nRespuesta:"}
+{"id": "arith-139", "a": 973, "b": 2, "op": "-", "question": "Diego tenía 973 naranjas y regaló 2. ¿Cuántos naranjas le quedan?", "answer": "971", "prompt": "Pregunta: Diego tenía 973 naranjas y regaló 2. ¿Cuántos naranjas le quedan?\nRespuesta:"}
+{"id": "arith-140", "a": 0, "b": 857, "op": "+", "question": "¿Cuánto es 0 + 857?", "answer": "857", "prompt": "Pregunta: ¿Cuánto es 0 + 857?\nRespuesta:"}
+{"id": "arith-141", "a": 17, "b": 33, "op": "*", "question": "¿Cuánto es 17 * 33?", "answer": "561", "prompt": "Pregunta: ¿Cuánto es 17 * 33?\nRespuesta:"}
+{"id": "arith-142", "a": 8, "b": 59, "op": "*", "question": "¿Cuánto es 8 * 59?", "answer": "472", "prompt": "Pregunta: ¿Cuánto es 8 * 59?\nRespuesta:"}
+{"id": "arith-143", "a": 5, "b": 8, "op": "+", "question": "¿Cuánto es 5 + 8?", "answer": "13", "prompt": "Pregunta: ¿Cuánto es 5 + 8?\nRespuesta:"}
+{"id": "arith-144", "a": 6, "b": 3, "op": "+", "question": "Sofía tiene 6 libros y le dan 3 más. ¿Cuántos libros tiene en total?", "answer": "9", "prompt": "Pregunta: Sofía tiene 6 libros y le dan 3 más. ¿Cuántos libros tiene en total?\nRespuesta:"}
+{"id": "arith-145", "a": 59, "b": 49, "op": "+", "question": "José tiene 59 canicas y le dan 49 más. ¿Cuántos canicas tiene en total?", "answer": "108", "prompt": "Pregunta: José tiene 59 canicas y le dan 49 más. ¿Cuántos canicas tiene en total?\nRespuesta:"}
+{"id": "arith-146", "a": 24, "b": 114, "op": "+", "question": "¿Cuánto es 24 + 114?", "answer": "138", "prompt": "Pregunta: ¿Cuánto es 24 + 114?\nRespuesta:"}
+{"id": "arith-147", "a": 8, "b": 8, "op": "*", "question": "¿Cuánto es 8 * 8?", "answer": "64", "prompt": "Pregunta: ¿Cuánto es 8 * 8?\nRespuesta:"}
+{"id": "arith-148", "a": 3, "b": 4, "op": "+", "question": "¿Cuánto es 3 + 4?", "answer": "7", "prompt": "Pregunta: ¿Cuánto es 3 + 4?\nRespuesta:"}
+{"id": "arith-149", "a": 744, "b": 4, "op": "-", "question": "¿Cuánto es 744 - 4?", "answer": "740", "prompt": "Pregunta: ¿Cuánto es 744 - 4?\nRespuesta:"}
+{"id": "arith-150", "a": 263, "b": 88, "op": "-", "question": "Valeria tenía 263 pesos y regaló 88. ¿Cuántos pesos le quedan?", "answer": "175", "prompt": "Pregunta: Valeria tenía 263 pesos y regaló 88. ¿Cuántos pesos le quedan?\nRespuesta:"}
+{"id": "arith-151", "a": 51, "b": 49, "op": "+", "question": "¿Cuánto es 51 + 49?", "answer": "100", "prompt": "Pregunta: ¿Cuánto es 51 + 49?\nRespuesta:"}
+{"id": "arith-152", "a": 466, "b": 36, "op": "*", "question": "¿Cuánto es 466 * 36?", "answer": "16776", "prompt": "Pregunta: ¿Cuánto es 466 * 36?\nRespuesta:"}
+{"id": "arith-153", "a": 45, "b": 8, "op": "-", "question": "¿Cuánto es 45 - 8?", "answer": "37", "prompt": "Pregunta: ¿Cuánto es 45 - 8?\nRespuesta:"}
+{"id": "arith-154", "a": 6, "b": 5, "op": "-", "question": "¿Cuánto es 6 - 5?", "answer": "1", "prompt": "Pregunta: ¿Cuánto es 6 - 5?\nRespuesta:"}
+{"id": "arith-155", "a": 884, "b": 60, "op": "-", "question": "Luis tenía 884 boletos y regaló 60. ¿Cuántos boletos le quedan?", "answer": "824", "prompt": "Pregunta: Luis tenía 884 boletos y regaló 60. ¿Cuántos boletos le quedan?\nRespuesta:"}
+{"id": "arith-156", "a": 98, "b": 320, "op": "+", "question": "Valeria tiene 98 lápices y le dan 320 más. ¿Cuántos lápices tiene en total?", "answer": "418", "prompt": "Pregunta: Valeria tiene 98 lápices y le dan 320 más. ¿Cuántos lápices tiene en total?\nRespuesta:"}
+{"id": "arith-157", "a": 88, "b": 47, "op": "-", "question": "Jorge tenía 88 boletos y regaló 47. ¿Cuántos boletos le quedan?", "answer": "41", "prompt": "Pregunta: Jorge tenía 88 boletos y regaló 47. ¿Cuántos boletos le quedan?\nRespuesta:"}
+{"id": "arith-158", "a": 390, "b": 12, "op": "-", "question": "María tenía 390 libros y regaló 12. ¿Cuántos libros le quedan?", "answer": "378", "prompt": "Pregunta: María tenía 390 libros y regaló 12. ¿Cuántos libros le quedan?\nRespuesta:"}
+{"id": "arith-159", "a": 51, "b": 21, "op": "-", "question": "María tenía 51 tacos y regaló 21. ¿Cuántos tacos le quedan?", "answer": "30", "prompt": "Pregunta: María tenía 51 tacos y regaló 21. ¿Cuántos tacos le quedan?\nRespuesta:"}
+{"id": "arith-160", "a": 88, "b": 12, "op": "-", "question": "Carlos tenía 88 manzanas y regaló 12. ¿Cuántos manzanas le quedan?", "answer": "76", "prompt": "Pregunta: Carlos tenía 88 manzanas y regaló 12. ¿Cuántos manzanas le quedan?\nRespuesta:"}
+{"id": "arith-161", "a": 245, "b": 8, "op": "-", "question": "José tenía 245 manzanas y regaló 8. ¿Cuántos manzanas le quedan?", "answer": "237", "prompt": "Pregunta: José tenía 245 manzanas y regaló 8. ¿Cuántos manzanas le quedan?\nRespuesta:"}
+{"id": "arith-162", "a": 42, "b": 37, "op": "-", "question": "Valeria tenía 42 naranjas y regaló 37. ¿Cuántos naranjas le quedan?", "answer": "5", "prompt": "Pregunta: Valeria tenía 42 naranjas y regaló 37. ¿Cuántos naranjas le quedan?\nRespuesta:"}
+{"id": "arith-163", "a": 38, "b": 4, "op": "-", "question": "Camila tenía 38 canicas y regaló 4. ¿Cuántos canicas le quedan?", "answer": "34", "prompt": "Pregunta: Camila tenía 38 canicas y regaló 4. ¿Cuántos canicas le quedan?\nRespuesta:"}
+{"id": "arith-164", "a": 9, "b": 65, "op": "*", "question": "¿Cuánto es 9 * 65?", "answer": "585", "prompt": "Pregunta: ¿Cuánto es 9 * 65?\nRespuesta:"}
+{"id": "arith-165", "a": 9, "b": 603, "op": "+", "question": "¿Cuánto es 9 + 603?", "answer": "612", "prompt": "Pregunta: ¿Cuánto es 9 + 603?\nRespuesta:"}
+{"id": "arith-166", "a": 1, "b": 11, "op": "*", "question": "¿Cuánto es 1 * 11?", "answer": "11", "prompt": "Pregunta: ¿Cuánto es 1 * 11?\nRespuesta:"}
+{"id": "arith-167", "a": 3, "b": 18, "op": "*", "question": "¿Cuánto es 3 * 18?", "answer": "54", "prompt": "Pregunta: ¿Cuánto es 3 * 18?\nRespuesta:"}
+{"id": "arith-168", "a": 33, "b": 94, "op": "*", "question": "¿Cuánto es 33 * 94?", "answer": "3102", "prompt": "Pregunta: ¿Cuánto es 33 * 94?\nRespuesta:"}
+{"id": "arith-169", "a": 185, "b": 204, "op": "+", "question": "¿Cuánto es 185 + 204?", "answer": "389", "prompt": "Pregunta: ¿Cuánto es 185 + 204?\nRespuesta:"}
+{"id": "arith-170", "a": 726, "b": 6, "op": "-", "question": "¿Cuánto es 726 - 6?", "answer": "720", "prompt": "Pregunta: ¿Cuánto es 726 - 6?\nRespuesta:"}
+{"id": "arith-171", "a": 27, "b": 16, "op": "+", "question": "¿Cuánto es 27 + 16?", "answer": "43", "prompt": "Pregunta: ¿Cuánto es 27 + 16?\nRespuesta:"}
+{"id": "arith-172", "a": 33, "b": 5, "op": "+", "question": "María tiene 33 tacos y le dan 5 más. ¿Cuántos tacos tiene en total?", "answer": "38", "prompt": "Pregunta: María tiene 33 tacos y le dan 5 más. ¿Cuántos tacos tiene en total?\nRespuesta:"}
+{"id": "arith-173", "a": 910, "b": 643, "op": "+", "question": "José tiene 910 lápices y le dan 643 más. ¿Cuántos lápices tiene en total?", "answer": "1553", "prompt": "Pregunta: José tiene 910 lápices y le dan 643 más. ¿Cuántos lápices tiene en total?\nRespuesta:"}
+{"id": "arith-174", "a": 834, "b": 45, "op": "+", "question": "Ricardo tiene 834 canicas y le dan 45 más. ¿Cuántos canicas tiene en total?", "answer": "879", "prompt": "Pregunta: Ricardo tiene 834 canicas y le dan 45 más. ¿Cuántos canicas tiene en total?\nRespuesta:"}
+{"id": "arith-175", "a": 66, "b": 9, "op": "-", "question": "Valeria tenía 66 naranjas y regaló 9. ¿Cuántos naranjas le quedan?", "answer": "57", "prompt": "Pregunta: Valeria tenía 66 naranjas y regaló 9. ¿Cuántos naranjas le quedan?\nRespuesta:"}
+{"id": "arith-176", "a": 38, "b": 38, "op": "+", "question": "¿Cuánto es 38 + 38?", "answer": "76", "prompt": "Pregunta: ¿Cuánto es 38 + 38?\nRespuesta:"}
+{"id": "arith-177", "a": 9, "b": 56, "op": "*", "question": "¿Cuánto es 9 * 56?", "answer": "504", "prompt": "Pregunta: ¿Cuánto es 9 * 56?\nRespuesta:"}
+{"id": "arith-178", "a": 1, "b": 2, "op": "+", "question": "¿Cuánto es 1 + 2?", "answer": "3", "prompt": "Pregunta: ¿Cuánto es 1 + 2?\nRespuesta:"}
+{"id": "arith-179", "a": 683, "b": 44, "op": "+", "question": "¿Cuánto es 683 + 44?", "answer": "727", "prompt": "Pregunta: ¿Cuánto es 683 + 44?\nRespuesta:"}
+{"id": "arith-180", "a": 805, "b": 9, "op": "*", "question": "¿Cuánto es 805 * 9?", "answer": "7245", "prompt": "Pregunta: ¿Cuánto es 805 * 9?\nRespuesta:"}
+{"id": "arith-181", "a": 2, "b": 35, "op": "+", "question": "¿Cuánto es 2 + 35?", "answer": "37", "prompt": "Pregunta: ¿Cuánto es 2 + 35?\nRespuesta:"}
+{"id": "arith-182", "a": 900, "b": 8, "op": "-", "question": "¿Cuánto es 900 - 8?", "answer": "892", "prompt": "Pregunta: ¿Cuánto es 900 - 8?\nRespuesta:"}
+{"id": "arith-183", "a": 670, "b": 63, "op": "+", "question": "¿Cuánto es 670 + 63?", "answer": "733", "prompt": "Pregunta: ¿Cuánto es 670 + 63?\nRespuesta:"}
+{"id": "arith-184", "a": 50, "b": 9, "op": "+", "question": "¿Cuánto es 50 + 9?", "answer": "59", "prompt": "Pregunta: ¿Cuánto es 50 + 9?\nRespuesta:"}
+{"id": "arith-185", "a": 19, "b": 8, "op": "-", "question": "¿Cuánto es 19 - 8?", "answer": "11", "prompt": "Pregunta: ¿Cuánto es 19 - 8?\nRespuesta:"}
+{"id": "arith-186", "a": 8, "b": 26, "op": "+", "question": "Sofía tiene 8 pesos y le dan 26 más. ¿Cuántos pesos tiene en total?", "answer": "34", "prompt": "Pregunta: Sofía tiene 8 pesos y le dan 26 más. ¿Cuántos pesos tiene en total?\nRespuesta:"}
+{"id": "arith-187", "a": 59, "b": 11, "op": "-", "question": "Lupita tenía 59 pesos y regaló 11. ¿Cuántos pesos le quedan?", "answer": "48", "prompt": "Pregunta: Lupita tenía 59 pesos y regaló 11. ¿Cuántos pesos le quedan?\nRespuesta:"}
+{"id": "arith-188", "a": 6, "b": 3, "op": "-", "question": "Carlos tenía 6 libros y regaló 3. ¿Cuántos libros le quedan?", "answer": "3", "prompt": "Pregunta: Carlos tenía 6 libros y regaló 3. ¿Cuántos libros le quedan?\nRespuesta:"}
+{"id": "arith-189", "a": 318, "b": 948, "op": "+", "question": "¿Cuánto es 318 + 948?", "answer": "1266", "prompt": "Pregunta: ¿Cuánto es 318 + 948?\nRespuesta:"}
+{"id": "arith-190", "a": 67, "b": 36, "op": "-", "question": "¿Cuánto es 67 - 36?", "answer": "31", "prompt": "Pregunta: ¿Cuánto es 67 - 36?\nRespuesta:"}
+{"id": "arith-191", "a": 50, "b": 6, "op": "-", "question": "¿Cuánto es 50 - 6?", "answer": "44", "prompt": "Pregunta: ¿Cuánto es 50 - 6?\nRespuesta:"}
+{"id": "arith-192", "a": 1, "b": 84, "op": "*", "question": "¿Cuánto es 1 * 84?", "answer": "84", "prompt": "Pregunta: ¿Cuánto es 1 * 84?\nRespuesta:"}
+{"id": "arith-193", "a": 60, "b": 51, "op": "*", "question": "¿Cuánto es 60 * 51?", "answer": "3060", "prompt": "Pregunta: ¿Cuánto es 60 * 51?\nRespuesta:"}
+{"id": "arith-194", "a": 0, "b": 57, "op": "*", "question": "¿Cuánto es 0 * 57?", "answer": "0", "prompt": "Pregunta: ¿Cuánto es 0 * 57?\nRespuesta:"}
+{"id": "arith-195", "a": 3, "b": 2, "op": "-", "question": "Miguel tenía 3 tacos y regaló 2. ¿Cuántos tacos le quedan?", "answer": "1", "prompt": "Pregunta: Miguel tenía 3 tacos y regaló 2. ¿Cuántos tacos le quedan?\nRespuesta:"}
+{"id": "arith-196", "a": 944, "b": 874, "op": "+", "question": "¿Cuánto es 944 + 874?", "answer": "1818", "prompt": "Pregunta: ¿Cuánto es 944 + 874?\nRespuesta:"}
+{"id": "arith-197", "a": 378, "b": 6, "op": "-", "question": "Miguel tenía 378 manzanas y regaló 6. ¿Cuántos manzanas le quedan?", "answer": "372", "prompt": "Pregunta: Miguel tenía 378 manzanas y regaló 6. ¿Cuántos manzanas le quedan?\nRespuesta:"}
+{"id": "arith-198", "a": 6, "b": 677, "op": "+", "question": "Diego tiene 6 boletos y le dan 677 más. ¿Cuántos boletos tiene en total?", "answer": "683", "prompt": "Pregunta: Diego tiene 6 boletos y le dan 677 más. ¿Cuántos boletos tiene en total?\nRespuesta:"}
+{"id": "arith-199", "a": 31, "b": 70, "op": "+", "question": "¿Cuánto es 31 + 70?", "answer": "101", "prompt": "Pregunta: ¿Cuánto es 31 + 70?\nRespuesta:"}
+{"id": "arith-200", "a": 982, "b": 959, "op": "+", "question": "Ana tiene 982 naranjas y le dan 959 más. ¿Cuántos naranjas tiene en total?", "answer": "1941", "prompt": "Pregunta: Ana tiene 982 naranjas y le dan 959 más. ¿Cuántos naranjas tiene en total?\nRespuesta:"}
+{"id": "arith-201", "a": 274, "b": 1, "op": "-", "question": "¿Cuánto es 274 - 1?", "answer": "273", "prompt": "Pregunta: ¿Cuánto es 274 - 1?\nRespuesta:"}
+{"id": "arith-202", "a": 6, "b": 949, "op": "+", "question": "Ximena tiene 6 boletos y le dan 949 más. ¿Cuántos boletos tiene en total?", "answer": "955", "prompt": "Pregunta: Ximena tiene 6 boletos y le dan 949 más. ¿Cuántos boletos tiene en total?\nRespuesta:"}
+{"id": "arith-203", "a": 7, "b": 947, "op": "+", "question": "Jorge tiene 7 lápices y le dan 947 más. ¿Cuántos lápices tiene en total?", "answer": "954", "prompt": "Pregunta: Jorge tiene 7 lápices y le dan 947 más. ¿Cuántos lápices tiene en total?\nRespuesta:"}
+{"id": "arith-204", "a": 5, "b": 34, "op": "+", "question": "¿Cuánto es 5 + 34?", "answer": "39", "prompt": "Pregunta: ¿Cuánto es 5 + 34?\nRespuesta:"}
+{"id": "arith-205", "a": 32, "b": 6, "op": "-", "question": "¿Cuánto es 32 - 6?", "answer": "26", "prompt": "Pregunta: ¿Cuánto es 32 - 6?\nRespuesta:"}
+{"id": "arith-206", "a": 609, "b": 90, "op": "-", "question": "¿Cuánto es 609 - 90?", "answer": "519", "prompt": "Pregunta: ¿Cuánto es 609 - 90?\nRespuesta:"}
+{"id": "arith-207", "a": 9, "b": 52, "op": "*", "question": "¿Cuánto es 9 * 52?", "answer": "468", "prompt": "Pregunta: ¿Cuánto es 9 * 52?\nRespuesta:"}
+{"id": "arith-208", "a": 830, "b": 5, "op": "-", "question": "Luis tenía 830 pesos y regaló 5. ¿Cuántos pesos le quedan?", "answer": "825", "prompt": "Pregunta: Luis tenía 830 pesos y regaló 5. ¿Cuántos pesos le quedan?\nRespuesta:"}
+{"id": "arith-209", "a": 18, "b": 437, "op": "+", "question": "Ximena tiene 18 lápices y le dan 437 más. ¿Cuántos lápices tiene en total?", "answer": "455", "prompt": "Pregunta: Ximena tiene 18 lápices y le dan 437 más. ¿Cuántos lápices tiene en total?\nRespuesta:"}
+{"id": "arith-210", "a": 1, "b": 1, "op": "*", "question": "¿Cuánto es 1 * 1?", "answer": "1", "prompt": "Pregunta: ¿Cuánto es 1 * 1?\nRespuesta:"}
+{"id": "arith-211", "a": 955, "b": 86, "op": "-", "question": "Fernanda tenía 955 boletos y regaló 86. ¿Cuántos boletos le quedan?", "answer": "869", "prompt": "Pregunta: Fernanda tenía 955 boletos y regaló 86. ¿Cuántos boletos le quedan?\nRespuesta:"}
+{"id": "arith-212", "a": 710, "b": 423, "op": "+", "question": "Ana tiene 710 canicas y le dan 423 más. ¿Cuántos canicas tiene en total?", "answer": "1133", "prompt": "Pregunta: Ana tiene 710 canicas y le dan 423 más. ¿Cuántos canicas tiene en total?\nRespuesta:"}
+{"id": "arith-213", "a": 6, "b": 6, "op": "+", "question": "¿Cuánto es 6 + 6?", "answer": "12", "prompt": "Pregunta: ¿Cuánto es 6 + 6?\nRespuesta:"}
+{"id": "arith-214", "a": 4, "b": 71, "op": "+", "question": "Carlos tiene 4 libros y le dan 71 más. ¿Cuántos libros tiene en total?", "answer": "75", "prompt": "Pregunta: Carlos tiene 4 libros y le dan 71 más. ¿Cuántos libros tiene en total?\nRespuesta:"}
+{"id": "arith-215", "a": 462, "b": 61, "op": "-", "question": "Ana tenía 462 tacos y regaló 61. ¿Cuántos tacos le quedan?", "answer": "401", "prompt": "Pregunta: Ana tenía 462 tacos y regaló 61. ¿Cuántos tacos le quedan?\nRespuesta:"}
+{"id": "arith-216", "a": 279, "b": 464, "op": "+", "question": "¿Cuánto es 279 + 464?", "answer": "743", "prompt": "Pregunta: ¿Cuánto es 279 + 464?\nRespuesta:"}
+{"id": "arith-217", "a": 185, "b": 0, "op": "-", "question": "¿Cuánto es 185 - 0?", "answer": "185", "prompt": "Pregunta: ¿Cuánto es 185 - 0?\nRespuesta:"}
+{"id": "arith-218", "a": 640, "b": 43, "op": "-", "question": "¿Cuánto es 640 - 43?", "answer": "597", "prompt": "Pregunta: ¿Cuánto es 640 - 43?\nRespuesta:"}
+{"id": "arith-219", "a": 42, "b": 94, "op": "*", "question": "¿Cuánto es 42 * 94?", "answer": "3948", "prompt": "Pregunta: ¿Cuánto es 42 * 94?\nRespuesta:"}
+{"id": "arith-220", "a": 594, "b": 11, "op": "-", "question": "Camila tenía 594 canicas y regaló 11. ¿Cuántos canicas le quedan?", "answer": "583", "prompt": "Pregunta: Camila tenía 594 canicas y regaló 11. ¿Cuántos canicas le quedan?\nRespuesta:"}
+{"id": "arith-221", "a": 36, "b": 16, "op": "-", "question": "¿Cuánto es 36 - 16?", "answer": "20", "prompt": "Pregunta: ¿Cuánto es 36 - 16?\nRespuesta:"}
+{"id": "arith-222", "a": 36, "b": 527, "op": "+", "question": "¿Cuánto es 36 + 527?", "answer": "563", "prompt": "Pregunta: ¿Cuánto es 36 + 527?\nRespuesta:"}
+{"id": "arith-223", "a": 273, "b": 80, "op": "-", "question": "¿Cuánto es 273 - 80?", "answer": "193", "prompt": "Pregunta: ¿Cuánto es 273 - 80?\nRespuesta:"}
+{"id": "arith-224", "a": 393, "b": 5, "op": "-", "question": "Camila tenía 393 naranjas y regaló 5. ¿Cuántos naranjas le quedan?", "answer": "388", "prompt": "Pregunta: Camila tenía 393 naranjas y regaló 5. ¿Cuántos naranjas le quedan?\nRespuesta:"}
+{"id": "arith-225", "a": 86, "b": 2, "op": "-", "question": "Miguel tenía 86 libros y regaló 2. ¿Cuántos libros le quedan?", "answer": "84", "prompt": "Pregunta: Miguel tenía 86 libros y regaló 2. ¿Cuántos libros le quedan?\nRespuesta:"}
+{"id": "arith-226", "a": 91, "b": 690, "op": "+", "question": "¿Cuánto es 91 + 690?", "answer": "781", "prompt": "Pregunta: ¿Cuánto es 91 + 690?\nRespuesta:"}
+{"id": "arith-227", "a": 36, "b": 5, "op": "-", "question": "¿Cuánto es 36 - 5?", "answer": "31", "prompt": "Pregunta: ¿Cuánto es 36 - 5?\nRespuesta:"}
+{"id": "arith-228", "a": 869, "b": 0, "op": "-", "question": "¿Cuánto es 869 - 0?", "answer": "869", "prompt": "Pregunta: ¿Cuánto es 869 - 0?\nRespuesta:"}
+{"id": "arith-229", "a": 74, "b": 13, "op": "-", "question": "Luis tenía 74 libros y regaló 13. ¿Cuántos libros le quedan?", "answer": "61", "prompt": "Pregunta: Luis tenía 74 libros y regaló 13. ¿Cuántos libros le quedan?\nRespuesta:"}
+{"id": "arith-230", "a": 35, "b": 5, "op": "-", "question": "Sofía tenía 35 lápices y regaló 5. ¿Cuántos lápices le quedan?", "answer": "30", "prompt": "Pregunta: Sofía tenía 35 lápices y regaló 5. ¿Cuántos lápices le quedan?\nRespuesta:"}
+{"id": "arith-231", "a": 107, "b": 5, "op": "+", "question": "Jorge tiene 107 libros y le dan 5 más. ¿Cuántos libros tiene en total?", "answer": "112", "prompt": "Pregunta: Jorge tiene 107 libros y le dan 5 más. ¿Cuántos libros tiene en total?\nRespuesta:"}
+{"id": "arith-232", "a": 15, "b": 5, "op": "-", "question": "¿Cuánto es 15 - 5?", "answer": "10", "prompt": "Pregunta: ¿Cuánto es 15 - 5?\nRespuesta:"}
+{"id": "arith-233", "a": 5, "b": 24, "op": "+", "question": "Miguel tiene 5 libros y le dan 24 más. ¿Cuántos libros tiene en total?", "answer": "29", "prompt": "Pregunta: Miguel tiene 5 libros y le dan 24 más. ¿Cuántos libros tiene en total?\nRespuesta:"}
+{"id": "arith-234", "a": 41, "b": 48, "op": "*", "question": "¿Cuánto es 41 * 48?", "answer": "1968", "prompt": "Pregunta: ¿Cuánto es 41 * 48?\nRespuesta:"}
+{"id": "arith-235", "a": 846, "b": 1, "op": "+", "question": "¿Cuánto es 846 + 1?", "answer": "847", "prompt": "Pregunta: ¿Cuánto es 846 + 1?\nRespuesta:"}
+{"id": "arith-236", "a": 22, "b": 82, "op": "*", "question": "¿Cuánto es 22 * 82?", "answer": "1804", "prompt": "Pregunta: ¿Cuánto es 22 * 82?\nRespuesta:"}
+{"id": "arith-237", "a": 9, "b": 76, "op": "+", "question": "¿Cuánto es 9 + 76?", "answer": "85", "prompt": "Pregunta: ¿Cuánto es 9 + 76?\nRespuesta:"}
+{"id": "arith-238", "a": 454, "b": 82, "op": "+", "question": "¿Cuánto es 454 + 82?", "answer": "536", "prompt": "Pregunta: ¿Cuánto es 454 + 82?\nRespuesta:"}
+{"id": "arith-239", "a": 9, "b": 24, "op": "+", "question": "Juan tiene 9 lápices y le dan 24 más. ¿Cuántos lápices tiene en total?", "answer": "33", "prompt": "Pregunta: Juan tiene 9 lápices y le dan 24 más. ¿Cuántos lápices tiene en total?\nRespuesta:"}
+{"id": "arith-240", "a": 42, "b": 2, "op": "+", "question": "¿Cuánto es 42 + 2?", "answer": "44", "prompt": "Pregunta: ¿Cuánto es 42 + 2?\nRespuesta:"}
+{"id": "arith-241", "a": 2, "b": 910, "op": "+", "question": "Jorge tiene 2 libros y le dan 910 más. ¿Cuántos libros tiene en total?", "answer": "912", "prompt": "Pregunta: Jorge tiene 2 libros y le dan 910 más. ¿Cuántos libros tiene en total?\nRespuesta:"}
+{"id": "arith-242", "a": 93, "b": 27, "op": "+", "question": "¿Cuánto es 93 + 27?", "answer": "120", "prompt": "Pregunta: ¿Cuánto es 93 + 27?\nRespuesta:"}
+{"id": "arith-243", "a": 182, "b": 46, "op": "-", "question": "Juan tenía 182 lápices y regaló 46. ¿Cuántos lápices le quedan?", "answer": "136", "prompt": "Pregunta: Juan tenía 182 lápices y regaló 46. ¿Cuántos lápices le quedan?\nRespuesta:"}
+{"id": "arith-244", "a": 3, "b": 7, "op": "+", "question": "¿Cuánto es 3 + 7?", "answer": "10", "prompt": "Pregunta: ¿Cuánto es 3 + 7?\nRespuesta:"}
+{"id": "arith-245", "a": 94, "b": 54, "op": "*", "question": "¿Cuánto es 94 * 54?", "answer": "5076", "prompt": "Pregunta: ¿Cuánto es 94 * 54?\nRespuesta:"}
+{"id": "arith-246", "a": 95, "b": 1, "op": "-", "question": "¿Cuánto es 95 - 1?", "answer": "94", "prompt": "Pregunta: ¿Cuánto es 95 - 1?\nRespuesta:"}
+{"id": "arith-247", "a": 626, "b": 59, "op": "+", "question": "Ana tiene 626 canicas y le dan 59 más. ¿Cuántos canicas tiene en total?", "answer": "685", "prompt": "Pregunta: Ana tiene 626 canicas y le dan 59 más. ¿Cuántos canicas tiene en total?\nRespuesta:"}
+{"id": "arith-248", "a": 45, "b": 5, "op": "-", "question": "Ximena tenía 45 libros y regaló 5. ¿Cuántos libros le quedan?", "answer": "40", "prompt": "Pregunta: Ximena tenía 45 libros y regaló 5. ¿Cuántos libros le quedan?\nRespuesta:"}
+{"id": "arith-249", "a": 94, "b": 91, "op": "-", "question": "Lupita tenía 94 canicas y regaló 91. ¿Cuántos canicas le quedan?", "answer": "3", "prompt": "Pregunta: Lupita tenía 94 canicas y regaló 91. ¿Cuántos canicas le quedan?\nRespuesta:"}
+{"id": "arith-250", "a": 76, "b": 73, "op": "-", "question": "Carlos tenía 76 tacos y regaló 73. ¿Cuántos tacos le quedan?", "answer": "3", "prompt": "Pregunta: Carlos tenía 76 tacos y regaló 73. ¿Cuántos tacos le quedan?\nRespuesta:"}
+{"id": "arith-251", "a": 294, "b": 123, "op": "+", "question": "Valeria tiene 294 boletos y le dan 123 más. ¿Cuántos boletos tiene en total?", "answer": "417", "prompt": "Pregunta: Valeria tiene 294 boletos y le dan 123 más. ¿Cuántos boletos tiene en total?\nRespuesta:"}
+{"id": "arith-252", "a": 316, "b": 6, "op": "-", "question": "Fernanda tenía 316 canicas y regaló 6. ¿Cuántos canicas le quedan?", "answer": "310", "prompt": "Pregunta: Fernanda tenía 316 canicas y regaló 6. ¿Cuántos canicas le quedan?\nRespuesta:"}
+{"id": "arith-253", "a": 999, "b": 7, "op": "+", "question": "Juan tiene 999 lápices y le dan 7 más. ¿Cuántos lápices tiene en total?", "answer": "1006", "prompt": "Pregunta: Juan tiene 999 lápices y le dan 7 más. ¿Cuántos lápices tiene en total?\nRespuesta:"}
+{"id": "arith-254", "a": 2, "b": 71, "op": "*", "question": "¿Cuánto es 2 * 71?", "answer": "142", "prompt": "Pregunta: ¿Cuánto es 2 * 71?\nRespuesta:"}
+{"id": "arith-255", "a": 37, "b": 3, "op": "-", "question": "¿Cuánto es 37 - 3?", "answer": "34", "prompt": "Pregunta: ¿Cuánto es 37 - 3?\nRespuesta:"}
+{"id": "arith-256", "a": 457, "b": 50, "op": "*", "question": "¿Cuánto es 457 * 50?", "answer": "22850", "prompt": "Pregunta: ¿Cuánto es 457 * 50?\nRespuesta:"}
+{"id": "arith-257", "a": 70, "b": 6, "op": "-", "question": "María tenía 70 naranjas y regaló 6. ¿Cuántos naranjas le quedan?", "answer": "64", "prompt": "Pregunta: María tenía 70 naranjas y regaló 6. ¿Cuántos naranjas le quedan?\nRespuesta:"}
+{"id": "arith-258", "a": 629, "b": 567, "op": "+", "question": "¿Cuánto es 629 + 567?", "answer": "1196", "prompt": "Pregunta: ¿Cuánto es 629 + 567?\nRespuesta:"}
+{"id": "arith-259", "a": 3, "b": 36, "op": "+", "question": "¿Cuánto es 3 + 36?", "answer": "39", "prompt": "Pregunta: ¿Cuánto es 3 + 36?\nRespuesta:"}
+{"id": "arith-260", "a": 74, "b": 1, "op": "+", "question": "¿Cuánto es 74 + 1?", "answer": "75", "prompt": "Pregunta: ¿Cuánto es 74 + 1?\nRespuesta:"}
+{"id": "arith-261", "a": 752, "b": 553, "op": "+", "question": "Juan tiene 752 canicas y le dan 553 más. ¿Cuántos canicas tiene en total?", "answer": "1305", "prompt": "Pregunta: Juan tiene 752 canicas y le dan 553 más. ¿Cuántos canicas tiene en total?\nRespuesta:"}
+{"id": "arith-262", "a": 54, "b": 441, "op": "+", "question": "Camila tiene 54 pesos y le dan 441 más. ¿Cuántos pesos tiene en total?", "answer": "495", "prompt": "Pregunta: Camila tiene 54 pesos y le dan 441 más. ¿Cuántos pesos tiene en total?\nRespuesta:"}
+{"id": "arith-263", "a": 30, "b": 8, "op": "-", "question": "Jorge tenía 30 pesos y regaló 8. ¿Cuántos pesos le quedan?", "answer": "22", "prompt": "Pregunta: Jorge tenía 30 pesos y regaló 8. ¿Cuántos pesos le quedan?\nRespuesta:"}
+{"id": "arith-264", "a": 554, "b": 57, "op": "*", "question": "¿Cuánto es 554 * 57?", "answer": "31578", "prompt": "Pregunta: ¿Cuánto es 554 * 57?\nRespuesta:"}
+{"id": "arith-265", "a": 843, "b": 260, "op": "+", "question": "Sofía tiene 843 lápices y le dan 260 más. ¿Cuántos lápices tiene en total?", "answer": "1103", "prompt": "Pregunta: Sofía tiene 843 lápices y le dan 260 más. ¿Cuántos lápices tiene en total?\nRespuesta:"}
+{"id": "arith-266", "a": 0, "b": 68, "op": "*", "question": "¿Cuánto es 0 * 68?", "answer": "0", "prompt": "Pregunta: ¿Cuánto es 0 * 68?\nRespuesta:"}
+{"id": "arith-267", "a": 118, "b": 77, "op": "-", "question": "¿Cuánto es 118 - 77?", "answer": "41", "prompt": "Pregunta: ¿Cuánto es 118 - 77?\nRespuesta:"}
+{"id": "arith-268", "a": 2, "b": 92, "op": "+", "question": "Miguel tiene 2 naranjas y le dan 92 más. ¿Cuántos naranjas tiene en total?", "answer": "94", "prompt": "Pregunta: Miguel tiene 2 naranjas y le dan 92 más. ¿Cuántos naranjas tiene en total?\nRespuesta:"}
+{"id": "arith-269", "a": 807, "b": 628, "op": "+", "question": "Juan tiene 807 boletos y le dan 628 más. ¿Cuántos boletos tiene en total?", "answer": "1435", "prompt": "Pregunta: Juan tiene 807 boletos y le dan 628 más. ¿Cuántos boletos tiene en total?\nRespuesta:"}
+{"id": "arith-270", "a": 463, "b": 609, "op": "+", "question": "¿Cuánto es 463 + 609?", "answer": "1072", "prompt": "Pregunta: ¿Cuánto es 463 + 609?\nRespuesta:"}
+{"id": "arith-271", "a": 25, "b": 8, "op": "-", "question": "Sofía tenía 25 canicas y regaló 8. ¿Cuántos canicas le quedan?", "answer": "17", "prompt": "Pregunta: Sofía tenía 25 canicas y regaló 8. ¿Cuántos canicas le quedan?\nRespuesta:"}
+{"id": "arith-272", "a": 5, "b": 23, "op": "+", "question": "Valeria tiene 5 naranjas y le dan 23 más. ¿Cuántos naranjas tiene en total?", "answer": "28", "prompt": "Pregunta: Valeria tiene 5 naranjas y le dan 23 más. ¿Cuántos naranjas tiene en total?\nRespuesta:"}
+{"id": "arith-273", "a": 617, "b": 61, "op": "-", "question": "Fernanda tenía 617 tacos y regaló 61. ¿Cuántos tacos le quedan?", "answer": "556", "prompt": "Pregunta: Fernanda tenía 617 tacos y regaló 61. ¿Cuántos tacos le quedan?\nRespuesta:"}
+{"id": "arith-274", "a": 104, "b": 7, "op": "-", "question": "¿Cuánto es 104 - 7?", "answer": "97", "prompt": "Pregunta: ¿Cuánto es 104 - 7?\nRespuesta:"}
+{"id": "arith-275", "a": 7, "b": 2, "op": "*", "question": "¿Cuánto es 7 * 2?", "answer": "14", "prompt": "Pregunta: ¿Cuánto es 7 * 2?\nRespuesta:"}
+{"id": "arith-276", "a": 560, "b": 7, "op": "-", "question": "¿Cuánto es 560 - 7?", "answer": "553", "prompt": "Pregunta: ¿Cuánto es 560 - 7?\nRespuesta:"}
+{"id": "arith-277", "a": 0, "b": 36, "op": "*", "question": "¿Cuánto es 0 * 36?", "answer": "0", "prompt": "Pregunta: ¿Cuánto es 0 * 36?\nRespuesta:"}
+{"id": "arith-278", "a": 50, "b": 38, "op": "-", "question": "¿Cuánto es 50 - 38?", "answer": "12", "prompt": "Pregunta: ¿Cuánto es 50 - 38?\nRespuesta:"}
+{"id": "arith-279", "a": 77, "b": 7, "op": "+", "question": "Lupita tiene 77 lápices y le dan 7 más. ¿Cuántos lápices tiene en total?", "answer": "84", "prompt": "Pregunta: Lupita tiene 77 lápices y le dan 7 más. ¿Cuántos lápices tiene en total?\nRespuesta:"}
+{"id": "arith-280", "a": 35, "b": 1, "op": "+", "question": "¿Cuánto es 35 + 1?", "answer": "36", "prompt": "Pregunta: ¿Cuánto es 35 + 1?\nRespuesta:"}
+{"id": "arith-281", "a": 43, "b": 53, "op": "+", "question": "¿Cuánto es 43 + 53?", "answer": "96", "prompt": "Pregunta: ¿Cuánto es 43 + 53?\nRespuesta:"}
+{"id": "arith-282", "a": 7, "b": 1, "op": "-", "question": "¿Cuánto es 7 - 1?", "answer": "6", "prompt": "Pregunta: ¿Cuánto es 7 - 1?\nRespuesta:"}
+{"id": "arith-283", "a": 6, "b": 0, "op": "-", "question": "¿Cuánto es 6 - 0?", "answer": "6", "prompt": "Pregunta: ¿Cuánto es 6 - 0?\nRespuesta:"}
+{"id": "arith-284", "a": 1, "b": 314, "op": "+", "question": "¿Cuánto es 1 + 314?", "answer": "315", "prompt": "Pregunta: ¿Cuánto es 1 + 314?\nRespuesta:"}
+{"id": "arith-285", "a": 95, "b": 21, "op": "-", "question": "¿Cuánto es 95 - 21?", "answer": "74", "prompt": "Pregunta: ¿Cuánto es 95 - 21?\nRespuesta:"}
+{"id": "arith-286", "a": 841, "b": 13, "op": "-", "question": "Camila tenía 841 libros y regaló 13. ¿Cuántos libros le quedan?", "answer": "828", "prompt": "Pregunta: Camila tenía 841 libros y regaló 13. ¿Cuántos libros le quedan?\nRespuesta:"}
+{"id": "arith-287", "a": 92, "b": 5, "op": "-", "question": "Juan tenía 92 canicas y regaló 5. ¿Cuántos canicas le quedan?", "answer": "87", "prompt": "Pregunta: Juan tenía 92 canicas y regaló 5. ¿Cuántos canicas le quedan?\nRespuesta:"}
+{"id": "arith-288", "a": 9, "b": 99, "op": "*", "question": "¿Cuánto es 9 * 99?", "answer": "891", "prompt": "Pregunta: ¿Cuánto es 9 * 99?\nRespuesta:"}
+{"id": "arith-289", "a": 9, "b": 6, "op": "-", "question": "Juan tenía 9 pesos y regaló 6. ¿Cuántos pesos le quedan?", "answer": "3", "prompt": "Pregunta: Juan tenía 9 pesos y regaló 6. ¿Cuántos pesos le quedan?\nRespuesta:"}
+{"id": "arith-290", "a": 656, "b": 599, "op": "+", "question": "¿Cuánto es 656 + 599?", "answer": "1255", "prompt": "Pregunta: ¿Cuánto es 656 + 599?\nRespuesta:"}
+{"id": "arith-291", "a": 636, "b": 25, "op": "+", "question": "Fernanda tiene 636 libros y le dan 25 más. ¿Cuántos libros tiene en total?", "answer": "661", "prompt": "Pregunta: Fernanda tiene 636 libros y le dan 25 más. ¿Cuántos libros tiene en total?\nRespuesta:"}
+{"id": "arith-292", "a": 706, "b": 17, "op": "-", "question": "Ana tenía 706 pesos y regaló 17. ¿Cuántos pesos le quedan?", "answer": "689", "prompt": "Pregunta: Ana tenía 706 pesos y regaló 17. ¿Cuántos pesos le quedan?\nRespuesta:"}
+{"id": "arith-293", "a": 472, "b": 11, "op": "*", "question": "¿Cuánto es 472 * 11?", "answer": "5192", "prompt": "Pregunta: ¿Cuánto es 472 * 11?\nRespuesta:"}
+{"id": "arith-294", "a": 642, "b": 40, "op": "-", "question": "María tenía 642 libros y regaló 40. ¿Cuántos libros le quedan?", "answer": "602", "prompt": "Pregunta: María tenía 642 libros y regaló 40. ¿Cuántos libros le quedan?\nRespuesta:"}
+{"id": "arith-295", "a": 780, "b": 88, "op": "*", "question": "¿Cuánto es 780 * 88?", "answer": "68640", "prompt": "Pregunta: ¿Cuánto es 780 * 88?\nRespuesta:"}
+{"id": "arith-296", "a": 9, "b": 1, "op": "-", "question": "¿Cuánto es 9 - 1?", "answer": "8", "prompt": "Pregunta: ¿Cuánto es 9 - 1?\nRespuesta:"}
+{"id": "arith-297", "a": 18, "b": 220, "op": "+", "question": "Lupita tiene 18 tacos y le dan 220 más. ¿Cuántos tacos tiene en total?", "answer": "238", "prompt": "Pregunta: Lupita tiene 18 tacos y le dan 220 más. ¿Cuántos tacos tiene en total?\nRespuesta:"}
+{"id": "arith-298", "a": 32, "b": 517, "op": "+", "question": "José tiene 32 tacos y le dan 517 más. ¿Cuántos tacos tiene en total?", "answer": "549", "prompt": "Pregunta: José tiene 32 tacos y le dan 517 más. ¿Cuántos tacos tiene en total?\nRespuesta:"}
+{"id": "arith-299", "a": 196, "b": 98, "op": "*", "question": "¿Cuánto es 196 * 98?", "answer": "19208", "prompt": "Pregunta: ¿Cuánto es 196 * 98?\nRespuesta:"}

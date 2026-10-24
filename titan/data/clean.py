@@ -1,0 +1,176 @@
+"""Normalización, filtros de calidad, identificación de idioma y limpieza de PII.
+
+Los umbrales siguen las heurísticas publicadas de Gopher/C4/FineWeb, con
+reglas separadas para prosa y para código. Cada filtro devuelve el motivo
+de rechazo para poder auditar el pipeline (``FilterStats``).
+"""
+
+from __future__ import annotations
+
+import re
+import unicodedata
+from collections import Counter
+from dataclasses import dataclass, field
+
+_CONTROL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+_MULTI_BLANK = re.compile(r"\n{3,}")
+_TRAILING_WS = re.compile(r"[ \t]+\n")
+_WORD = re.compile(r"\w+", re.UNICODE)
+
+_EMAIL = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
+_PHONE = re.compile(r"(?<!\w)(?:\+?\d{1,3}[\s.-]?)?(?:\(?\d{2,3}\)?[\s.-]?)\d{3,4}[\s.-]?\d{4}(?!\w)")
+_IPV4 = re.compile(r"\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b")
+_SECRET = re.compile(
+    r"(?:sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{36}|xox[bp]-[A-Za-z0-9-]{10,}"
+    r"|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----)"
+)
+
+
+def normalize_text(text: str) -> str:
+    text = unicodedata.normalize("NFC", text)
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
+    text = _CONTROL.sub("", text)
+    text = _TRAILING_WS.sub("\n", text)
+    text = _MULTI_BLANK.sub("\n\n", text)
+    return text.strip()
+
+
+def scrub_pii(text: str) -> str:
+    """Sustituye correos, teléfonos, IPs y secretos por marcadores."""
+    text = _SECRET.sub("<SECRETO>", text)
+    text = _EMAIL.sub("<CORREO>", text)
+    text = _IPV4.sub("<IP>", text)
+    text = _PHONE.sub("<TELEFONO>", text)
+    return text
+
+
+# ----------------------------------------------------------------------
+# Identificación de idioma ligera (sin modelos externos)
+# ----------------------------------------------------------------------
+_STOPWORDS = {
+    "es": set("de la que el en y a los se del las un por con no una su para es al lo como más pero sus le ya o este sí porque esta entre cuando muy sin sobre también me hasta hay donde quien desde todo nos durante todos uno les ni contra otros ese eso ante ellos e esto mí antes algunos qué unos yo otro otras otra él tanto esa estos mucho quienes nada muchos cual poco ella estar estas algunas algo nosotros".split()),
+    "en": set("the of and to in a is that for it as was with be by on not he i this are or his from at which but have an they you were her she there been their one all we can has will would more if no when what so who out up its into about than them only other new some could time these two may then do first any my now such like our over man me even most made after also did many before must through back years where much your way well down should because each just those people how too little state good very make world still own see men work long get here between both life being under never day same another know while last might us great old year off come since against go came right used take three".split()),
+    "pt": set("de a o que e do da em um para é com não uma os no se na por mais as dos como mas foi ao ele das tem à seu sua ou ser quando muito há nos já está eu também só pelo pela até isso ela entre era depois sem mesmo aos ter seus quem nas me esse eles estão você tinha foram essa num nem suas meu às minha têm numa pelos elas havia seja qual será nós tenho lhe deles essas esses pelas este fosse dele".split()),
+    "fr": set("de la le et les des en un du une que est pour qui dans par au sur pas plus ne se ce il sont avec ou son aux mais nous comme été elle ont leur sa ses on cette aussi y entre très sans tout même dont fait deux ces être bien peut où lui".split()),
+}
+
+
+def detect_language(text: str, sample_chars: int = 4000) -> tuple[str, float]:
+    words = [w.lower() for w in _WORD.findall(text[:sample_chars])]
+    if len(words) < 5:
+        return "unk", 0.0
+    scores = {lang: sum(1 for w in words if w in sw) for lang, sw in _STOPWORDS.items()}
+    lang, best = max(scores.items(), key=lambda kv: kv[1])
+    frac = best / len(words)
+    if frac < 0.08:
+        return "unk", frac
+    return lang, frac
+
+
+# ----------------------------------------------------------------------
+# Filtros de calidad
+# ----------------------------------------------------------------------
+@dataclass
+class QualityConfig:
+    min_chars: int = 200
+    max_chars: int = 2_000_000
+    min_words: int = 30
+    min_mean_word_len: float = 2.5
+    max_mean_word_len: float = 12.0
+    min_alpha_frac: float = 0.55        # fracción de palabras con letras
+    max_symbol_word_ratio: float = 0.10  # '#' y '...' por palabra
+    max_dup_line_frac: float = 0.30
+    max_bullet_line_frac: float = 0.90
+    max_char_run: int = 80               # p. ej. "========..." muy largos
+    # Código
+    code_max_line_len: int = 1000
+    code_max_mean_line_len: float = 120.0
+    code_min_alnum_frac: float = 0.25
+    code_autogen_markers: tuple[str, ...] = (
+        "auto-generated", "autogenerated", "do not edit", "generated by", "minified",
+    )
+
+
+@dataclass
+class FilterStats:
+    kept: int = 0
+    rejected: Counter = field(default_factory=Counter)
+
+    def add(self, reason: str | None) -> None:
+        if reason is None:
+            self.kept += 1
+        else:
+            self.rejected[reason] += 1
+
+    def to_dict(self) -> dict:
+        return {"kept": self.kept, "rejected": dict(self.rejected)}
+
+
+def _max_char_run(text: str) -> int:
+    best = run = 0
+    prev = ""
+    for ch in text:
+        run = run + 1 if ch == prev else 1
+        prev = ch
+        if run > best:
+            best = run
+    return best
+
+
+def quality_reason_prose(text: str, cfg: QualityConfig) -> str | None:
+    n = len(text)
+    if n < cfg.min_chars:
+        return "too_short"
+    if n > cfg.max_chars:
+        return "too_long"
+    words = text.split()
+    if len(words) < cfg.min_words:
+        return "too_few_words"
+    mean_len = sum(len(w) for w in words) / len(words)
+    if not (cfg.min_mean_word_len <= mean_len <= cfg.max_mean_word_len):
+        return "mean_word_length"
+    alpha = sum(1 for w in words if any(c.isalpha() for c in w)) / len(words)
+    if alpha < cfg.min_alpha_frac:
+        return "low_alpha"
+    symbols = text.count("#") + text.count("...") + text.count("…")
+    if symbols / len(words) > cfg.max_symbol_word_ratio:
+        return "symbol_ratio"
+    lines = [ln.strip() for ln in text.split("\n") if ln.strip()]
+    if lines:
+        dup = 1 - len(set(lines)) / len(lines)
+        if dup > cfg.max_dup_line_frac:
+            return "duplicate_lines"
+        bullets = sum(1 for ln in lines if ln[:1] in "-*•·") / len(lines)
+        if bullets > cfg.max_bullet_line_frac:
+            return "bullet_lines"
+    if _max_char_run(text) > cfg.max_char_run:
+        return "char_run"
+    return None
+
+
+def quality_reason_code(text: str, cfg: QualityConfig) -> str | None:
+    if len(text) < 100:
+        return "too_short"
+    if len(text) > cfg.max_chars:
+        return "too_long"
+    head = text[:2000].lower()
+    if any(m in head for m in cfg.code_autogen_markers):
+        return "autogenerated"
+    lines = text.split("\n")
+    if max(len(ln) for ln in lines) > cfg.code_max_line_len:
+        return "long_line"
+    if sum(len(ln) for ln in lines) / len(lines) > cfg.code_max_mean_line_len:
+        return "mean_line_length"
+    alnum = sum(c.isalnum() for c in text) / len(text)
+    if alnum < cfg.code_min_alnum_frac:
+        return "low_alnum"
+    return None
+
+
+def quality_reason(text: str, kind: str, cfg: QualityConfig) -> str | None:
+    if kind == "synthetic":
+        # Generado y verificado por programa: solo controles de tamaño
+        return "too_short" if len(text) < 20 else ("too_long" if len(text) > cfg.max_chars else None)
+    if kind == "code":
+        return quality_reason_code(text, cfg)
+    return quality_reason_prose(text, cfg)

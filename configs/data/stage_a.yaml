@@ -1,0 +1,97 @@
+# Etapa A — corpus pequeño, legal y alcanzable desde la sesión de desarrollo.
+# Sirve para validar el pipeline completo, no para obtener un modelo útil.
+name: stage_a
+output_dir: data/stage_a
+cache_dir: cache
+val_fraction: 0.03
+seed: 1234
+vocab_size: 8192
+tokenizer_train_chars: 40000000
+shard_tokens: 20000000
+exact_dedup: true
+minhash_dedup: true
+minhash: {num_perm: 128, bands: 16, ngram: 5}
+decontam_ngram: 13
+eval_files:
+  - titan/eval/data/*.jsonl
+sources:
+  - name: europarl_es
+    domain: es
+    language: es
+    loader: zip_url
+    license: "Europarl (Koehn 2005), muestra de NLTK. statmt.org/europarl: sin restricciones de copyright conocidas"
+    detokenize: true
+    doc_chars: 3000
+    weight: 0.35
+    params:
+      url: https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/europarl_raw.zip
+      sha256: ad553e177baac263840c10980e6f3e76d5d15f7f7a078bd98520b36edb69b27c
+      members: ["europarl_raw/spanish/*"]
+  - name: udhr_es
+    domain: es
+    language: es
+    loader: zip_url
+    license: "Dominio público (Declaración Universal de los Derechos Humanos, ONU)"
+    weight: 0.35
+    params:
+      url: https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/udhr.zip
+      sha256: 97e4c9dfa4a402f243d60b03d511afb04cf63f92f9ad1be9108b511448c329fa
+      members: ["udhr/Spanish-Latin1", "udhr/Spanish_Espanol-Latin1"]
+      encoding: latin-1
+  - name: europarl_en
+    domain: en
+    language: en
+    loader: zip_url
+    license: "Europarl (Koehn 2005), muestra de NLTK. statmt.org/europarl: sin restricciones de copyright conocidas"
+    detokenize: true
+    doc_chars: 3000
+    weight: 0.25
+    params:
+      url: https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/europarl_raw.zip
+      sha256: ad553e177baac263840c10980e6f3e76d5d15f7f7a078bd98520b36edb69b27c
+      members: ["europarl_raw/english/*"]
+  - name: gutenberg_en
+    domain: en
+    language: en
+    loader: zip_url
+    license: "Dominio público (Project Gutenberg, selección de NLTK)"
+    doc_chars: 4000
+    weight: 0.25
+    params:
+      url: https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/gutenberg.zip
+      sha256: 2d3c3ab548c653944310f37f536443ec85d0a0ad855fcae217a0c9efdce2d611
+      members: ["gutenberg/*.txt"]
+  - name: europarl_romance
+    domain: multi
+    language: multi
+    loader: zip_url
+    license: "Europarl (Koehn 2005), muestra de NLTK. statmt.org/europarl: sin restricciones de copyright conocidas"
+    detokenize: true
+    doc_chars: 3000
+    weight: 0.05
+    params:
+      url: https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/europarl_raw.zip
+      sha256: ad553e177baac263840c10980e6f3e76d5d15f7f7a078bd98520b36edb69b27c
+      members: ["europarl_raw/portuguese/*", "europarl_raw/french/*", "europarl_raw/italian/*"]
+  - name: python_stdlib
+    domain: code
+    language: code
+    kind: code
+    loader: local_glob
+    license: "PSF-2.0 (biblioteca estándar de CPython)"
+    weight: 0.25
+    params:
+      patterns: ["{stdlib}/**/*.py"]
+      exclude: ["*/test/*", "*/tests/*", "*/idle_test/*", "*/site-packages/*", "*/dist-packages/*"]
+      max_file_bytes: 300000
+  - name: arithmetic_synthetic
+    domain: math
+    language: multi
+    kind: synthetic
+    loader: synthetic
+    license: "Propio (generado y verificado por titan.sft.synthetic)"
+    weight: 0.10
+    params:
+      generator: arithmetic_documents
+      kwargs: {n_docs: 3000, problems_per_doc: 12, seed: 7, max_digits: 3,
+               exclude_file: titan/eval/data/arith_es.jsonl}
