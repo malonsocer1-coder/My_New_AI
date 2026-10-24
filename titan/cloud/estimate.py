@@ -49,6 +49,8 @@ PRESETS: dict[str, dict] = {
     "titan-stage-a": dict(vocab_size=8192, dim=256, n_layers=6, n_heads=8, n_kv_heads=4, multiple_of=64, max_seq_len=256),
     "titan-100m": dict(vocab_size=32768, dim=768, n_layers=12, n_heads=12, n_kv_heads=4, multiple_of=256,
                        max_seq_len=1024, tie_embeddings=True),
+    "titan-120m": dict(vocab_size=32768, dim=576, n_layers=28, n_heads=9, n_kv_heads=3, ffn_dim=1536,
+                       max_seq_len=2048, tie_embeddings=True),
     "titan-350m": dict(vocab_size=65536, dim=1024, n_layers=24, n_heads=16, n_kv_heads=4, multiple_of=256,
                        max_seq_len=4096, tie_embeddings=True),
     "titan-1b": dict(vocab_size=65536, dim=2048, n_layers=16, n_heads=32, n_kv_heads=8, ffn_dim=8192,
@@ -70,7 +72,7 @@ PRESETS: dict[str, dict] = {
 # Tokens de entrenamiento recomendados (más allá de Chinchilla ≈ 20/parámetro:
 # entrenar de más abarata la inferencia, que es lo que importa en un PC).
 RECOMMENDED_TOKENS = {
-    "titan-stage-a": 2.0e7, "titan-100m": 2.0e9, "titan-350m": 2.0e10, "titan-1b": 1.0e11, "titan-3b": 5.0e11,
+    "titan-stage-a": 2.0e7, "titan-100m": 2.0e9, "titan-120m": 2.75e9, "titan-350m": 2.0e10, "titan-1b": 1.0e11, "titan-3b": 5.0e11,
     "titan-8b": 1.5e12, "titan-moe-7b-a2b": 1.0e12, "titan-30b": 1.5e12, "titan-70b": 2.0e12, "titan-100b": 2.0e12,
 }
 

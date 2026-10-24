@@ -29,11 +29,16 @@ from .distributed import (DistInfo, all_reduce_mean, apply_fsdp, cleanup_distrib
                           setup_distributed)
 from .schedule import lr_at
 
-# FLOPs pico densos BF16 por dispositivo (sin dispersión), para estimar MFU.
+# FLOPs pico densos BF16 por dispositivo (sin dispersión, acumulación FP32), para estimar MFU.
+# Se comparan por subcadena del nombre en este orden: las variantes concretas van primero.
+# Las GeForce RTX 50 se derivan de los «AI TOPS» publicados (FP4 con dispersión / 16) y son
+# aproximadas: en portátiles el pico real depende de la potencia (TGP) configurada.
 PEAK_FLOPS = {
     "B300": 2.5e15, "B200": 2.25e15, "GB200": 2.5e15, "H200": 989e12, "H100": 989e12, "H800": 989e12,
     "A100": 312e12, "L40S": 362e12, "L40": 181e12, "A6000": 155e12, "RTX 6000 Ada": 364e12,
-    "5090": 209e12, "4090": 165e12, "L4": 121e12, "A10": 125e12, "MI300X": 1.3e15,
+    "5090 Laptop": 114e12, "5080 Laptop": 83e12, "5070 Ti Laptop": 62e12, "5070 Laptop": 50e12,
+    "5060 Laptop": 36e12, "5090": 209e12, "5080": 113e12, "5070 Ti": 88e12, "5070": 62e12,
+    "4090": 165e12, "L4": 121e12, "A10": 125e12, "MI300X": 1.3e15,
 }
 
 DTYPES = {"bf16": torch.bfloat16, "fp16": torch.float16, "fp32": torch.float32}
@@ -69,6 +74,82 @@ def build_optimizer(model: torch.nn.Module, cfg: TrainConfig, device: torch.devi
     if device.type == "cuda":
         kw["fused"] = True
     return torch.optim.AdamW(groups, lr=cfg.lr, betas=(cfg.beta1, cfg.beta2), eps=cfg.eps, **kw)
+
+
+def resolve_compile(cfg: TrainConfig, device: torch.device, say=print) -> bool:
+    """``compile: auto`` activa torch.compile solo con GPU y Triton (en Windows: ``triton-windows``).
+    Si la compilación falla en ejecución, Dynamo vuelve al modo normal en lugar de abortar."""
+    want = cfg.compile
+    if isinstance(want, str):
+        if want != "auto":
+            raise ValueError(f"compile debe ser true, false o auto (recibido {want!r})")
+        import importlib.util
+        if device.type != "cuda":
+            return False
+        if importlib.util.find_spec("triton") is None:
+            say("[compile] Triton no está instalado: se entrena sin torch.compile "
+                "(en Windows: pip install \"triton-windows<3.6\" según su versión de PyTorch)")
+            return False
+        want = True
+    if want:
+        import torch._dynamo
+        with contextlib.suppress(AttributeError):
+            torch._dynamo.config.suppress_errors = True
+    return bool(want)
+
+
+def resolve_batch(model_cfg: ModelConfig, cfg: TrainConfig, dinfo: DistInfo, device: torch.device,
+                  dtype: torch.dtype, out_dir: Path, say=print) -> ModelConfig:
+    """Fija micro-lote y acumulación a partir de ``batch_tokens`` y, con ``auto_batch``, de una
+    medición real en la GPU (guardada en ``auto_batch.json`` para las sesiones siguientes)."""
+    if cfg.batch_tokens is None and not cfg.auto_batch:
+        return model_cfg
+    if cfg.batch_tokens is not None:
+        if cfg.batch_tokens % cfg.seq_len:
+            raise ValueError(f"batch_tokens={cfg.batch_tokens} no es múltiplo de seq_len={cfg.seq_len}")
+        total = cfg.batch_tokens // cfg.seq_len
+    else:
+        total = cfg.micro_batch_size * cfg.grad_accum_steps * dinfo.world_size
+    if total % dinfo.world_size:
+        raise ValueError(f"{total} secuencias por paso no se reparten entre {dinfo.world_size} procesos")
+    per_rank = total // dinfo.world_size
+    if cfg.auto_batch and device.type == "cuda":
+        import dataclasses
+        from ..utils.io import read_json
+        key = {"device": torch.cuda.get_device_name(device), "model": model_cfg.to_dict(), "seq_len": cfg.seq_len,
+               "seqs_per_rank": per_rank, "dtype": cfg.dtype, "max": cfg.auto_batch_max,
+               "margin_gb": cfg.auto_batch_margin_gb, "torch": torch.__version__}
+        # Caché compartida entre ejecuciones (p. ej. las variantes de un piloto) y copia en la ejecución.
+        from ..utils.io import stable_hash
+        cache = Path(os.environ.get("TITAN_CACHE", "cache")) / "auto_batch" / f"{stable_hash(key)}.json"
+        choice = None
+        if dinfo.is_main:
+            if cache.exists():
+                prev = read_json(cache)
+                if prev.get("key") == key:
+                    choice = prev["choice"]
+                    say(f"[autobatch] se reutiliza la medición guardada: {choice}")
+            if choice is None:
+                from .autobatch import probe
+                say(f"[autobatch] midiendo micro-lotes para {per_rank} secuencias por paso…")
+                res = probe(model_cfg, cfg, device, dtype, per_rank, cfg.auto_batch_max,
+                            cfg.auto_batch_margin_gb, log=say)
+                choice = res["choice"]
+                cache.parent.mkdir(parents=True, exist_ok=True)
+                write_json(cache, {"key": key, **res})
+            write_json(out_dir / "auto_batch.json", {"key": key, "choice": choice})
+        if dinfo.distributed:
+            obj = [choice]
+            dist.broadcast_object_list(obj, src=0)
+            choice = obj[0]
+        cfg.micro_batch_size = choice["micro_batch_size"]
+        model_cfg = dataclasses.replace(model_cfg, activation_checkpointing=choice["activation_checkpointing"])
+        say(f"[autobatch] micro-lote {cfg.micro_batch_size} x acumulación {per_rank // cfg.micro_batch_size}"
+            + (" con recálculo de activaciones" if model_cfg.activation_checkpointing else ""))
+    if per_rank % cfg.micro_batch_size:
+        raise ValueError(f"micro_batch_size={cfg.micro_batch_size} no divide {per_rank} secuencias por paso")
+    cfg.grad_accum_steps = per_rank // cfg.micro_batch_size
+    return model_cfg
 
 
 def build_loaders(cfg: TrainConfig, dinfo: DistInfo):
@@ -174,6 +255,7 @@ def train(model_cfg: ModelConfig, cfg: TrainConfig, log=None) -> dict:
         torch.backends.cuda.matmul.allow_tf32 = True
         torch.backends.cudnn.allow_tf32 = True
 
+    model_cfg = resolve_batch(model_cfg, cfg, dinfo, device, dtype, out_dir, say)
     n_params = model_cfg.param_counts()["total"]
     parallel = resolve_parallel(cfg.parallel, dinfo.world_size, n_params, device)
     if parallel in ("ddp", "fsdp") and not dinfo.distributed:
@@ -223,6 +305,13 @@ def train(model_cfg: ModelConfig, cfg: TrainConfig, log=None) -> dict:
         else contextlib.nullcontext
 
     train_loader, val_loader = build_loaders(cfg, dinfo)
+    if cfg.max_epochs:
+        n_rows = getattr(train_loader, "n", None)
+        if n_rows is None:
+            raise ValueError("max_epochs solo se admite con datos SFT (filas fijas)")
+        seqs = cfg.micro_batch_size * cfg.grad_accum_steps * dinfo.world_size
+        cfg.max_steps = max(1, math.ceil(cfg.max_epochs * n_rows / seqs))
+        say(f"[datos] {n_rows:,} filas x {cfg.max_epochs} épocas -> {cfg.max_steps} pasos")
     ckpt = CheckpointManager(out_dir / "checkpoints", dinfo.rank, dinfo.world_size,
                              sharded=(parallel == "fsdp"), keep_last=cfg.keep_last, keep_every=cfg.keep_every)
 
@@ -241,7 +330,7 @@ def train(model_cfg: ModelConfig, cfg: TrainConfig, log=None) -> dict:
     if parallel == "ddp":
         from torch.nn.parallel import DistributedDataParallel as DDP
         fwd_model = DDP(model, device_ids=[device.index] if device.type == "cuda" else None)
-    if cfg.compile:
+    if resolve_compile(cfg, device, say):
         fwd_model = torch.compile(fwd_model)
 
     tokens_per_step = train_loader.tokens_per_step() * cfg.grad_accum_steps
@@ -381,6 +470,7 @@ def train(model_cfg: ModelConfig, cfg: TrainConfig, log=None) -> dict:
                           split=parallel != "fsdp")
             if ev:
                 mean = ev["_mean"]["loss"]
+                state["last_val"] = mean
                 if state["best_val"] is None or mean < state["best_val"]:
                     state["best_val"] = mean
                 if is_main:
@@ -419,6 +509,7 @@ def train(model_cfg: ModelConfig, cfg: TrainConfig, log=None) -> dict:
     summary = {
         "stop_reason": stop["reason"] or "completed", "steps": state["step"], "tokens": state["tokens"],
         "elapsed_h": state["elapsed_s"] / 3600, "best_val_loss": state["best_val"],
+        "final_val_loss": state.get("last_val"),
         "cost_usd": state["elapsed_s"] / 3600 * dinfo.world_size * cfg.gpu_hour_usd,
         "checkpoint": str(ckpt.latest()) if is_main else None,
     }

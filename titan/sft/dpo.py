@@ -10,6 +10,7 @@ margen medio, en entrenamiento y en pares reservados.
 
 from __future__ import annotations
 
+import contextlib
 import copy
 import json
 import math
@@ -43,7 +44,8 @@ class DPOConfig:
     grad_clip: float = 1.0
     log_interval: int = 10
     seed: int = 0
-    device: str = "cpu"
+    device: str = "cpu"     # cpu | cuda | auto
+    dtype: str = "fp32"     # fp32 | bf16 (autocast; los pesos y AdamW siguen en fp32)
     num_threads: int | None = None
 
 
@@ -60,16 +62,23 @@ def encode_pair(fmt: ChatFormat, pair: dict, max_len: int) -> tuple[list[int], l
 
 
 def _batch_logps(model, seqs: list[list[int]], masks: list[list[int]], device, pad_id: int) -> torch.Tensor:
+    """Suma de log-probabilidades de los tokens con máscara 1, por secuencia.
+
+    Solo se proyectan al vocabulario las posiciones de la respuesta: con contexto
+    de 2048 y vocabulario de 32k, los logits completos de un lote ocuparían varios GB.
+    """
     L = max(len(s) for s in seqs)
     ids = torch.full((len(seqs), L), pad_id, dtype=torch.long)
-    m = torch.zeros((len(seqs), L), dtype=torch.float32)
+    m = torch.zeros((len(seqs), L), dtype=torch.bool)
     for i, (s, k) in enumerate(zip(seqs, masks)):
         ids[i, :len(s)] = torch.tensor(s)
-        m[i, :len(k)] = torch.tensor(k, dtype=torch.float32)
+        m[i, :len(k)] = torch.tensor(k, dtype=torch.bool)
     ids, m = ids.to(device), m.to(device)
-    logits = model(ids[:, :-1]).logits.float()
-    logp = torch.log_softmax(logits, -1).gather(-1, ids[:, 1:].unsqueeze(-1)).squeeze(-1)
-    return (logp * m[:, 1:]).sum(-1)
+    sel = m[:, 1:]
+    h = model(ids[:, :-1], return_hidden=True).hidden[sel]
+    logp = -F.cross_entropy(model.output(h).float(), ids[:, 1:][sel], reduction="none")
+    rows = torch.arange(len(seqs), device=device).unsqueeze(1).expand_as(sel)[sel]
+    return torch.zeros(len(seqs), device=device, dtype=torch.float32).index_add(0, rows, logp)
 
 
 def dpo_terms(policy, ref, batch, device, pad_id, beta):
@@ -103,11 +112,15 @@ def train_dpo(cfg: DPOConfig, log=print) -> dict:
         torch.set_num_threads(cfg.num_threads)
     torch.manual_seed(cfg.seed)
     random.seed(cfg.seed)
-    device = torch.device(cfg.device)
+    from ..train.distributed import pick_device
+    device = pick_device(cfg.device)
+    use_ac = cfg.dtype != "fp32"
+    ac_dtype = {"bf16": torch.bfloat16, "fp16": torch.float16}.get(cfg.dtype, torch.float32)
+    autocast = (lambda: torch.autocast(device.type, dtype=ac_dtype)) if use_ac else contextlib.nullcontext
     _, _, tok_path = resolve_artifact(cfg.init_from)
     tok = TitanTokenizer.load(tok_path)
     fmt = ChatFormat(tok)
-    policy = load_model(cfg.init_from, device=cfg.device, dtype=torch.float32)
+    policy = load_model(cfg.init_from, device=str(device), dtype=torch.float32)
     policy.train()
     ref = copy.deepcopy(policy).eval()
     for p in ref.parameters():
@@ -117,10 +130,12 @@ def train_dpo(cfg: DPOConfig, log=print) -> dict:
     ev = [e for e in (encode_pair(fmt, p, max_len) for p in read_jsonl(cfg.eval_data)) if e] if cfg.eval_data else []
     log(f"[dpo] {len(enc)} pares de entrenamiento, {len(ev)} de evaluación, β={cfg.beta}")
     opt = torch.optim.AdamW([p for p in policy.parameters() if p.requires_grad], lr=cfg.lr,
-                            weight_decay=cfg.weight_decay, betas=(0.9, 0.95))
+                            weight_decay=cfg.weight_decay, betas=(0.9, 0.95),
+                            **({"fused": True} if device.type == "cuda" else {}))
     out = Path(cfg.out_dir)
     out.mkdir(parents=True, exist_ok=True)
-    before = preference_accuracy(policy, ref, ev, device, tok.pad_id, cfg.beta) if ev else {}
+    with autocast():
+        before = preference_accuracy(policy, ref, ev, device, tok.pad_id, cfg.beta) if ev else {}
     if before:
         log(f"[dpo] evaluación antes: {before}")
     t0 = time.time()
@@ -136,7 +151,8 @@ def train_dpo(cfg: DPOConfig, log=print) -> dict:
             pos = 0
         batch = [enc[i] for i in order[pos:pos + cfg.batch_size]]
         pos += cfg.batch_size
-        loss, acc, margin = dpo_terms(policy, ref, batch, device, tok.pad_id, cfg.beta)
+        with autocast():
+            loss, acc, margin = dpo_terms(policy, ref, batch, device, tok.pad_id, cfg.beta)
         opt.zero_grad(set_to_none=True)
         loss.backward()
         torch.nn.utils.clip_grad_norm_(policy.parameters(), cfg.grad_clip)
@@ -147,7 +163,8 @@ def train_dpo(cfg: DPOConfig, log=print) -> dict:
             append_jsonl(out / "metrics.jsonl", rec)
             log(f"[dpo] paso {step} | pérdida {rec['loss']} | acierto {acc:.2f} | margen {rec['margin']}")
     policy.eval()
-    after = preference_accuracy(policy, ref, ev, device, tok.pad_id, cfg.beta) if ev else {}
+    with autocast():
+        after = preference_accuracy(policy, ref, ev, device, tok.pad_id, cfg.beta) if ev else {}
     from safetensors.torch import save_file
     save_file(model_state_for_save(policy), str(out / "model.safetensors"))
     write_json(out / "model_config.json", policy.cfg.to_dict())

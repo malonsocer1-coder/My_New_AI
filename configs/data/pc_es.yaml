@@ -1,6 +1,9 @@
 # Datos para entrenar en el PC (Windows, con Internet sin restricciones).
-# Objetivo: ~2.5-3 mil millones de tokens, mayoritariamente español.
+# Objetivo: ~3 300 M tokens únicos, mayoritariamente español, para que el plan de 118 M
+# (configs/plans/pc_120m.yaml, ~2 900 M tokens de entrenamiento) no repita datos
+# salvo en los dominios pequeños (matemáticas y código).
 # Verifique en data/pc_es/data_card.json los tokens reales y ajuste max_docs.
+# Disco: ~7 GB de shards + caché de Hugging Face; tiempo de preparación: varias horas de CPU.
 #
 # Requisitos: pip install -e ".[cloud]"   (instala `datasets`)
 # Los conjuntos de Hugging Face se leen en streaming; no hace falta descargarlos enteros.
@@ -30,7 +33,7 @@ sources:
     license: "ODC-By 1.0 (FineWeb-2, HuggingFaceFW) + términos de uso de Common Crawl"
     scrub_pii: true
     dialect_routing: true
-    max_docs: 1400000
+    max_docs: 2000000
     weight: 0.50
     params: {path: HuggingFaceFW/fineweb-2, name: spa_Latn, split: train, text_field: text}
   - name: wikipedia_es
@@ -47,7 +50,7 @@ sources:
     language: en
     loader: hf
     license: "ODC-By 1.0 (FineWeb-Edu, HuggingFaceFW)"
-    max_docs: 600000
+    max_docs: 800000
     weight: 0.25
     params: {path: HuggingFaceFW/fineweb-edu, name: sample-10BT, split: train, text_field: text}
   - name: open_web_math
@@ -75,7 +78,7 @@ sources:
     kind: code
     loader: local_glob
     license: "PSF-2.0 (biblioteca estándar de CPython)"
-    weight: 0.05   # pocos datos de código: peso bajo para no memorizarlos
+    weight: 0.02   # pocos datos de código (~decenas de M tokens): peso bajo para no memorizarlos
     params:
       patterns: ["{stdlib}/**/*.py"]
       exclude: ["*/test/*", "*/tests/*", "*/idle_test/*", "*/site-packages/*"]

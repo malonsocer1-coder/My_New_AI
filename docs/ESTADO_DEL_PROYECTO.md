@@ -7,7 +7,7 @@
 | Etapa | Estado | Evidencia |
 |---|---|---|
 | A — Validación técnica | ✅ **completada** | modelo propio de 8,6 M entrenado desde cero; [informe](../reports/INFORME_ETAPA_A.md) |
-| B — Prototipo (PC, 100 M, por partes) | 🟡 **lista para ejecutar en tu PC** | configs, instalador y guía; falta ejecutarla en la RTX 5070 |
+| B — Prototipo en el PC: TITAN 120M (118 M) | 🟡 **lista para ejecutar en tu PC** | plan completo `configs/plans/pc_120m.yaml` probado de extremo a extremo con un modelo diminuto; el de 118 M aprende y se exporta idéntico a llama.cpp; [guía](PC_MODELO_120M.md); falta ejecutarlo en la RTX 5070 |
 | C — Escalado en la nube | 🟡 **código verificado**, sin lanzar | DDP/FSDP2 probados; proveedores en modo de prueba; falta presupuesto, claves y red |
 | D — Entrenamiento principal | ⏸️ pendiente de tu decisión de escala y presupuesto | [tabla de escalado](ESCALADO_Y_PRESUPUESTO.md) |
 | E — SFT / DPO / herramientas | ✅ pipeline completo y ejecutado: 100 % de llamadas válidas, ~80 % de respuestas correctas en tareas reservadas, y un fallo de honestidad detectado y corregido con datos (SFT v2 + DPO v2) | [EVALUACION.md](EVALUACION.md) |
@@ -27,6 +27,7 @@
 10. **Interfaz web local:** chat y agente con diálogos de permisos y protección anti-CSRF ([captura](../reports/ui_agente.png)).
 11. **Nube:** estimación de coste, `--approve` obligatorio, rechazo por presupuesto y guardián en el nodo.
 12. **Diagnóstico:** `titan doctor` revisa GPU, CUDA, VRAM, disco, paquetes y red en tu PC.
+13. **Plan de 118 M para tu PC:** piloto automático de la tasa de aprendizaje, micro-lote elegido midiendo la GPU (sin desbordar la VRAM en Windows), `torch.compile` automático, contexto 2048, SFT con conversaciones abiertas en español (OASST2, Aya) y sintéticas verificadas, DPO, GGUF y evaluación, todo en un plan reanudable por sesiones.
 
 ## Qué NO está hecho y por qué
 
@@ -44,7 +45,7 @@
 ## Decisiones que necesito de ti
 
 1. **Presupuesto para la nube** (ver la escalera en [ESCALADO_Y_PRESUPUESTO.md](ESCALADO_Y_PRESUPUESTO.md)):
-   * 0 USD → solo PC (100 M).
+   * 0 USD → solo PC (118 M, plan `pc_120m`).
    * ~100–200 USD → titan-350m (validación de la nube).
    * ~1–2,5 mil USD → titan-1b (primer modelo útil en español).
    * ~12–55 mil USD → titan-3b o MoE 7B-A2B (máxima capacidad que cabe bien en tu laptop).
@@ -65,4 +66,5 @@
   el de expertos en tu PC? Es la misma fase base para los tres planes.
 * ¿Te parece bien que la memoria persistente del agente venga desactivada por defecto?
 * ¿Qué herramientas te importan más en el día a día (archivos, código, web, documentos, voz)?
-* ¿Cuánto tiempo seguido puede estar tu laptop entrenando (horas por día)?
+* ¿Cuánto tiempo seguido puede estar tu laptop entrenando (horas por día)? El plan de 118 M necesita 32–67 h en total.
+* Cuando ejecutes `titan bench --find-batch` en tu PC, ¿me envías el JSON? Con la velocidad real ajusto tokens y tiempos.

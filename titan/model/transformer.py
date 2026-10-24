@@ -188,6 +188,7 @@ class ModelOutput:
     ce_loss: torch.Tensor | None = None
     aux_loss: torch.Tensor | None = None
     z_loss: torch.Tensor | None = None
+    hidden: torch.Tensor | None = None  # estados finales normalizados (con return_hidden=True)
 
 
 class Transformer(nn.Module):
@@ -265,6 +266,7 @@ class Transformer(nn.Module):
         start_pos: int = 0,
         cache: KVCache | None = None,
         last_only: bool = False,
+        return_hidden: bool = False,
     ) -> ModelOutput:
         B, T = tokens.shape
         if start_pos + T > self.cfg.max_seq_len:
@@ -283,6 +285,8 @@ class Transformer(nn.Module):
             aux_total = aux_total + aux
             z_total = z_total + z
         h = self.norm(h)
+        if return_hidden:  # el llamador proyecta solo las posiciones que necesita
+            return ModelOutput(logits=None, hidden=h)
         if last_only:
             h = h[:, -1:, :]
         chunk = self.cfg.ce_chunk_size

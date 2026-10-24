@@ -4,6 +4,10 @@ Esta guía explica cómo entrenar en tu propio equipo un modelo TITAN **desde
 pesos aleatorios**, por fases que se guardan en el disco y se pueden hacer en
 días distintos.
 
+> **Plan recomendado ahora: TITAN 120M** (118 M parámetros, de pesos aleatorios
+> a GGUF en un solo plan): [PC_MODELO_120M.md](PC_MODELO_120M.md). Los planes de
+> 100 M de esta guía siguen disponibles y comparten la instalación y los datos.
+
 ## Qué se puede esperar (y qué no)
 
 | | |

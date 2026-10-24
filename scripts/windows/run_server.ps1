@@ -21,8 +21,14 @@ if (-not (Test-Path $Config)) {
     Write-Host "Configuración creada en $Config (revísela)."
 }
 if (-not $Model) {
+    # 1) resultado del plan de 118 M (GGUF Q8_0 o, si no, la exportación TITAN), 2) models\quantized, 3) models\base\titan
+    $planGguf = Join-Path $App "runs\pc_120m\gguf\titan-120m-Q8_0.gguf"
+    $planExport = Join-Path $App "runs\pc_120m\export"
     $gguf = Get-ChildItem (Join-Path $Root "models\quantized") -Filter *.gguf -ErrorAction SilentlyContinue | Select-Object -First 1
-    if ($gguf) { $Model = $gguf.FullName } else { $Model = Join-Path $Root "models\base\titan" }
+    if (Test-Path $planGguf) { $Model = $planGguf }
+    elseif (Test-Path (Join-Path $planExport "model_config.json")) { $Model = $planExport }
+    elseif ($gguf) { $Model = $gguf.FullName }
+    else { $Model = Join-Path $Root "models\base\titan" }
 }
 Write-Host "Modelo: $Model"
 Start-Job -ScriptBlock { param($p) Start-Sleep 6; Start-Process "http://127.0.0.1:$p" } -ArgumentList $Port | Out-Null

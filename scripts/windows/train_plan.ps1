@@ -7,13 +7,16 @@
   sesión: al cumplirse el tiempo guarda un checkpoint y se detiene; la
   siguiente ejecución reanuda exactamente en ese punto.
 
+  Plan por defecto: configs\plans\pc_120m.yaml (modelo de ~118 M parámetros, desde
+  pesos aleatorios hasta el GGUF final). Mantenga el portátil conectado a la corriente.
+
 .EXAMPLE
-  powershell -File scripts\windows\train_plan.ps1 -Hours 4
-  powershell -File scripts\windows\train_plan.ps1 -Plan configs\plans\pc_btx_100m.yaml
+  powershell -File scripts\windows\train_plan.ps1 -Hours 8
+  powershell -File scripts\windows\train_plan.ps1 -Plan configs\plans\pc_dense_100m.yaml
   powershell -File scripts\windows\train_plan.ps1 -Status
 #>
 param(
-    [string]$Plan = "configs\plans\pc_dense_100m.yaml",
+    [string]$Plan = "configs\plans\pc_120m.yaml",
     [double]$Hours = 0,
     [switch]$Status
 )

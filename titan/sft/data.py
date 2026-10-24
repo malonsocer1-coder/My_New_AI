@@ -56,8 +56,8 @@ def pack(encoded: list[tuple[list[int], list[int]]], row_len: int, pad_id: int) 
     return np.asarray(rows_t, dtype=np.int64), np.asarray(rows_m, dtype=np.uint8)
 
 
-def prepare_sft(config_path: str, log=print) -> dict:
-    cfg = read_yaml(config_path)
+def prepare_sft(config: str | dict, log=print) -> dict:
+    cfg = read_yaml(config) if isinstance(config, (str, Path)) else dict(config)
     tok = TitanTokenizer.load(cfg["tokenizer"])
     fmt = ChatFormat(tok)
     seq_len = int(cfg["seq_len"])

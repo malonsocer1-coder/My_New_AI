@@ -140,9 +140,15 @@ def cmd_plan(args) -> None:
 
 
 def cmd_bench(args) -> None:
-    from .train.bench import bench
-    print(json.dumps(bench(args.config, args.steps, overrides=_parse_overrides(args.set),
-                           target_tokens=args.tokens), indent=2))
+    from .train.bench import bench, find_batch
+    if args.find_batch:
+        res = find_batch(args.config, _parse_overrides(args.set), args.tokens)
+    else:
+        res = bench(args.config, args.steps, overrides=_parse_overrides(args.set), target_tokens=args.tokens)
+    if args.out:
+        from .utils.io import write_json
+        write_json(args.out, res)
+    print(json.dumps(res, indent=2, ensure_ascii=False))
 
 
 def cmd_doctor(args) -> None:
@@ -278,6 +284,9 @@ def build_parser() -> argparse.ArgumentParser:
     be.add_argument("--steps", type=int, default=10)
     be.add_argument("--tokens", type=float, help="tokens objetivo para proyectar horas")
     be.add_argument("--set", nargs="*")
+    be.add_argument("--find-batch", action="store_true",
+                    help="medir todos los micro-lotes que caben y elegir el más rápido")
+    be.add_argument("--out", help="guardar el resultado en JSON")
     be.set_defaults(func=cmd_bench)
 
     dr = sub.add_parser("doctor", help="diagnosticar el equipo (GPU, CUDA, memoria, disco, red)")

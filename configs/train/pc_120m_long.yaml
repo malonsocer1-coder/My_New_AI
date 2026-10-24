@@ -1,0 +1,32 @@
+# Fase long_ctx: continúa la base con contexto de 2048 tokens (la base se entrena a 1024,
+# que es más barato por token). ~131 M tokens; LR bajo con su propio calentamiento corto.
+model_config: configs/model/titan_120m.yaml
+train:
+  task: pretrain
+  data: data/pc_es/manifest.json
+  tokenizer: data/pc_es/tokenizer
+  seq_len: 2048
+  batch_tokens: 262144          # 128 secuencias de 2048
+  micro_batch_size: 4
+  auto_batch: true
+  auto_batch_max: 16
+  auto_batch_margin_gb: 0.7
+  max_steps: 500
+  lr: 3.0e-4
+  min_lr: 3.0e-5
+  warmup_steps: 50
+  schedule: cosine
+  weight_decay: 0.1
+  grad_clip: 1.0
+  dtype: bf16
+  compile: auto
+  device: auto
+  eval_interval: 250
+  eval_windows: 32
+  eval_batch_size: 4
+  log_interval: 10
+  ckpt_interval: 100
+  keep_last: 2
+  sample_prompts:
+    - "La Ciudad de México es"
+  seed: 2024

@@ -11,10 +11,14 @@
   5. Comprueba que la GPU es visible para PyTorch.
 
   Las GPU RTX 50 (Blackwell) necesitan PyTorch compilado con CUDA 12.8 o superior.
+  Con -Triton instala además triton-windows (compatible con su versión de PyTorch) para
+  que torch.compile acelere el entrenamiento; si la prueba falla, lo desinstala y se
+  entrena sin compilar (más lento, igual de correcto).
 
 .EXAMPLE
   powershell -ExecutionPolicy Bypass -File install.ps1
   powershell -ExecutionPolicy Bypass -File install.ps1 -Root E:\TITAN_AI -NoSleep
+  powershell -ExecutionPolicy Bypass -File install.ps1 -Triton
 #>
 param(
     [string]$Root = "D:\TITAN_AI",
@@ -22,6 +26,7 @@ param(
     [string]$Branch = "claude/adoring-hypatia-oc7bdz",
     [string]$TorchIndex = "https://download.pytorch.org/whl/cu128",
     [switch]$SkipTorch,
+    [switch]$Triton,
     [switch]$NoSleep
 )
 
@@ -86,6 +91,20 @@ if (-not $SkipTorch) {
 Step "Instalando TITAN AI"
 & $VPy -m pip install -e "$($App)[cloud,export,docs,dev]"
 
+if ($Triton) {
+    Step "Instalando triton-windows para torch.compile"
+    # triton-windows 3.N corresponde a PyTorch 2.(N+4): 2.8 -> 3.4, 2.9 -> 3.5, ...
+    $bound = & $VPy -c "import torch; v=torch.__version__.split('+')[0].split('.'); print('3.' + str(int(v[1]) - 3))"
+    & $VPy -m pip install -U "triton-windows<$bound"
+    $ErrorActionPreference = "Continue"
+    & $VPy -c "import torch; f=torch.compile(lambda x: x*2+1); assert f(torch.ones(8, device='cuda')).sum().item() == 24; print('torch.compile funciona')"
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "torch.compile no funciona con este Triton; se desinstala y se entrenará sin compilar."
+        & $VPy -m pip uninstall -y triton-windows
+    }
+    $ErrorActionPreference = "Stop"
+}
+
 # 4. Enlaces a las carpetas de datos ---------------------------------------
 Step "Enlazando carpetas de datos"
 function Link-Dir($name, $target) {
@@ -122,6 +141,6 @@ if ($NoSleep) {
 Write-Host "`nInstalación terminada." -ForegroundColor Green
 Write-Host "Siguientes pasos (desde $App):"
 Write-Host "  .\.venv\Scripts\Activate.ps1"
-Write-Host "  titan bench --config configs/train/pc_base_100m.yaml --steps 10"
+Write-Host "  titan bench --config configs/train/pc_120m_base.yaml --find-batch --out reports\bench_pc.json"
 Write-Host "  titan data prepare --config configs/data/pc_es.yaml"
-Write-Host "  powershell -File scripts\windows\train_plan.ps1 -Hours 4"
+Write-Host "  powershell -File scripts\windows\train_plan.ps1 -Hours 8"

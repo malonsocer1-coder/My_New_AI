@@ -16,7 +16,38 @@ import torch
 from ..model import Transformer
 from .config import load_run_config
 from .distributed import pick_device
-from .trainer import DTYPES, build_optimizer, detect_peak_flops
+from .trainer import DTYPES, build_optimizer, detect_peak_flops, resolve_compile
+
+
+def _seqs_per_step(cfg) -> int:
+    if cfg.batch_tokens:
+        return cfg.batch_tokens // cfg.seq_len
+    return cfg.micro_batch_size * cfg.grad_accum_steps
+
+
+def find_batch(config_path: str, overrides: dict | None = None, target_tokens: float | None = None,
+               log=print) -> dict:
+    """Mide todos los micro-lotes posibles en esta GPU y proyecta las horas con el mejor
+    (lo mismo que hace ``auto_batch: true`` al empezar a entrenar)."""
+    from .autobatch import probe
+    model_cfg, cfg = load_run_config(config_path, overrides)
+    device = pick_device(cfg.device)
+    if cfg.num_threads:
+        torch.set_num_threads(cfg.num_threads)
+    seqs = _seqs_per_step(cfg)
+    res = probe(model_cfg, cfg, device, DTYPES[cfg.dtype], seqs, cfg.auto_batch_max, cfg.auto_batch_margin_gb,
+                log=log)
+    tps = res["choice"]["tokens_per_s_eager"]
+    total = target_tokens or seqs * cfg.seq_len * cfg.max_steps
+    res.update({
+        "device": torch.cuda.get_device_name(device) if device.type == "cuda" else str(device),
+        "params_M": round(model_cfg.param_counts()["total"] / 1e6, 2), "seq_len": cfg.seq_len,
+        "tokens_per_step": seqs * cfg.seq_len, "target_tokens": int(total),
+        "achieved_tflops_eager": round(tps * model_cfg.flops_per_token(cfg.seq_len) / 1e12, 2),
+        "projected_hours_eager": round(total / tps / 3600, 2),
+        "note": "medido sin torch.compile; con compile suele ser más rápido (mida con titan bench)",
+    })
+    return res
 
 
 def bench(config_path: str, steps: int = 10, warmup: int = 3, overrides: dict | None = None,
@@ -26,9 +57,11 @@ def bench(config_path: str, steps: int = 10, warmup: int = 3, overrides: dict | 
     dtype = DTYPES[cfg.dtype]
     if cfg.num_threads:
         torch.set_num_threads(cfg.num_threads)
+    if cfg.batch_tokens:
+        cfg.grad_accum_steps = _seqs_per_step(cfg) // cfg.micro_batch_size
     model = Transformer(model_cfg).to(device)
     opt = build_optimizer(model, cfg, device)
-    fwd = torch.compile(model) if cfg.compile else model
+    fwd = torch.compile(model) if resolve_compile(cfg, device) else model
     use_ac = dtype != torch.float32
     ctx = (lambda: torch.autocast(device.type, dtype=dtype)) if use_ac else contextlib.nullcontext
     B, T = cfg.micro_batch_size, cfg.seq_len

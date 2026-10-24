@@ -1,0 +1,41 @@
+# Fase base del plan de 118 M en el PC (RTX 5070 Laptop, 8 GB).
+# Lote global fijo de 262 144 tokens por paso; el micro-lote se elige midiendo la GPU
+# al empezar (auto_batch) y la acumulación se ajusta sola. ~2 750 M tokens.
+# El plan (configs/plans/pc_120m.yaml) fija lr/min_lr con el resultado del piloto.
+model_config: configs/model/titan_120m.yaml
+train:
+  run_name: pc_120m_base
+  out_dir: runs/pc_120m_base
+  task: pretrain
+  data: data/pc_es/manifest.json
+  tokenizer: data/pc_es/tokenizer
+  seq_len: 1024
+  batch_tokens: 262144          # 256 secuencias de 1024 por paso del optimizador
+  micro_batch_size: 8           # solo si auto_batch está desactivado o no hay GPU
+  auto_batch: true
+  auto_batch_max: 32
+  auto_batch_margin_gb: 0.7     # VRAM libre mínima en el pico (evita el desbordamiento a RAM de Windows)
+  max_steps: 10500              # 2 752 M tokens (~23 tokens por parámetro)
+  lr: 1.6e-3
+  min_lr: 1.6e-4
+  warmup_steps: 500
+  schedule: wsd                 # meseta + caída final: alargar max_steps durante la meseta no reinicia nada
+  wsd_decay_frac: 0.2
+  weight_decay: 0.1
+  grad_clip: 1.0
+  dtype: bf16
+  compile: auto                 # usa torch.compile si hay Triton (Windows: triton-windows)
+  device: auto
+  eval_interval: 500
+  eval_windows: 64
+  eval_batch_size: 8
+  log_interval: 10
+  ckpt_interval: 200            # ~45 min entre checkpoints; cada uno ocupa ~1,4 GB (pesos fp32 + AdamW)
+  keep_last: 2
+  keep_every: 2500
+  sample_prompts:
+    - "La Ciudad de México es"
+    - "Pregunta: ¿Cuánto es 48 + 27?\nRespuesta:"
+    - "Para preparar unos tacos al pastor se necesita"
+    - "def es_par(n):"
+  seed: 1234

@@ -6,7 +6,7 @@ el trabajo previo queda guardado y el siguiente paso viable queda documentado.
 | Etapa | Objetivo | Dónde | Estado |
 |---|---|---|---|
 | A — Validación técnica | modelo pequeño desde cero: aprende, generaliza a validación, genera, guarda/carga, reanuda | CPU de la sesión | **hecha** (ver `reports/INFORME_ETAPA_A.md`) |
-| B — Prototipo | datos reales en español (2–3 mil millones de tokens), 100 M parámetros, plan por partes, evaluación automática | tu PC (RTX 5070) | configurada (`configs/plans/pc_btx_100m.yaml`), pendiente de ejecutar |
+| B — Prototipo | datos reales en español (~3 mil millones de tokens), 118 M parámetros, plan completo hasta GGUF, evaluación automática | tu PC (RTX 5070) | configurada (`configs/plans/pc_120m.yaml`, guía en `docs/PC_MODELO_120M.md`), pendiente de ejecutar |
 | C — Escalado | DDP/FSDP2 en GPUs alquiladas, 350 M–1 B | nube | código verificado con 2 procesos; pendiente de presupuesto |
 | D — Entrenamiento principal | el tamaño elegido según presupuesto (1 B–8 B o MoE) | nube | pendiente de presupuesto y autorización |
 | E — Capacidades | SFT de instrucciones y herramientas, ajuste de preferencias | PC o nube | pipeline hecho y probado; SFT de demostración sobre la Etapa A |
@@ -22,8 +22,10 @@ torchrun --nproc_per_node=8 -m titan.cli train --config configs/train/titan_1b.y
 python scripts/make_sft_data.py && titan sft prepare --config configs/sft/stage_a.yaml
 titan train --config configs/train/sft_stage_a.yaml            # SFT desde el modelo base
 python scripts/make_pref_data.py && titan dpo --config configs/train/dpo_stage_a.yaml   # preferencias
-titan plan run --plan configs/plans/pc_btx_100m.yaml --hours 4 # entrenamiento por partes
-titan bench --config configs/train/pc_base_100m.yaml           # medir el hardware
+titan plan run --plan configs/plans/pc_120m.yaml --hours 8     # plan completo de 118 M por sesiones
+titan plan status --plan configs/plans/pc_120m.yaml
+titan bench --config configs/train/pc_120m_base.yaml --find-batch   # micro-lotes que caben y su velocidad
+titan bench --config configs/train/pc_120m_base.yaml --steps 10     # velocidad con la config tal cual
 ```
 
 ## Fases de capacidad y su justificación
@@ -48,12 +50,34 @@ titan bench --config configs/train/pc_base_100m.yaml           # medir el hardwa
 |---|---|---|---|---|
 | ≤ 10 M | 1,5e-3 | 4 k | 200 pasos | coseno |
 | 100 M | 6e-4 | 131 k | 500 | WSD |
+| 118 M profundo (28 × 576) | elegida por el piloto entre 8e-4, 1,6e-3 y 3,2e-3 | 262 k | 500 | WSD |
 | 1 B | 3e-4 | 524 k | 2 000 | WSD |
 | 8 B | 1,5e-4–3e-4 | 2–4 M | 2 000 | WSD |
 
 WSD (calentamiento-meseta-caída) permite continuar desde un checkpoint de la
 meseta con más datos sin rehacer la programación, encaja con el entrenamiento
 por partes.
+
+## Lote, memoria y velocidad
+
+| Clave | Qué hace |
+|---|---|
+| `batch_tokens` | lote global fijo (tokens por paso del optimizador); la acumulación se calcula sola |
+| `auto_batch: true` | al empezar mide en la GPU cada micro-lote posible (pasos reales con AdamW) y elige el de más tokens/s que deja al menos `auto_batch_margin_gb` de VRAM libre; si nada cabe, activa el recálculo de activaciones. La medición se guarda en `cache/auto_batch/` y se reutiliza |
+| `compile: auto` | `torch.compile` solo si hay GPU y Triton; si la compilación falla, sigue sin compilar |
+| `max_epochs` (SFT) | calcula `max_steps` a partir del número real de filas de los datos |
+
+Cambiar el reparto micro-lote × acumulación entre sesiones no altera el
+entrenamiento: el orden de los datos depende solo del número de muestras vistas.
+
+## Planes por fases
+
+`titan plan run` ejecuta un YAML de fases reanudables (`titan/train/plan.py`):
+`train`, `sweep` (ejecuciones cortas que eligen, p. ej., la tasa de
+aprendizaje), `grow_depth`, `upcycle`, `merge_experts`, `sft_data`, `dpo`,
+`export`, `gguf_quantize` y `eval`. Los valores pueden referirse a fases
+anteriores: `@base` (su carpeta) o `@result:lr_pilot.best.lr` (un valor de su
+resultado, admite `*0.1`). `--hours` limita la sesión entera, no cada fase.
 
 ## Métricas que se registran
 

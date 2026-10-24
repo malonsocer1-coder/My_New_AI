@@ -13,6 +13,8 @@ alquilado ninguna GPU).
 | DPO de demostración | 8,6 M | 150 pasos × 8 pares | 0,22 h | — | 94,5 % de preferencia en pares reservados |
 | Escalado xs / s / m | 2,9 / 8,6 / 18,9 M | 4,1 M c/u | 0,14 / 0,31 / 0,51 h | 11 k / 4,2 k / 2,2 k tok/s | ver abajo |
 | DDP y FSDP2 (2 procesos) | 1,1 M | — | segundos | — | correcto con reanudación |
+| TITAN 120M, prueba de aprendizaje (datos de la Etapa A, vocabulario 8 192) | 103,8 M | 0,16 M | 4 min | ~700 tok/s | pérdida 9,0 → 7,04 en 40 pasos |
+| TITAN 120M, `titan bench` en CPU (bf16, 1 024 de contexto) | 118,0 M | — | — | 536 tok/s ≈ 0,49 TFLOPS | la base (2 753 M tokens) tardaría ~1 430 h en CPU |
 
 \* Incluye 20 min en pausa (SIGSTOP) mientras se ejecutaba otra tarea.
 
@@ -57,4 +59,6 @@ PyTorch en CPU: es el backend recomendado para el PC.
 Ver `docs/ESCALADO_Y_PRESUPUESTO.md`: de ~70–180 USD (350 M) a ~0,9–2,3 mil
 USD (1 B), ~12–55 mil USD (3 B o MoE 7B-A2B) y ~79–210 mil USD (8 B), con
 8×H100 a 1,5–4 USD/GPU-h y MFU del 40 %. En el PC, el plan por partes de 100 M
-cuesta 0 USD y ~32–67 h de GPU.
+cuesta 0 USD y ~32–67 h de GPU, igual que el plan completo de 118 M
+(`configs/plans/pc_120m.yaml`: piloto, base de 2 753 M tokens, contexto 2048,
+SFT, DPO y exportación) para 25–12 TFLOPS efectivos.

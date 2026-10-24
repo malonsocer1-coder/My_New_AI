@@ -1,0 +1,18 @@
+# TITAN 120M: ~118 M parámetros, diseño "profundo y estrecho" para la RTX 5070 Laptop (8 GB).
+# Misma forma que los mejores modelos abiertos de este tamaño (MobileLLM-125M y
+# SmolLM2-135M usan d = 576, 9 cabezas, 3 cabezas KV, FFN 1536 y ~30 capas): a menos
+# de 1 000 M de parámetros, más capas finas rinden mejor que pocas capas anchas con
+# los mismos parámetros (Liu et al., 2024, «MobileLLM»).
+# Compatible con el formato Llama (exportable a GGUF / llama.cpp).
+name: titan-120m
+vocab_size: 32768
+dim: 576
+n_layers: 28
+n_heads: 9              # head_dim = 64
+n_kv_heads: 3           # GQA 3:1: caché KV 3 veces más pequeña en inferencia
+ffn_dim: 1536
+max_seq_len: 2048       # la base se entrena a 1024 y la fase long_ctx amplía a 2048
+rope_theta: 10000.0
+tie_embeddings: true    # 18,9 M parámetros compartidos entre entrada y salida
+activation_checkpointing: false   # el ajuste automático del lote lo activa solo si hace falta
+ce_chunk_size: 1024     # entropía cruzada por fragmentos: no materializa los logits completos

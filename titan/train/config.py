@@ -19,7 +19,15 @@ class TrainConfig:
     seq_len: int = 1024
     micro_batch_size: int = 8
     grad_accum_steps: int = 1
+    # Lote global fijo en tokens por paso del optimizador. Si se define, la acumulación
+    # se calcula sola (batch_tokens / (seq_len * micro_batch_size * GPUs)).
+    batch_tokens: int | None = None
+    # Elegir el micro-lote midiendo tokens/s y memoria en la GPU (ver train/autobatch.py).
+    auto_batch: bool = False
+    auto_batch_max: int = 32
+    auto_batch_margin_gb: float = 0.7   # memoria de GPU que debe quedar libre en el pico
     max_steps: int = 1000
+    max_epochs: float | None = None  # SFT: calcula max_steps a partir del tamaño de los datos
     # Optimización
     lr: float = 3e-4
     min_lr: float = 3e-5
@@ -33,7 +41,7 @@ class TrainConfig:
     grad_clip: float = 1.0
     # Numérica y rendimiento
     dtype: str = "bf16"  # bf16 | fp16 | fp32
-    compile: bool = False
+    compile: bool | str = False  # True | False | "auto" (solo si hay GPU y Triton instalado)
     parallel: str = "auto"  # auto | none | ddp | fsdp
     fsdp_shard_size: int | None = None  # HSDP: tamaño del grupo de sharding (p. ej. GPUs por nodo)
     device: str = "auto"
@@ -84,7 +92,10 @@ def load_run_config(path: str, overrides: dict[str, Any] | None = None) -> tuple
     if model_d is None:
         raise ValueError(f"{path}: falta la sección 'model' o 'model_config'")
     train_d = dict(d.get("train", {}))
-    for k, v in (overrides or {}).items():
+    overrides = dict(overrides or {})
+    if "model_config" in overrides:  # cambiar la arquitectura sin editar el YAML
+        model_d = read_yaml(overrides.pop("model_config"))
+    for k, v in overrides.items():
         if k.startswith("model."):
             model_d[k[6:]] = v
         else:

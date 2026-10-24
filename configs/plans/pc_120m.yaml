@@ -1,0 +1,108 @@
+# Plan completo para el PC: TITAN 120M (~118 M parámetros) desde pesos aleatorios hasta
+# un modelo de chat con herramientas exportado a GGUF. Se ejecuta por sesiones:
+#   powershell -File scripts\windows\train_plan.ps1 -Hours 8
+# Cada ejecución sigue donde se quedó (checkpoints cada ~45 min y plan_state.json).
+#
+# Coste estimado en la RTX 5070 Laptop (a confirmar con `titan bench --find-batch`):
+#   lr_pilot ~2-4 h · base ~28-58 h · long_ctx ~2-3 h · sft + dpo + exportar < 1 h
+#   (rango para 25-12 TFLOPS efectivos). Gasto en dinero: 0 (solo electricidad).
+#
+# Requisito previo: datos preparados con
+#   titan data prepare --config configs/data/pc_es.yaml
+name: pc_120m
+workdir: runs/pc_120m
+phases:
+  # 1) Piloto de tasa de aprendizaje: 3 ejecuciones cortas completas (calentamiento,
+  #    meseta y caída) con el mismo lote que la base; se elige la de menor pérdida de
+  #    validación final. Si dos quedan a menos de 0,5 %, se elige la más baja (las
+  #    ejecuciones cortas favorecen tasas altas). Para omitirlo: enabled: false y fije lr.
+  - id: lr_pilot
+    type: sweep
+    config: configs/train/pc_120m_base.yaml
+    set: {max_steps: 250, warmup_steps: 50, wsd_decay_frac: 0.3, eval_interval: 250,
+          eval_windows: 48, ckpt_interval: 125, keep_last: 1, keep_every: null, sample_prompts: []}
+    variants:
+      - {lr: 8.0e-4, min_lr: 8.0e-5}
+      - {lr: 1.6e-3, min_lr: 1.6e-4}
+      - {lr: 3.2e-3, min_lr: 3.2e-4}
+    metric: final_val_loss
+    tie_tolerance: 0.005
+
+  # 2) Preentrenamiento base a 1024 tokens de contexto: ~2 750 M tokens.
+  - id: base
+    type: train
+    config: configs/train/pc_120m_base.yaml
+    set:
+      lr: "@result:lr_pilot.best.lr"
+      min_lr: "@result:lr_pilot.best.min_lr"
+
+  # 3) Contexto largo: 2048 tokens, ~131 M tokens.
+  - id: long_ctx
+    type: train
+    config: configs/train/pc_120m_long.yaml
+    init_from: "@base"
+
+  # 4) Datos de SFT: conversaciones sintéticas verificadas (herramientas reales y
+  #    aritmética) + conversaciones abiertas en español con licencia Apache-2.0.
+  #    Las importadas son opcionales: sin Internet o si cambian, se registran y se omiten.
+  - id: sft_data
+    type: sft_data
+    tokenizer: data/pc_es/tokenizer
+    seq_len: 2048
+    val_fraction: 0.03
+    synthetic: {tools: 8000, arith: 3000, seed: 1}
+    imports:
+      - name: oasst2_es
+        format: oasst
+        loader: hf
+        optional: true
+        license: "Apache-2.0 (OpenAssistant OASST2)"
+        params: {path: OpenAssistant/oasst2, split: train}
+        langs: [es]
+        max_turns: 6
+        max_conversations: 20000
+      - name: aya_es
+        format: pairs
+        loader: hf
+        optional: true
+        license: "Apache-2.0 (Aya Dataset, Cohere For AI)"
+        params: {path: CohereLabs/aya_dataset, split: train}
+        filter: {language_code: [spa]}
+        prompt_field: inputs
+        response_field: targets
+        max_conversations: 20000
+
+  # 5) SFT: 3 épocas sobre esos datos.
+  - id: sft
+    type: train
+    config: configs/train/pc_120m_sft.yaml
+    init_from: "@long_ctx"
+    set: {data: "@sft_data"}
+
+  # 6) DPO con pares verificados (fidelidad a las herramientas, honestidad ante
+  #    errores, archivos inexistentes, permisos denegados y preguntas sin respuesta).
+  - id: dpo
+    type: dpo
+    init_from: "@sft"
+    pairs: {train: 3000, eval: 200, seed: 3}
+    set: {beta: 0.1, lr: 1.0e-5, steps: 300, batch_size: 8, warmup_steps: 30,
+          device: auto, dtype: bf16, log_interval: 10}
+
+  # 7) Exportación verificada (TITAN, Hugging Face Llama, GGUF) y cuantización.
+  - id: export
+    type: export
+    checkpoint: "@dpo"
+    formats: [titan, hf, gguf]
+    dtype: bf16
+    tokenizer: data/pc_es/tokenizer
+  - id: gguf
+    type: gguf_quantize
+    model: "@export/gguf"
+    types: [Q8_0, Q4_K_M]
+
+  # 8) Benchmarks propios sobre el modelo final.
+  - id: eval
+    type: eval
+    checkpoint: "@export"
+    suite: all
+    data: data/pc_es/manifest.json

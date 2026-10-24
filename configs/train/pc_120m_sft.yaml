@@ -1,0 +1,31 @@
+# Fase sft: ajuste de instrucciones y uso de herramientas sobre el modelo long_ctx.
+# Los datos los prepara la fase sft_data del plan; max_steps se calcula a partir de
+# max_epochs y del número real de filas. Solo cuentan los tokens del asistente.
+model_config: configs/model/titan_120m.yaml
+train:
+  task: sft
+  data: data/sft_pc_120m        # el plan lo sustituye por @sft_data
+  tokenizer: data/pc_es/tokenizer
+  seq_len: 2048
+  batch_tokens: 65536           # 32 filas empaquetadas de 2048
+  micro_batch_size: 4
+  auto_batch: true
+  auto_batch_max: 16
+  auto_batch_margin_gb: 0.7
+  max_epochs: 3
+  lr: 2.0e-4
+  min_lr: 2.0e-5
+  warmup_steps: 30
+  schedule: cosine
+  weight_decay: 0.0
+  grad_clip: 1.0
+  dtype: bf16
+  compile: auto
+  device: auto
+  eval_interval: 100
+  eval_windows: 128
+  eval_batch_size: 4
+  log_interval: 10
+  ckpt_interval: 100
+  keep_last: 2
+  seed: 7
