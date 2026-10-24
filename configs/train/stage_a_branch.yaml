@@ -1,0 +1,23 @@
+# Ramas y ajustes de la demostración BTX sobre la Etapa A (CPU).
+model_config: configs/model/titan_stage_a.yaml
+train:
+  task: pretrain
+  data: data/stage_a/manifest.json
+  tokenizer: data/stage_a/tokenizer
+  seq_len: 256
+  micro_batch_size: 16
+  max_steps: 300
+  lr: 5.0e-4
+  min_lr: 5.0e-5
+  warmup_steps: 30
+  schedule: cosine
+  weight_decay: 0.1
+  dtype: fp32
+  compile: false
+  device: cpu
+  num_threads: 4
+  eval_interval: 0
+  log_interval: 50
+  ckpt_interval: 1000
+  keep_last: 1
+  seed: 99

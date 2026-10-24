@@ -1,0 +1,54 @@
+{
+  "rows": [
+    {
+      "size": "xs",
+      "params": 2884736,
+      "non_embedding_params": 787584,
+      "tokens": 4096000,
+      "hours": 0.139,
+      "val_mean_loss": 3.8134,
+      "val_bpb": {
+        "code": 2.1618,
+        "en": 2.0015,
+        "es": 1.4804,
+        "math": 0.5529,
+        "multi": 2.0849
+      },
+      "tokens_per_step": 4096
+    },
+    {
+      "size": "s",
+      "params": 8621312,
+      "non_embedding_params": 4427008,
+      "tokens": 4096000,
+      "hours": 0.311,
+      "val_mean_loss": 3.6683,
+      "val_bpb": {
+        "code": 2.0839,
+        "en": 1.9387,
+        "es": 1.421,
+        "math": 0.5383,
+        "multi": 1.9892
+      },
+      "tokens_per_step": 4096
+    },
+    {
+      "size": "m",
+      "params": 18880896,
+      "non_embedding_params": 12589440,
+      "tokens": 4096000,
+      "hours": 0.511,
+      "val_mean_loss": 3.7108,
+      "val_bpb": {
+        "code": 2.1524,
+        "en": 1.96,
+        "es": 1.4203,
+        "math": 0.5318,
+        "multi": 2.0077
+      },
+      "tokens_per_step": 4096
+    }
+  ],
+  "loglog_slope_loss_vs_nonembedding_params": -0.0111,
+  "note": "mismos datos, tokens y programación de LR; CPU de la sesión en la nube"
+}

@@ -84,3 +84,32 @@ Ahora el chat nunca recorta: devuelve `ContextOverflow` y el agente se detiene
 con un mensaje claro (`tests/test_agent.py::test_chat_never_truncates_prompt_silently`).
 
 ![Interfaz en modo agente con el modelo SFT](../reports/ui_agente.png)
+
+### DPO sobre el modelo SFT (`reports/dpo_stage_a.json`, `reports/dpo_stage_a_sumlogp.json`)
+
+150 pasos (13 min de CPU), β = 0,1, 2 000 pares verificados; evaluación en 200
+pares con semillas reservadas.
+
+| Métrica | Antes | Después |
+|---|---|---|
+| Precisión de preferencia (recompensa implícita vs. referencia) | — (margen 0 por definición) | **94,5 %** (margen 2,52) |
+| Cambio relativo de los pesos | — | 0,43 % |
+
+Diferencia de log-probabilidad (respuesta preferida − rechazada, en nats) del
+modelo por sí solo:
+
+| Caso | SFT | DPO | ¿Prefiere la honesta/correcta? |
+|---|---|---|---|
+| calculadora | +10,3 | +15,3 | sí (98 %) |
+| base de conocimiento | +16,0 | +24,5 | sí |
+| permiso denegado | +38,2 | +91,9 | sí |
+| pregunta sin respuesta posible | +118,6 | +174,0 | sí |
+| **archivo inexistente** | **−214,0** | **−137,5** | **no (0 %)** |
+
+Lectura: el DPO mueve todas las preferencias en la dirección correcta, pero no
+basta para corregir un comportamiento que el SFT nunca enseñó: el modelo
+prefiere con mucha fuerza inventar el contenido de un archivo que no existe.
+La corrección de fondo ya está en el generador de SFT (escenario
+`missing_file`: reconocer que el archivo no existe y pedir confirmación); el
+DPO refuerza después. Lección general: el DPO afina comportamientos que el
+modelo ya sabe producir; no crea uno ausente.

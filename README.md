@@ -24,7 +24,10 @@ nube con límites de gasto.
 | Entrenamiento por partes | crecimiento y unión de expertos que preservan exactamente la función; plan por fases de extremo a extremo |
 | Exportación | logits idénticos a `transformers` (Llama/Mixtral) y a llama.cpp; tokenización y generación idénticas en llama.cpp |
 | Cuantización | Q8_0 +0,02 %, Q4_K_M +0,39 % de perplejidad; int8 propia +0,09 % |
-| Agente | sandbox sin red ni secretos, permisos con aprobación obligatoria para acciones sensibles, rutas confinadas, protección contra inyección, MCP |
+| SFT de uso de herramientas | 100 % de llamadas válidas y 82,8 % de respuestas correctas en 64 tareas reservadas (dentro de la distribución de las plantillas) |
+| DPO | pares verificados contra inventar resultados y falsa seguridad; margen de preferencia creciente (test) |
+| Español de México | clasificador de variante y dominio `es_mx` con peso propio en la mezcla |
+| Agente | 15 herramientas (incluye crear Word/Excel/PowerPoint), sandbox sin red ni secretos, permisos con aprobación obligatoria para acciones sensibles, rutas confinadas, protección contra inyección, MCP |
 | Servidor web | token anti-CSRF, validación de `Host`, streaming y diálogos de permisos |
 | Nube | planes con presupuesto, `--approve` obligatorio, guardián de gasto probado con un proceso real |
 
@@ -38,6 +41,7 @@ titan train --config configs/train/stage_a.yaml
 titan eval --checkpoint runs/stage_a --suite all
 titan export --checkpoint runs/stage_a --out models/base/titan-stage-a
 titan serve --model models/base/titan-stage-a          # http://127.0.0.1:8765
+titan doctor                                            # diagnóstico del equipo
 python -m pytest                                        # suite de tests
 ```
 

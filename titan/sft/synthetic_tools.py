@@ -164,6 +164,23 @@ def _ex_write(rng, reg, ctx, ws):
             {"role": "assistant", "content": f"Listo, creé {name} ({res.content['bytes']} bytes)."}]
 
 
+def _ex_missing_file(rng, reg, ctx, ws):
+    """El archivo pedido no existe y no hay otro parecido: se reconoce sin inventar nada."""
+    name = rng.choice(["notas", "pendientes", "lista", "datos", "reporte", "agenda"]) + f"_{rng.randint(1, 99)}.txt"
+    q = rng.choice([f"¿Cuántas líneas tiene {name}?", f"¿Qué dice la primera línea de {name}?", f"Lee {name}."])
+    r1 = reg.call("read_file", {"path": name}, ctx)
+    assert not r1.ok
+    r2 = reg.call("list_dir", {}, ctx)
+    assert r2.ok and not any(i["name"] == name for i in r2.content)
+    return [{"role": "user", "content": q},
+            {"role": "assistant", "content": "", "tool_calls": [_call("read_file", {"path": name})]},
+            {"role": "tool", **r1.to_message("read_file")},
+            {"role": "assistant", "content": "No existe. Reviso qué archivos hay.", "tool_calls": [_call("list_dir", {})]},
+            {"role": "tool", **r2.to_message("list_dir")},
+            {"role": "assistant", "content": f"No encontré {name} en el espacio de trabajo y no hay otro archivo "
+                                             "parecido. ¿Puedes confirmar el nombre o compartir el archivo?"}]
+
+
 def _ex_no_tool(rng, reg, ctx, ws):
     q, a = rng.choice(GREETINGS + UNKNOWABLE)
     return [{"role": "user", "content": q}, {"role": "assistant", "content": a}]
@@ -181,7 +198,7 @@ def _ex_permission_denied(rng, reg, ctx, ws):
 
 
 GENERATORS = [(_ex_calculator, 3), (_ex_read_file, 2), (_ex_error_recovery, 1), (_ex_python, 2), (_ex_kb, 2),
-              (_ex_write, 1), (_ex_no_tool, 2), (_ex_permission_denied, 1)]
+              (_ex_write, 1), (_ex_no_tool, 2), (_ex_permission_denied, 1), (_ex_missing_file, 1)]
 
 
 KINDS = {g.__name__[4:]: g for g, _ in GENERATORS}

@@ -1,0 +1,37 @@
+# Demostración real (CPU) del entrenamiento por partes sobre el modelo de la Etapa A:
+#   base (runs/stage_a) -> ramas es / en / code (por separado) -> MoE de 3 expertos -> ajuste conjunto
+# y un control denso con el mismo cómputo adicional (3x300 + 200 pasos = 1100 pasos).
+name: stage_a_btx
+workdir: runs/stage_a_btx
+phases:
+  - id: expert_es
+    type: train
+    config: configs/train/stage_a_branch.yaml
+    init_from: runs/stage_a
+    set: {domain_weights: {es: 0.80, en: 0.08, code: 0.04, math: 0.04, multi: 0.04}}
+  - id: expert_en
+    type: train
+    config: configs/train/stage_a_branch.yaml
+    init_from: runs/stage_a
+    set: {domain_weights: {en: 0.80, es: 0.08, code: 0.04, math: 0.04, multi: 0.04}}
+  - id: expert_code
+    type: train
+    config: configs/train/stage_a_branch.yaml
+    init_from: runs/stage_a
+    set: {domain_weights: {code: 0.80, es: 0.08, en: 0.04, math: 0.04, multi: 0.04}}
+  - id: merge
+    type: merge_experts
+    branches: ["@expert_es", "@expert_en", "@expert_code"]
+    top_k: 2
+    tokenizer: data/stage_a/tokenizer
+  - id: moe_tune
+    type: train
+    config: configs/train/stage_a_branch.yaml
+    init_from: "@merge"
+    model_from: "@merge"
+    set: {max_steps: 200, lr: 3.0e-4, warmup_steps: 20}
+  - id: dense_control
+    type: train
+    config: configs/train/stage_a_branch.yaml
+    init_from: runs/stage_a
+    set: {max_steps: 1100}

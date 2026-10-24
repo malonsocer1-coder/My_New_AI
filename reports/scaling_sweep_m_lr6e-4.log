@@ -1,0 +1,2 @@
+[modelo] 18.88M parámetros (18.88M activos), paralelismo=none, mundo=1, dispositivo=cpu, dtype=fp32
+[datos] 4,096 tokens/paso, 1000 pasos -> 4.1M tokens

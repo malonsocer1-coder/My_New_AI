@@ -16,3 +16,84 @@ paso   1000 | pérdida 3.8982 | lr 1.50e-04 | ‖g‖ 0.88 | 9,686 tok/s | ETA 0
 [modelo] 8.62M parámetros (8.62M activos), paralelismo=none, mundo=1, dispositivo=cpu, dtype=fp32
 [datos] 4,096 tokens/paso, 1000 pasos -> 4.1M tokens
 paso    100 | pérdida 6.9083 | lr 1.50e-03 | ‖g‖ 1.00 | 1,631 tok/s | ETA 37.7 min | $0.00
+paso    200 | pérdida 5.2925 | lr 1.46e-03 | ‖g‖ 0.66 | 3,941 tok/s | ETA 23.7 min | $0.00
+paso    300 | pérdida 4.6897 | lr 1.34e-03 | ‖g‖ 0.57 | 4,446 tok/s | ETA 17.4 min | $0.00
+paso    400 | pérdida 4.3599 | lr 1.16e-03 | ‖g‖ 0.65 | 4,501 tok/s | ETA 13.5 min | $0.00
+paso    500 | pérdida 4.2175 | lr 9.45e-04 | ‖g‖ 0.59 | 4,406 tok/s | ETA 10.5 min | $0.00
+paso    600 | pérdida 4.0990 | lr 7.10e-04 | ‖g‖ 0.69 | 4,178 tok/s | ETA 8.1 min | $0.00
+paso    700 | pérdida 3.9130 | lr 4.90e-04 | ‖g‖ 0.63 | 4,038 tok/s | ETA 5.9 min | $0.00
+paso    800 | pérdida 3.7695 | lr 3.09e-04 | ‖g‖ 0.60 | 4,199 tok/s | ETA 3.9 min | $0.00
+paso    900 | pérdida 3.7392 | lr 1.92e-04 | ‖g‖ 0.64 | 4,370 tok/s | ETA 1.9 min | $0.00
+paso   1000 | pérdida 3.7423 | lr 1.50e-04 | ‖g‖ 0.64 | 4,136 tok/s | ETA 0.0 min | $0.00
+[eval] paso 1000 | code: 3.9032 (2.084 bpb) | en: 4.4921 (1.939 bpb) | es: 3.7721 (1.421 bpb) | math: 0.9719 (0.538 bpb) | multi: 5.2021 (1.989 bpb) | _mean: 3.6683
+[checkpoint] runs/sweep_s/checkpoints/step_00001000
+{'size': 's', 'params': 8621312, 'non_embedding_params': 4427008, 'tokens': 4096000, 'hours': 0.311, 'val_mean_loss': 3.6683, 'val_bpb': {'code': 2.0839, 'en': 1.9387, 'es': 1.421, 'math': 0.5383, 'multi': 1.9892}, 'tokens_per_step': 4096}
+[modelo] 18.88M parámetros (18.88M activos), paralelismo=none, mundo=1, dispositivo=cpu, dtype=fp32
+[datos] 4,096 tokens/paso, 1000 pasos -> 4.1M tokens
+paso    100 | pérdida 6.7782 | lr 1.50e-03 | ‖g‖ 1.08 | 2,017 tok/s | ETA 30.5 min | $0.00
+paso    200 | pérdida 5.5124 | lr 1.46e-03 | ‖g‖ 0.77 | 2,281 tok/s | ETA 25.5 min | $0.00
+paso    300 | pérdida 4.8913 | lr 1.34e-03 | ‖g‖ 0.62 | 2,317 tok/s | ETA 21.8 min | $0.00
+paso    400 | pérdida 4.5248 | lr 1.16e-03 | ‖g‖ 0.76 | 2,381 tok/s | ETA 18.3 min | $0.00
+paso    500 | pérdida 4.3397 | lr 9.45e-04 | ‖g‖ 0.59 | 2,319 tok/s | ETA 15.1 min | $0.00
+paso    600 | pérdida 4.1929 | lr 7.10e-04 | ‖g‖ 0.68 | 2,088 tok/s | ETA 12.3 min | $0.00
+paso    700 | pérdida 3.9843 | lr 4.90e-04 | ‖g‖ 0.59 | 2,129 tok/s | ETA 9.3 min | $0.00
+paso    800 | pérdida 3.8223 | lr 3.09e-04 | ‖g‖ 0.55 | 2,127 tok/s | ETA 6.2 min | $0.00
+paso    900 | pérdida 3.7797 | lr 1.92e-04 | ‖g‖ 0.60 | 2,300 tok/s | ETA 3.1 min | $0.00
+paso   1000 | pérdida 3.7781 | lr 1.50e-04 | ‖g‖ 0.60 | 2,396 tok/s | ETA 0.0 min | $0.00
+[eval] paso 1000 | code: 4.0315 (2.152 bpb) | en: 4.5414 (1.960 bpb) | es: 3.7704 (1.420 bpb) | math: 0.9602 (0.532 bpb) | multi: 5.2504 (2.008 bpb) | _mean: 3.7108
+[checkpoint] runs/sweep_m/checkpoints/step_00001000
+{'size': 'm', 'params': 18880896, 'non_embedding_params': 12589440, 'tokens': 4096000, 'hours': 0.511, 'val_mean_loss': 3.7108, 'val_bpb': {'code': 2.1524, 'en': 1.96, 'es': 1.4203, 'math': 0.5318, 'multi': 2.0077}, 'tokens_per_step': 4096}
+{
+  "rows": [
+    {
+      "size": "xs",
+      "params": 2884736,
+      "non_embedding_params": 787584,
+      "tokens": 4096000,
+      "hours": 0.139,
+      "val_mean_loss": 3.8134,
+      "val_bpb": {
+        "code": 2.1618,
+        "en": 2.0015,
+        "es": 1.4804,
+        "math": 0.5529,
+        "multi": 2.0849
+      },
+      "tokens_per_step": 4096
+    },
+    {
+      "size": "s",
+      "params": 8621312,
+      "non_embedding_params": 4427008,
+      "tokens": 4096000,
+      "hours": 0.311,
+      "val_mean_loss": 3.6683,
+      "val_bpb": {
+        "code": 2.0839,
+        "en": 1.9387,
+        "es": 1.421,
+        "math": 0.5383,
+        "multi": 1.9892
+      },
+      "tokens_per_step": 4096
+    },
+    {
+      "size": "m",
+      "params": 18880896,
+      "non_embedding_params": 12589440,
+      "tokens": 4096000,
+      "hours": 0.511,
+      "val_mean_loss": 3.7108,
+      "val_bpb": {
+        "code": 2.1524,
+        "en": 1.96,
+        "es": 1.4203,
+        "math": 0.5318,
+        "multi": 2.0077
+      },
+      "tokens_per_step": 4096
+    }
+  ],
+  "loglog_slope_loss_vs_nonembedding_params": -0.0111,
+  "note": "mismos datos, tokens y programación de LR; CPU de la sesión en la nube"
+}

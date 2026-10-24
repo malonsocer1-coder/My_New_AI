@@ -16,15 +16,17 @@
 ## Qué funciona hoy (verificado)
 
 1. **Modelo propio desde cero:** arquitectura Llama/Mixtral-compatible, inicialización aleatoria propia, tokenizador BPE propio.
-2. **Datos:** pipeline con licencias, PII, calidad, deduplicación, descontaminación (0 contaminados) y fichas de datos.
-3. **Entrenamiento:** checkpoints atómicos con SHA-256, reanudación exacta tras SIGTERM real, DDP y FSDP2, límites de gasto y tiempo, métricas y ETA.
+2. **Datos:** pipeline con licencias, PII, calidad, deduplicación, descontaminación (0 contaminados), fichas de datos y **dominio propio para el español de México** (`es_mx`, con más peso en la mezcla).
+3. **Entrenamiento:** checkpoints atómicos con SHA-256, reanudación exacta tras SIGTERM real, DDP y FSDP2, límites de gasto y tiempo, métricas y ETA, entropía cruzada por fragmentos para ahorrar VRAM.
 4. **Entrenamiento por partes:** agrandar el modelo y unir expertos preservando lo aprendido; planes por fases reanudables.
 5. **Evaluación:** 8 suites reproducibles sin jueces externos.
 6. **Exportación:** formatos TITAN, Hugging Face y GGUF con equivalencia numérica probada contra `transformers` y llama.cpp.
 7. **Cuantización:** Q8_0 a Q4_K_M con pérdida medida (< 0,4 % de perplejidad en la Etapa A).
-8. **Agente:** 14 herramientas, permisos, sandbox, memoria con privacidad, búsqueda en documentos locales, MCP y plugins.
-9. **Interfaz web local:** chat y agente con diálogos de permisos y protección anti-CSRF.
-10. **Nube:** estimación de coste, `--approve` obligatorio, rechazo por presupuesto y guardián en el nodo.
+8. **Agente:** 15 herramientas (incluida la creación de Word/Excel/PowerPoint), permisos, sandbox, memoria con privacidad, búsqueda en documentos locales, MCP y plugins.
+9. **Ajuste por preferencias (DPO):** con pares verificados que castigan inventar resultados, números falsos y falsa seguridad.
+10. **Interfaz web local:** chat y agente con diálogos de permisos y protección anti-CSRF ([captura](../reports/ui_agente.png)).
+11. **Nube:** estimación de coste, `--approve` obligatorio, rechazo por presupuesto y guardián en el nodo.
+12. **Diagnóstico:** `titan doctor` revisa GPU, CUDA, VRAM, disco, paquetes y red en tu PC.
 
 ## Qué NO está hecho y por qué
 
@@ -35,7 +37,7 @@
 | Lanzar trabajos en la nube | sin autorización de gasto ni claves; la red bloquea las API de los proveedores | tu decisión de presupuesto + clave del proveedor |
 | Probar los scripts de Windows | esta máquina es Linux | ejecutarlos en tu PC (pueden necesitar ajustes menores) |
 | Velocidad real en la RTX 5070 | sin acceso a tu equipo | `titan bench` y `titan gguf bench` en el PC |
-| Ajuste de preferencias (DPO) | aporta poco por debajo de ~1 B parámetros | un modelo base ≥ 1 B |
+| DPO a escala útil | implementado y probado, pero aporta poco por debajo de ~1 B parámetros | un modelo base ≥ 1 B |
 | Benchmarks estándar (MMLU, GSM8K…) | necesitan Hugging Face y un modelo por encima del azar | Etapa B/C |
 | Código abierto a gran escala | The Stack exige aceptar sus términos | aceptarlos en Hugging Face y definir `HF_TOKEN` |
 

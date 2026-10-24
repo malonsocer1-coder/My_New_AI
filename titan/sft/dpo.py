@@ -166,3 +166,24 @@ def main_from_yaml(path: str) -> dict:
 if __name__ == "__main__":
     import sys
     print(json.dumps(main_from_yaml(sys.argv[1]), indent=2, ensure_ascii=False))
+
+
+@torch.no_grad()
+def raw_preference_report(model_path: str, pairs_path: str, device: str = "cpu") -> dict:
+    """Fracción de pares en que el modelo, sin referencia, asigna mayor log-probabilidad media
+    por token a la respuesta preferida que a la rechazada; desglosada por tipo de caso."""
+    _, _, tok_path = resolve_artifact(model_path)
+    fmt = ChatFormat(TitanTokenizer.load(tok_path))
+    model = load_model(model_path, device=device, dtype=torch.float32)
+    by_kind: dict[str, list[int]] = {}
+    for pair in read_jsonl(pairs_path):
+        enc = encode_pair(fmt, pair, model.cfg.max_seq_len)
+        if not enc:
+            continue
+        lp = _batch_logps(model, [enc[0], enc[2]], [enc[1], enc[3]], torch.device(device), fmt.tok.pad_id)
+        avg_c = lp[0].item() / max(1, sum(enc[1]))
+        avg_r = lp[1].item() / max(1, sum(enc[3]))
+        by_kind.setdefault(pair.get("kind", "?"), []).append(int(avg_c > avg_r))
+    total = [x for v in by_kind.values() for x in v]
+    return {"model": model_path, "n": len(total), "prefers_chosen": round(sum(total) / len(total), 4),
+            "by_kind": {k: round(sum(v) / len(v), 3) for k, v in sorted(by_kind.items())}}
