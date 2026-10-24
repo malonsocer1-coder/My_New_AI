@@ -1,0 +1,56 @@
+{
+  "mc": {
+    "n": 60,
+    "acc": 0.15,
+    "acc_norm": 0.3,
+    "chance": 0.25,
+    "ece": 0.3443,
+    "consistency_under_reorder": 1.0,
+    "acc_norm_no_accents_lowercase": 0.2667
+  },
+  "arith": {
+    "n": 300,
+    "exact_match": 0.0133
+  },
+  "code": {
+    "n": 20,
+    "pass@1": 0.0,
+    "reference_pass_rate": 1.0
+  },
+  "instructions": {
+    "n": 20,
+    "prompt_level_acc": 0.15,
+    "constraint_level_acc": 0.2,
+    "context_overflow": 0
+  },
+  "uncertainty": {
+    "n": 16,
+    "acc": 0.0,
+    "context_overflow": 0,
+    "by_behavior.abstain": 0.0,
+    "by_behavior.false_premise": 0.0,
+    "by_behavior.clarify": 0.0
+  },
+  "tool_use": {
+    "n": 64,
+    "tool_selection_acc": 1.0,
+    "valid_call_rate": 1.0,
+    "answer_acc": 0.8281,
+    "selection_by_kind.calculator": 1.0,
+    "selection_by_kind.read_file": 1.0,
+    "selection_by_kind.error_recovery": 1.0,
+    "selection_by_kind.python": 1.0,
+    "selection_by_kind.kb": 1.0,
+    "selection_by_kind.write": 1.0,
+    "selection_by_kind.no_tool": 1.0,
+    "selection_by_kind.permission_denied": 1.0
+  },
+  "retrieval": {
+    "context_25pct": 0.0,
+    "context_50pct": 0.0,
+    "context_90pct": 0.0,
+    "n_per_length": 20,
+    "max_seq_len": 768
+  }
+}
+EXIT 0

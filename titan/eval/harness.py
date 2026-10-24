@@ -188,7 +188,7 @@ def eval_uncertainty(eng: Engine, limit: int | None = None) -> dict:
 
 def eval_tool_use(eng: Engine, limit: int | None = None) -> dict:
     from ..agent.loop import Agent
-    from ..sft.synthetic_tools import build_example, tool_schemas
+    from ..sft.synthetic_tools import TOOLSETS, build_example, tool_schemas
     items = read_jsonl(DATA / "tool_use_es.jsonl")[:limit]
     reg = default_registry()
     if _overflows(eng, [{"role": "user", "content": "¿Cuánto es 2 + 2?"}], tool_schemas(reg), reserve=96):
@@ -208,7 +208,9 @@ def eval_tool_use(eng: Engine, limit: int | None = None) -> dict:
             pol = PermissionPolicy(rules={**{k: "allow" for k in DEFAULT_POLICY}},
                                    approver=lambda r: "deny" if r.capability == "file_delete" else "allow_once")
             ctx = ToolContext(workspace=str(ws), permissions=pol)
-            agent = Agent(eng, reg, ctx, max_steps=5, sampling={"temperature": 0.0, "max_new_tokens": 200})
+            # Mismo conjunto de herramientas que en el entrenamiento SFT
+            agent = Agent(eng, reg, ctx, max_steps=5, sampling={"temperature": 0.0, "max_new_tokens": 200},
+                          tool_names=TOOLSETS["basic"] + ["delete_file"])
             res = agent.run([ref[0]])
             first = next((m["tool_calls"][0]["name"] for m in res.messages if m["role"] == "assistant"
                           and m.get("tool_calls")), None)

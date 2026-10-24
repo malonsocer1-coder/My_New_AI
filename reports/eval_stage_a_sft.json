@@ -1,0 +1,163 @@
+{
+  "checkpoint": "runs/sft_stage_a",
+  "suites": [
+    "mc",
+    "arith",
+    "code",
+    "instructions",
+    "uncertainty",
+    "tool_use",
+    "retrieval"
+  ],
+  "results": {
+    "mc": {
+      "n": 60,
+      "acc": 0.15,
+      "acc_norm": 0.3,
+      "chance": 0.25,
+      "ece": 0.3443,
+      "consistency_under_reorder": 1.0,
+      "acc_norm_no_accents_lowercase": 0.2667,
+      "seconds": 10.0
+    },
+    "arith": {
+      "n": 300,
+      "exact_match": 0.0133,
+      "examples": [
+        {
+          "prompt": "¿Cuánto es 118 + 384?",
+          "expected": "502",
+          "got": "8844. y631 -"
+        },
+        {
+          "prompt": "¿Cuánto es 1 + 56?",
+          "expected": "57",
+          "got": "16. 561 + 56"
+        },
+        {
+          "prompt": "Ana tenía 439 libros y regaló 5. ¿Cuántos libros le quedan?",
+          "expected": "434",
+          "got": "1711 - 519+1"
+        },
+        {
+          "prompt": "Ricardo tiene 79 libros y le dan 22 más. ¿Cuántos libros tiene en total?",
+          "expected": "101",
+          "got": "1351 - 1+1=1"
+        },
+        {
+          "prompt": "Valeria tenía 694 manzanas y regaló 4. ¿Cuántos manzanas le quedan?",
+          "expected": "690",
+          "got": "5118 - 4+1+1"
+        }
+      ],
+      "seconds": 18.7
+    },
+    "code": {
+      "n": 20,
+      "pass@1": 0.0,
+      "reference_pass_rate": 1.0,
+      "seconds": 17.6
+    },
+    "instructions": {
+      "n": 20,
+      "prompt_level_acc": 0.15,
+      "constraint_level_acc": 0.2,
+      "context_overflow": 0,
+      "seconds": 3.4
+    },
+    "uncertainty": {
+      "n": 16,
+      "acc": 0.0,
+      "context_overflow": 0,
+      "by_behavior": {
+        "abstain": 0.0,
+        "false_premise": 0.0,
+        "clarify": 0.0
+      },
+      "note": "verificación por marcadores léxicos: indicativa, no definitiva",
+      "seconds": 2.6
+    },
+    "tool_use": {
+      "n": 64,
+      "tool_selection_acc": 1.0,
+      "valid_call_rate": 1.0,
+      "answer_acc": 0.8281,
+      "selection_by_kind": {
+        "calculator": 1.0,
+        "read_file": 1.0,
+        "error_recovery": 1.0,
+        "python": 1.0,
+        "kb": 1.0,
+        "write": 1.0,
+        "no_tool": 1.0,
+        "permission_denied": 1.0
+      },
+      "seconds": 37.1
+    },
+    "retrieval": {
+      "context_25pct": 0.0,
+      "context_50pct": 0.0,
+      "context_90pct": 0.0,
+      "n_per_length": 20,
+      "max_seq_len": 768,
+      "seconds": 4.9
+    }
+  },
+  "params": 8621312,
+  "elapsed_s": 94.2,
+  "summary": {
+    "mc": {
+      "n": 60,
+      "acc": 0.15,
+      "acc_norm": 0.3,
+      "chance": 0.25,
+      "ece": 0.3443,
+      "consistency_under_reorder": 1.0,
+      "acc_norm_no_accents_lowercase": 0.2667
+    },
+    "arith": {
+      "n": 300,
+      "exact_match": 0.0133
+    },
+    "code": {
+      "n": 20,
+      "pass@1": 0.0,
+      "reference_pass_rate": 1.0
+    },
+    "instructions": {
+      "n": 20,
+      "prompt_level_acc": 0.15,
+      "constraint_level_acc": 0.2,
+      "context_overflow": 0
+    },
+    "uncertainty": {
+      "n": 16,
+      "acc": 0.0,
+      "context_overflow": 0,
+      "by_behavior.abstain": 0.0,
+      "by_behavior.false_premise": 0.0,
+      "by_behavior.clarify": 0.0
+    },
+    "tool_use": {
+      "n": 64,
+      "tool_selection_acc": 1.0,
+      "valid_call_rate": 1.0,
+      "answer_acc": 0.8281,
+      "selection_by_kind.calculator": 1.0,
+      "selection_by_kind.read_file": 1.0,
+      "selection_by_kind.error_recovery": 1.0,
+      "selection_by_kind.python": 1.0,
+      "selection_by_kind.kb": 1.0,
+      "selection_by_kind.write": 1.0,
+      "selection_by_kind.no_tool": 1.0,
+      "selection_by_kind.permission_denied": 1.0
+    },
+    "retrieval": {
+      "context_25pct": 0.0,
+      "context_50pct": 0.0,
+      "context_90pct": 0.0,
+      "n_per_length": 20,
+      "max_seq_len": 768
+    }
+  }
+}

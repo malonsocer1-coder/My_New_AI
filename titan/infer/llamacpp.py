@@ -47,8 +47,11 @@ class LlamaCppEngine:
     def complete(self, prompt: str, max_new_tokens: int = 128, temperature: float = 0.7, **kw) -> str:
         return self.tok.decode(list(self.stream_ids(self.tok.encode(prompt), max_new_tokens, temperature, **kw)))
 
-    def chat_ids(self, messages, tools=None, system=None, max_new_tokens=512, temperature=0.7, **kw) -> list[int]:
+    def chat_ids(self, messages, tools=None, system=None, max_new_tokens=512, temperature=0.7, min_new_tokens=32,
+                 **kw) -> list[int]:
+        from .engine import check_context
         prompt = self.chat_format.prompt_ids(messages, tools, system)
+        check_context(len(prompt), self.max_seq_len, min_new_tokens)
         out = []
         for i in self.stream_ids(prompt, max_new_tokens, temperature,
                                  stop_ids=[self.chat_format.im_end, self.tok.eos_id], **kw):

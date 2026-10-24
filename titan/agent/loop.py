@@ -45,7 +45,10 @@ class Agent:
         for step in range(self.max_steps):
             if time.time() - t0 > self.max_seconds:
                 return AgentResult("Se agotó el tiempo máximo de la tarea.", msgs, trace, "time_limit", n_calls)
-            turn = self.engine.chat_turn(msgs, tools=tools, system=self.system, **self.sampling)
+            try:
+                turn = self.engine.chat_turn(msgs, tools=tools, system=self.system, **self.sampling)
+            except ValueError as e:  # ContextOverflow: no cabe más historial
+                return AgentResult(f"No puedo continuar: {e}", msgs, trace, "context_overflow", n_calls)
             emit({"type": "assistant", "step": step, **turn})
             assistant = {"role": "assistant", "content": turn["content"], "tool_calls": turn["tool_calls"]}
             msgs.append(assistant)

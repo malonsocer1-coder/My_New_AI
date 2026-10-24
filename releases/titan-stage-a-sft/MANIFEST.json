@@ -1,0 +1,34 @@
+{
+  "info": {
+    "source": "runs/sft_stage_a/checkpoints/step_00000800",
+    "base": "releases/titan-stage-a",
+    "step": 800,
+    "note": "SFT de demostración (herramientas + aritmética) sobre la Etapa A; contexto 768"
+  },
+  "files": {
+    "MODEL_CARD.md": {
+      "sha256": "77b722207c78bfa14d6063e63055399ce7e4cbc712d85fddd9580ef777fd4679",
+      "bytes": 720
+    },
+    "generation_config.json": {
+      "sha256": "d7182112e19509ce86ecda7fbed8a1a15178fa297ac130a85117777c337061e2",
+      "bytes": 82
+    },
+    "model.safetensors": {
+      "sha256": "85f0c62e67e960df6ef97f14553404d4545c025ead5bf765b32d083376d7235f",
+      "bytes": 17248216
+    },
+    "model_config.json": {
+      "sha256": "1e44aeb04d3ae4a218dc4b7747144af0ee1ec0f87e713b72fb04fdd6db969dca",
+      "bytes": 416
+    },
+    "titan-stage-a-sft-Q8_0.gguf": {
+      "sha256": "d5da07b532dcca58aba36794b0f95b731c42cf314336baa8dfa837d89356b49e",
+      "bytes": 9442752
+    },
+    "tokenizer.json": {
+      "sha256": "7a8c3630fa3f9aaf53d793cbe63f252de8170e74166f4cc78d551388f95bd4dd",
+      "bytes": 551183
+    }
+  }
+}

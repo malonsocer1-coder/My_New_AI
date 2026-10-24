@@ -182,3 +182,17 @@ def test_mcp_client(tmp_path):
     res = specs[0].func({"t": "hola"}, None)
     assert res.ok and res.content == "HOLA"
     cli.close()
+
+
+def test_chat_never_truncates_prompt_silently(tmp_path):
+    import torch
+    from titan.infer.engine import ContextOverflow, Engine
+    from titan.model import ModelConfig, Transformer
+    tok = train_tokenizer(["hola mundo " * 50] * 10, 300, tmp_path / "tok")
+    m = Transformer(ModelConfig(vocab_size=300, dim=32, n_layers=1, n_heads=2, max_seq_len=64, multiple_of=16))
+    eng = Engine(m.eval(), tok)
+    with pytest.raises(ContextOverflow):
+        eng.chat_turn([{"role": "user", "content": "hola " * 200}], max_new_tokens=8)
+    ctx = ToolContext(workspace=str(tmp_path), permissions=allow_all())
+    res = Agent(eng, default_registry(), ctx).run([{"role": "user", "content": "hola " * 200}])
+    assert res.stop_reason == "context_overflow" and "contexto" in res.final

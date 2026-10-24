@@ -98,8 +98,9 @@ async function submit(text) {
       const ev = JSON.parse(line.slice(6));
       if (ev.type === "token") { current = current || add("assistant", ""); current.textContent += ev.text; }
       else if (ev.type === "assistant") {
+        // Solo los turnos intermedios (con llamadas); la respuesta final llega en el evento "final"
         const calls = (ev.tool_calls || []).map(c => `→ ${c.name}(${JSON.stringify(c.arguments)})`).join("\n");
-        if (ev.content || calls) add("assistant", [ev.content, calls].filter(Boolean).join("\n"));
+        if (calls) add("assistant", [ev.content, calls].filter(Boolean).join("\n"));
       }
       else if (ev.type === "tool_result") add("tool", `${ev.ok ? "✓" : "✗"} ${ev.name}: ${ev.content}`);
       else if (ev.type === "permission_request") permission(ev);

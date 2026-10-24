@@ -1,0 +1,21 @@
+{
+  "seq_len": 768,
+  "tokenizer_sha256": "7a8c3630fa3f9aaf53d793cbe63f252de8170e74166f4cc78d551388f95bd4dd",
+  "splits": {
+    "val": {
+      "conversations": 250,
+      "rows": 184,
+      "trained_tokens": 14500,
+      "dropped_too_long": 0,
+      "sha256_tokens": "79fd91e6a2fe5bfd43186cd459dd32c5a4eadabfb28fd1fc46ddd4bf5b6085aa"
+    },
+    "train": {
+      "conversations": 4750,
+      "rows": 3381,
+      "trained_tokens": 258883,
+      "dropped_too_long": 0,
+      "sha256_tokens": "b8cad27b567baf2e548788fff519b931dde9b270778f8cbf3e0b69a82fbced4b"
+    }
+  },
+  "dtype": "uint16"
+}

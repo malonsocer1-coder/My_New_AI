@@ -103,7 +103,17 @@ la CPU de la sesión, compartida con otros procesos: son indicativas.
 | GGUF Q5_K_M | 6,7 MB | 34,01 | +0,36 % |
 | GGUF Q4_K_M | 6,0 MB | 34,02 | +0,39 % |
 
-## 7. Siguiente paso viable
+## 7. SFT de demostración (`reports/eval_stage_a_sft.json`, `releases/titan-stage-a-sft/`)
+
+800 pasos sobre el modelo base con 4 750 conversaciones sintéticas verificadas
+(herramientas y aritmética), contexto ampliado a 768 tokens; pérdida de
+validación SFT 0,035. En 64 tareas de herramientas con semillas reservadas:
+herramienta correcta 100 %, llamadas válidas 100 %, respuesta correcta 82,8 %
+(dentro de la distribución de las plantillas; ver `docs/EVALUACION.md`). La
+interfaz web funciona de extremo a extremo con este modelo
+(`reports/ui_agente.png`).
+
+## 8. Siguiente paso viable
 
 Etapa B en el PC (RTX 5070): `configs/plans/pc_btx_100m.yaml`, ~2 500 M tokens en
 español y otros dominios, 100 M parámetros y entrenamiento por partes. No

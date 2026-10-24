@@ -23,6 +23,17 @@ from ..train.distributed import pick_device
 from .generate import SamplingParams, generate_ids
 
 
+class ContextOverflow(ValueError):
+    pass
+
+
+def check_context(prompt_len: int, max_len: int, min_new_tokens: int) -> None:
+    """En chat no se recorta el prompt en silencio: se perdería el sistema o la tarea."""
+    if prompt_len > max_len - min_new_tokens:
+        raise ContextOverflow(f"La conversación ocupa {prompt_len} tokens y el contexto del modelo es de {max_len}: "
+                              "acorte el historial o reduzca las herramientas ofrecidas")
+
+
 def resolve_artifact(path: str | Path) -> tuple[Path, Path, Path | None]:
     """Devuelve (directorio_de_pesos, config_json, tokenizador)."""
     p = Path(path)
@@ -90,8 +101,9 @@ class Engine:
         return self.tok.decode(out)
 
     def chat_ids(self, messages: list[dict], tools: list[dict] | None = None, system: str | None = None,
-                 max_new_tokens: int = 512, temperature: float = 0.7, **kw) -> list[int]:
+                 max_new_tokens: int = 512, temperature: float = 0.7, min_new_tokens: int = 32, **kw) -> list[int]:
         prompt = self.chat_format.prompt_ids(messages, tools, system)
+        check_context(len(prompt), self.model.cfg.max_seq_len, min_new_tokens)
         out = []
         for i in self.stream_ids(prompt, max_new_tokens=max_new_tokens, temperature=temperature,
                                  stop_ids=[self.chat_format.im_end, self.tok.eos_id], **kw):

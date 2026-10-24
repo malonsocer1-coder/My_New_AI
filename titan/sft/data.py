@@ -129,8 +129,10 @@ class SFTLoader:
 
     def _row(self, s: int) -> int:
         epoch, j = divmod(s, self.n)
-        perm = np.random.default_rng([self.seed, epoch]).permutation(self.n)
-        return int(perm[j])
+        if getattr(self, "_perm_epoch", None) != epoch:
+            self._perm = np.random.default_rng([self.seed, epoch]).permutation(self.n)
+            self._perm_epoch = epoch
+        return int(self._perm[j])
 
     def next_batch(self):
         base = self.samples_seen + self.rank * self.batch_size

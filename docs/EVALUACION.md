@@ -50,6 +50,37 @@ mismo formato de prompt, misma métrica).
 | retrieval | 0 % |
 | instructions / uncertainty / tool_use | no aplicables (contexto de 256 tokens) |
 
-### Etapa A + SFT de demostración
+### Etapa A + SFT de demostración (`reports/eval_stage_a_sft.json`)
 
-Ver la sección siguiente (se completa con `reports/eval_stage_a_sft.json`).
+SFT de 800 pasos (4,9 M tokens, 43 min de CPU) con 4 750 conversaciones
+sintéticas verificadas; contexto ampliado de 256 a 768 tokens.
+
+| Suite | Base | Tras SFT | Comentario |
+|---|---|---|---|
+| tool_use: herramienta correcta | 12,5 %* | **100 %** | *solo acertaba «no usar herramienta» |
+| tool_use: llamadas válidas | 12,5 % | **100 %** | JSON y argumentos válidos según el esquema |
+| tool_use: respuesta correcta | 12,5 % | **82,8 %** | resultado de la herramienta trasladado a la respuesta |
+| instructions (por consigna) | n/a | 15 % | sin datos de instrucciones generales en el SFT |
+| uncertainty | n/a | 0 % | no reconoce lo que no sabe |
+| mc | 20,0 % | 15,0 % | ambos en el azar |
+| arith (formato de completado) | 6,7 % | 1,3 % | olvido del formato de preentrenamiento |
+| code | 0 % | 0 % | |
+
+**Cómo leer estos números.** Las 64 tareas de `tool_use` usan semillas nunca
+vistas, pero las **mismas plantillas** que el entrenamiento: demuestran que el
+pipeline enseña el protocolo de herramientas (elegir, llamar con JSON válido,
+usar el resultado), no que el modelo sea inteligente. Fuera de esas plantillas
+falla: en la interfaz, con un espacio de trabajo vacío, inventó el archivo
+`notas_9.txt` (un nombre memorizado) y, tras el error, contestó con un número
+inventado en lugar de reconocerlo. La bajada en `mc` y `arith` es el olvido
+esperable al ajustar un modelo diminuto con datos muy estrechos; a escala se
+mitiga mezclando datos de preentrenamiento y conversación general en el SFT.
+
+**Fallo del sistema encontrado y corregido gracias a esta evaluación:** el
+agente ofrecía al modelo 14 herramientas en lugar de las 7 del entrenamiento;
+el prompt superaba el contexto y el generador recortaba su inicio en silencio,
+dejando sitio a un solo token de respuesta (el acierto aparente era del 12,5 %).
+Ahora el chat nunca recorta: devuelve `ContextOverflow` y el agente se detiene
+con un mensaje claro (`tests/test_agent.py::test_chat_never_truncates_prompt_silently`).
+
+![Interfaz en modo agente con el modelo SFT](../reports/ui_agente.png)

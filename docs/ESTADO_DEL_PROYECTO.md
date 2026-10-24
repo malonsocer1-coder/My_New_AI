@@ -10,7 +10,7 @@
 | B — Prototipo (PC, 100 M, por partes) | 🟡 **lista para ejecutar en tu PC** | configs, instalador y guía; falta ejecutarla en la RTX 5070 |
 | C — Escalado en la nube | 🟡 **código verificado**, sin lanzar | DDP/FSDP2 probados; proveedores en modo de prueba; falta presupuesto, claves y red |
 | D — Entrenamiento principal | ⏸️ pendiente de tu decisión de escala y presupuesto | [tabla de escalado](ESCALADO_Y_PRESUPUESTO.md) |
-| E — SFT / herramientas | ✅ pipeline completo; SFT de demostración sobre la Etapa A | ver EVALUACION.md |
+| E — SFT / herramientas | ✅ pipeline completo; SFT de demostración: 100 % de llamadas válidas y 82,8 % de respuestas correctas en tareas de herramientas reservadas | [EVALUACION.md](EVALUACION.md) |
 | F — Despliegue | ✅ exportación, GGUF, cuantización y servidor web verificados | falta medir en la RTX 5070 |
 
 ## Qué funciona hoy (verificado)

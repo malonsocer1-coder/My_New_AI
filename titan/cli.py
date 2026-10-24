@@ -76,7 +76,8 @@ def cmd_estimate(args) -> None:
 
 def cmd_export(args) -> None:
     from .export.exporter import export_checkpoint
-    info = export_checkpoint(args.checkpoint, args.out, formats=args.formats.split(","))
+    info = export_checkpoint(args.checkpoint, args.out, formats=args.formats.split(","), dtype=args.dtype,
+                             tokenizer=args.tokenizer)
     print(json.dumps(info, indent=2, ensure_ascii=False))
 
 
@@ -199,6 +200,8 @@ def build_parser() -> argparse.ArgumentParser:
     x.add_argument("--checkpoint", required=True)
     x.add_argument("--out", required=True)
     x.add_argument("--formats", default="titan,hf,gguf")
+    x.add_argument("--dtype", default="bf16", choices=["bf16", "fp16", "fp32"])
+    x.add_argument("--tokenizer", help="tokenizer.json o su carpeta (si no se detecta solo)")
     x.set_defaults(func=cmd_export)
 
     q = sub.add_parser("quantize", help="cuantizar un modelo exportado (int8/int4)")
