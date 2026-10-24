@@ -15,3 +15,6 @@ __pycache__/
 .env
 secrets/
 /config/credentials*
+# Pesos propios publicados en el repositorio (pequeños; los grandes van a almacenamiento externo)
+!releases/**/*.safetensors
+!releases/**/*.gguf

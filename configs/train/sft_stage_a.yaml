@@ -1,0 +1,38 @@
+# SFT de demostración sobre el modelo de la Etapa A (valida el pipeline, no la capacidad).
+# El contexto se amplía de 256 a 768 tokens (RoPE no tiene pesos: solo cambia la tabla).
+model:
+  name: titan-stage-a-sft
+  vocab_size: 8192
+  dim: 256
+  n_layers: 6
+  n_heads: 8
+  n_kv_heads: 4
+  multiple_of: 64
+  max_seq_len: 768
+train:
+  run_name: sft_stage_a
+  out_dir: runs/sft_stage_a
+  task: sft
+  data: data/sft_stage_a
+  tokenizer: data/stage_a/tokenizer
+  init_from: runs/stage_a
+  seq_len: 768
+  micro_batch_size: 8
+  grad_accum_steps: 1
+  max_steps: 800
+  lr: 5.0e-4
+  min_lr: 5.0e-5
+  warmup_steps: 50
+  schedule: cosine
+  weight_decay: 0.0
+  dtype: fp32
+  compile: true
+  device: cpu
+  num_threads: 4
+  eval_interval: 200
+  eval_windows: 128
+  eval_batch_size: 16
+  log_interval: 25
+  ckpt_interval: 200
+  keep_last: 2
+  seed: 7

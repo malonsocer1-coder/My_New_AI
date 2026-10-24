@@ -1,0 +1,71 @@
+{
+  "bpb": {
+    "code.loss": 3.3908,
+    "code.ppl": 29.69,
+    "code.bpb": 1.8103,
+    "en.loss": 3.7973,
+    "en.ppl": 44.58,
+    "en.bpb": 1.6389,
+    "es.loss": 3.3922,
+    "es.ppl": 29.73,
+    "es.bpb": 1.2779,
+    "math.loss": 0.7027,
+    "math.ppl": 2.02,
+    "math.bpb": 0.3892,
+    "multi.loss": 4.2171,
+    "multi.ppl": 67.84,
+    "multi.bpb": 1.6126
+  },
+  "mc": {
+    "n": 60,
+    "acc": 0.2,
+    "acc_norm": 0.3167,
+    "chance": 0.25,
+    "ece": 0.1813,
+    "consistency_under_reorder": 1.0,
+    "acc_norm_no_accents_lowercase": 0.3
+  },
+  "arith": {
+    "n": 300,
+    "exact_match": 0.0667
+  },
+  "code": {
+    "n": 20,
+    "pass@1": 0.0,
+    "reference_pass_rate": 1.0
+  },
+  "instructions": {
+    "n": 20,
+    "prompt_level_acc": 0.0,
+    "constraint_level_acc": 0.12
+  },
+  "uncertainty": {
+    "n": 16,
+    "acc": 0.0,
+    "by_behavior.abstain": 0.0,
+    "by_behavior.false_premise": 0.0,
+    "by_behavior.clarify": 0.0
+  },
+  "tool_use": {
+    "n": 64,
+    "tool_selection_acc": 0.125,
+    "valid_call_rate": 0.125,
+    "answer_acc": 0.125,
+    "selection_by_kind.calculator": 0.0,
+    "selection_by_kind.read_file": 0.0,
+    "selection_by_kind.error_recovery": 0.0,
+    "selection_by_kind.python": 0.0,
+    "selection_by_kind.kb": 0.0,
+    "selection_by_kind.write": 0.0,
+    "selection_by_kind.no_tool": 1.0,
+    "selection_by_kind.permission_denied": 0.0
+  },
+  "retrieval": {
+    "context_25pct": 0.0,
+    "context_50pct": 0.0,
+    "context_90pct": 0.0,
+    "n_per_length": 20,
+    "max_seq_len": 256
+  }
+}
+EXIT 0

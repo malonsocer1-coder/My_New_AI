@@ -39,6 +39,11 @@ def cmd_data(args) -> None:
         print(json.dumps(audit_contamination(args.data_dir, args.eval_files), indent=2, ensure_ascii=False))
 
 
+def cmd_sft(args) -> None:
+    from .sft.data import prepare_sft
+    print(json.dumps(prepare_sft(args.config), indent=2, ensure_ascii=False))
+
+
 def cmd_train(args) -> None:
     from .train.trainer import main_from_yaml
     summary = main_from_yaml(args.config, _parse_overrides(args.set))
@@ -149,6 +154,11 @@ def build_parser() -> argparse.ArgumentParser:
     d.add_argument("--data-dir")
     d.add_argument("--eval-files", nargs="*", default=["titan/eval/data/*.jsonl"])
     d.set_defaults(func=cmd_data)
+
+    sf = sub.add_parser("sft", help="preparar datos de ajuste de instrucciones")
+    sf.add_argument("action", choices=["prepare"])
+    sf.add_argument("--config", required=True)
+    sf.set_defaults(func=cmd_sft)
 
     t = sub.add_parser("train", help="preentrenar o ajustar (SFT)")
     t.add_argument("--config", required=True)

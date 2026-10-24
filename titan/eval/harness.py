@@ -138,31 +138,50 @@ def eval_code(eng: Engine, limit: int | None = None) -> dict:
     return {"n": len(items), "pass@1": round(passed / len(items), 4), "reference_pass_rate": ref_ok / len(items)}
 
 
+def _ctx_len(eng) -> int:
+    return getattr(eng, "max_seq_len", None) or eng.model.cfg.max_seq_len
+
+
+def _overflows(eng, messages, tools=None, reserve: int = 48) -> bool:
+    """True si el prompt de chat no deja al menos ``reserve`` tokens para responder."""
+    return len(eng.chat_format.prompt_ids(messages, tools)) > _ctx_len(eng) - reserve
+
+
 def eval_instructions(eng: Engine, limit: int | None = None) -> dict:
     items = read_jsonl(DATA / "instructions_es.jsonl")[:limit]
-    all_ok = parts_ok = parts = 0
+    all_ok = parts_ok = parts = overflow = 0
     for it in items:
+        if _overflows(eng, [{"role": "user", "content": it["prompt"]}]):
+            overflow += 1
+            continue
         out = eng.chat([{"role": "user", "content": it["prompt"]}], max_new_tokens=200, temperature=0.0)
         res = [check_constraint(out, c) for c in it["checks"]]
         all_ok += all(res)
         parts_ok += sum(res)
         parts += len(res)
+    if overflow == len(items):
+        return {"n": len(items), "context_overflow": overflow, "skipped": "contexto del modelo insuficiente"}
     return {"n": len(items), "prompt_level_acc": round(all_ok / len(items), 4),
-            "constraint_level_acc": round(parts_ok / parts, 4)}
+            "constraint_level_acc": round(parts_ok / max(1, parts), 4), "context_overflow": overflow}
 
 
 def eval_uncertainty(eng: Engine, limit: int | None = None) -> dict:
     items = read_jsonl(DATA / "uncertainty_es.jsonl")[:limit]
-    ok = 0
+    ok = overflow = 0
     by = {}
     for it in items:
+        if _overflows(eng, [{"role": "user", "content": it["prompt"]}]):
+            overflow += 1
+            continue
         out = eng.chat([{"role": "user", "content": it["prompt"]}], max_new_tokens=80, temperature=0.0)
         hit = check_uncertainty(out, it["expected_behavior"])
         ok += hit
         b = by.setdefault(it["expected_behavior"], [0, 0])
         b[0] += 1
         b[1] += hit
-    return {"n": len(items), "acc": round(ok / len(items), 4),
+    if overflow == len(items):
+        return {"n": len(items), "context_overflow": overflow, "skipped": "contexto del modelo insuficiente"}
+    return {"n": len(items), "acc": round(ok / len(items), 4), "context_overflow": overflow,
             "by_behavior": {k: round(v[1] / v[0], 4) for k, v in by.items()},
             "note": "verificación por marcadores léxicos: indicativa, no definitiva"}
 
@@ -172,6 +191,8 @@ def eval_tool_use(eng: Engine, limit: int | None = None) -> dict:
     from ..sft.synthetic_tools import build_example, tool_schemas
     items = read_jsonl(DATA / "tool_use_es.jsonl")[:limit]
     reg = default_registry()
+    if _overflows(eng, [{"role": "user", "content": "¿Cuánto es 2 + 2?"}], tool_schemas(reg), reserve=96):
+        return {"n": len(items), "context_overflow": len(items), "skipped": "contexto del modelo insuficiente"}
     sel = valid = answered = 0
     by = {}
     for it in items:

@@ -1,0 +1,9 @@
+{
+  "stop_reason": "completed",
+  "steps": 5000,
+  "tokens": 20480000,
+  "elapsed_h": 1.5936898773908614,
+  "best_val_loss": 3.1000191807746886,
+  "cost_usd": 0.0,
+  "checkpoint": "runs/stage_a/checkpoints/step_00005000"
+}

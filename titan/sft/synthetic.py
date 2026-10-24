@@ -111,3 +111,21 @@ def arithmetic_eval_items(n: int = 300, seed: int = 999_001, max_digits: int = 3
         seen.add(_key(p))
         items.append({"id": f"arith-{len(items)}", **p, "prompt": f"Pregunta: {p['question']}\nRespuesta:"})
     return items
+
+
+def arithmetic_chats(n: int = 1000, seed: int = 100, max_digits: int = 3, exclude_file: str | None = None) -> list[dict]:
+    """Diálogos de aritmética para SFT: el asistente razona por columnas y da la respuesta verificada."""
+    rng = random.Random(seed)
+    excl = load_exclusions(exclude_file)
+    out = []
+    while len(out) < n:
+        p = make_arith_problem(rng, max_digits, "es")
+        if _key(p) in excl:
+            continue
+        if p["op"] == "+":
+            body = f"Sumo por columnas: {_column_addition_steps(p['a'], p['b'])}. La respuesta es {p['answer']}."
+        else:
+            body = f"{p['a']} {p['op']} {p['b']} = {p['answer']}. La respuesta es {p['answer']}."
+        out.append({"messages": [{"role": "user", "content": p["question"]},
+                                 {"role": "assistant", "content": body}], "kind": "arith_chat"})
+    return out

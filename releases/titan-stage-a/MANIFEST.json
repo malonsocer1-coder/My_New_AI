@@ -1,0 +1,34 @@
+{
+  "info": {
+    "source": "runs/stage_a/checkpoints/step_00005000",
+    "step": 5000,
+    "tokens": 20480000,
+    "note": "Pesos propios entrenados desde cero (Etapa A, validación técnica)"
+  },
+  "files": {
+    "MODEL_CARD.md": {
+      "sha256": "e1725705a54534a3f592030e222f2fa6f206573f34e580a6c4e6d4caf7cab7e1",
+      "bytes": 714
+    },
+    "generation_config.json": {
+      "sha256": "d7182112e19509ce86ecda7fbed8a1a15178fa297ac130a85117777c337061e2",
+      "bytes": 82
+    },
+    "model.safetensors": {
+      "sha256": "c39abcb675f1de8ca788476db138c99616876f0c5e09588e40b7f9061c8c1202",
+      "bytes": 17248216
+    },
+    "model_config.json": {
+      "sha256": "37f466962f689102442ee6f8ebbdd6e3d4c98d1e7c16e532a97cfcf5b69bd417",
+      "bytes": 412
+    },
+    "titan-stage-a-Q8_0.gguf": {
+      "sha256": "996dd5293b56e158b6430457e8230b77c9e4684e4cb2b98062c129f1826178c0",
+      "bytes": 9442752
+    },
+    "tokenizer.json": {
+      "sha256": "7a8c3630fa3f9aaf53d793cbe63f252de8170e74166f4cc78d551388f95bd4dd",
+      "bytes": 551183
+    }
+  }
+}

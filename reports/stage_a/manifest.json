@@ -1,0 +1,170 @@
+{
+  "name": "stage_a",
+  "config_fingerprint": "e5f433e31eb8d478",
+  "created_unix": 1792818128,
+  "tokenizer": {
+    "path": "data/stage_a/tokenizer/tokenizer.json",
+    "sha256": "7a8c3630fa3f9aaf53d793cbe63f252de8170e74166f4cc78d551388f95bd4dd",
+    "vocab_size": 8192,
+    "eos_id": 0
+  },
+  "dtype": "uint16",
+  "domains": [
+    "code",
+    "en",
+    "es",
+    "math",
+    "multi"
+  ],
+  "domain_weights": {
+    "es": 0.35,
+    "en": 0.25,
+    "multi": 0.05,
+    "code": 0.25,
+    "math": 0.1
+  },
+  "shards": [
+    {
+      "path": "tokens/train/code_00000.bin",
+      "split": "train",
+      "domain": "code",
+      "num_tokens": 2530794,
+      "dtype": "uint16",
+      "sha256": "3ff102fdf1f4643598b5d7ce6aec09895bdda3ce4b205dccd1afecd087f00b8d"
+    },
+    {
+      "path": "tokens/train/en_00000.bin",
+      "split": "train",
+      "domain": "en",
+      "num_tokens": 4236634,
+      "dtype": "uint16",
+      "sha256": "b4b657faf3b28241d9987403635f530808388db1e0faf8977d27caa7410f7ef4"
+    },
+    {
+      "path": "tokens/train/es_00000.bin",
+      "split": "train",
+      "domain": "es",
+      "num_tokens": 871430,
+      "dtype": "uint16",
+      "sha256": "c856633029ac2fa43de2b708d84adfb19b7b797a4435feed0686d00c283f0878"
+    },
+    {
+      "path": "tokens/train/math_00000.bin",
+      "split": "train",
+      "domain": "math",
+      "num_tokens": 838045,
+      "dtype": "uint16",
+      "sha256": "d3f3fbb19c0aba8bbe072cffb4bb93e410c1222cad1c59a2a6ad70e91911c43f"
+    },
+    {
+      "path": "tokens/train/multi_00000.bin",
+      "split": "train",
+      "domain": "multi",
+      "num_tokens": 2761998,
+      "dtype": "uint16",
+      "sha256": "fa4faa4f9a31736398774ea1a722cfed654756745de9013741beb0f54d5ca755"
+    },
+    {
+      "path": "tokens/val/code_00000.bin",
+      "split": "val",
+      "domain": "code",
+      "num_tokens": 116837,
+      "dtype": "uint16",
+      "sha256": "4272ae8fe8fffc4ea0a8d90a4a2eebff3cbe1b900ce03c28abc041e2fc56bd74"
+    },
+    {
+      "path": "tokens/val/en_00000.bin",
+      "split": "val",
+      "domain": "en",
+      "num_tokens": 132909,
+      "dtype": "uint16",
+      "sha256": "92eb6ec0cebbed503d1bf9e9e4dad15574cdb6f87214bf4f19e376916bb8c639"
+    },
+    {
+      "path": "tokens/val/es_00000.bin",
+      "split": "val",
+      "domain": "es",
+      "num_tokens": 32463,
+      "dtype": "uint16",
+      "sha256": "b9dc4db67ef489e795253631aa7f3995f9e412f01a9f89fda418c80b29a09b25"
+    },
+    {
+      "path": "tokens/val/math_00000.bin",
+      "split": "val",
+      "domain": "math",
+      "num_tokens": 24976,
+      "dtype": "uint16",
+      "sha256": "564ff3bdf7aa5c774c9afb9384e577c2edb8ac2b723089a524ed586fc5a71b7a"
+    },
+    {
+      "path": "tokens/val/multi_00000.bin",
+      "split": "val",
+      "domain": "multi",
+      "num_tokens": 69900,
+      "dtype": "uint16",
+      "sha256": "48d3b7bea837a45137578411a14debbd15c4099d86227d4a359cdcee5e6834ed"
+    }
+  ],
+  "totals": {
+    "code.train": {
+      "docs": 447,
+      "tokens": 2530794,
+      "bytes": 8574535,
+      "bytes_per_token": 3.388679497317957
+    },
+    "en.train": {
+      "docs": 3770,
+      "tokens": 4236634,
+      "bytes": 14240630,
+      "bytes_per_token": 3.36430133356517
+    },
+    "es.train": {
+      "docs": 1063,
+      "tokens": 871430,
+      "bytes": 3372708,
+      "bytes_per_token": 3.8750412182447174
+    },
+    "math.train": {
+      "docs": 2547,
+      "tokens": 838045,
+      "bytes": 2177107,
+      "bytes_per_token": 2.6057596786587163
+    },
+    "multi.train": {
+      "docs": 3264,
+      "tokens": 2761998,
+      "bytes": 10398631,
+      "bytes_per_token": 3.76934891149346
+    },
+    "code.val": {
+      "docs": 13,
+      "tokens": 116837,
+      "bytes": 315677,
+      "bytes_per_token": 2.702158802985688
+    },
+    "en.val": {
+      "docs": 116,
+      "tokens": 132909,
+      "bytes": 443891,
+      "bytes_per_token": 3.342728908903331
+    },
+    "es.val": {
+      "docs": 39,
+      "tokens": 32463,
+      "bytes": 124176,
+      "bytes_per_token": 3.829755736491488
+    },
+    "math.val": {
+      "docs": 75,
+      "tokens": 24976,
+      "bytes": 64862,
+      "bytes_per_token": 2.604794988153086
+    },
+    "multi.val": {
+      "docs": 83,
+      "tokens": 69900,
+      "bytes": 263405,
+      "bytes_per_token": 3.7727917269432947
+    }
+  }
+}

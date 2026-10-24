@@ -1,0 +1,73 @@
+{
+  "model": "models/base/titan-stage-a",
+  "eval_tokens": 12288,
+  "rows": [
+    {
+      "variant": "TITAN bf16 (original)",
+      "engine": "pytorch",
+      "mb": 17.25,
+      "nll": 3.5229,
+      "ppl": 33.884,
+      "gen_tok_s": 4.1,
+      "ppl_increase_pct": 0.0
+    },
+    {
+      "variant": "TITAN int8 (propia)",
+      "engine": "pytorch",
+      "mb": 8.69,
+      "nll": 3.5238,
+      "ppl": 33.913,
+      "ppl_increase_pct": 0.09
+    },
+    {
+      "variant": "TITAN int4 (propia)",
+      "engine": "pytorch",
+      "mb": 4.58,
+      "nll": 3.5541,
+      "ppl": 34.958,
+      "ppl_increase_pct": 3.17
+    },
+    {
+      "variant": "GGUF F16",
+      "engine": "llama.cpp (CPU)",
+      "mb": 17.52,
+      "nll": 3.5228,
+      "ppl": 33.879,
+      "prompt_tok_s": 38.3,
+      "gen_tok_s": 171.8,
+      "ppl_increase_pct": -0.01
+    },
+    {
+      "variant": "GGUF Q8_0",
+      "engine": "llama.cpp (CPU)",
+      "mb": 9.44,
+      "nll": 3.5231,
+      "ppl": 33.891,
+      "prompt_tok_s": 46.0,
+      "gen_tok_s": 310.5,
+      "ppl_increase_pct": 0.02
+    },
+    {
+      "variant": "GGUF Q5_K_M",
+      "engine": "llama.cpp (CPU)",
+      "mb": 6.68,
+      "nll": 3.5265,
+      "ppl": 34.005,
+      "prompt_tok_s": 83.9,
+      "gen_tok_s": 631.4,
+      "ppl_increase_pct": 0.36
+    },
+    {
+      "variant": "GGUF Q4_K_M",
+      "engine": "llama.cpp (CPU)",
+      "mb": 5.96,
+      "nll": 3.5268,
+      "ppl": 34.017,
+      "prompt_tok_s": 84.0,
+      "gen_tok_s": 925.1,
+      "ppl_increase_pct": 0.39
+    }
+  ],
+  "hardware": "4 vCPU Xeon de la sesión en la nube (sin GPU); no representa la RTX 5070",
+  "unix": 1792825564.0263538
+}

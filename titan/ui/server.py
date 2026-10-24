@@ -88,6 +88,13 @@ class TitanApp:
         self.registry = default_registry(audit_log=str(logs / "tools_audit.jsonl"), include=cfg.get("tools"))
         for plugin in cfg.get("plugins", []):
             self.registry.load_plugin(plugin)
+        self.mcp_clients = []
+        for srv in cfg.get("mcp_servers", []):
+            from ..agent.mcp import MCPClient
+            client = MCPClient(srv["name"], srv["command"])
+            for spec in client.tool_specs():
+                self.registry.register(spec)
+            self.mcp_clients.append(client)
         self.ctx = ToolContext(workspace=str(self.workspace), permissions=self.policy, memory=self.memory,
                                settings=cfg.get("settings", {}))
         self.gen_lock = threading.Lock()

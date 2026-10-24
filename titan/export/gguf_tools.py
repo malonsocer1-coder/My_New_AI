@@ -48,10 +48,10 @@ def bench_gguf(path: str | Path, prompt_tokens: int = 128, gen_tokens: int = 128
     t_prompt = time.time() - t0
     n = 0
     t1 = time.time()
-    for _ in llm.generate(prompt, temp=0.0, reset=False):
+    for _ in range(gen_tokens):  # decodificación token a token sobre el prompt ya evaluado
+        tok = llm.sample(temp=0.0)
+        llm.eval([tok])
         n += 1
-        if n >= gen_tokens:
-            break
     t_gen = time.time() - t1
     return {"model": str(path), "mb": round(Path(path).stat().st_size / 1e6, 2), "n_gpu_layers": n_gpu_layers,
             "prompt_tokens": prompt_tokens, "prompt_tok_s": round(prompt_tokens / t_prompt, 1),

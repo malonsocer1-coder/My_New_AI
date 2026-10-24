@@ -1,0 +1,34 @@
+# Configuración del agente local. Cópiela a D:\TITAN_AI\config\agent.yaml y ajústela.
+root: D:/TITAN_AI
+workspace: D:/TITAN_AI/app/workspace        # único lugar donde el agente lee/escribe archivos
+permissions: D:/TITAN_AI/config/permissions.yaml
+logs_dir: D:/TITAN_AI/logs
+
+# Backend de generación:
+#   titan     motor PyTorch (modelo exportado en models/base/...)
+#   llamacpp  GGUF con llama.cpp (recomendado en la RTX 5070: CUDA + cuantización)
+backend: llamacpp
+tokenizer: D:/TITAN_AI/models/base/titan/tokenizer.json   # necesario con GGUF
+n_gpu_layers: -1      # -1 = todo en GPU; menos capas si el modelo no cabe en 8 GB
+max_steps: 8          # pasos máximos de herramienta por petición
+
+memory:
+  enabled: false      # memoria persistente desactivada hasta que usted la active
+  path: D:/TITAN_AI/memory/memory.db
+  retention_days: 365
+
+settings:
+  sandbox_backend: auto      # en Windows: subproceso con límite de tiempo (code_exec siempre pide permiso)
+  knowledge_dir: knowledge   # documentos para la búsqueda local (workspace/knowledge)
+  web_search:
+    backend: null            # searxng (url propia) | brave (clave en BRAVE_API_KEY)
+    # url: http://127.0.0.1:8888
+  # Módulos auxiliares independientes (modelos de terceros, opcionales): visión y voz.
+  auxiliary: {}
+  #  vision: {command: ["D:/TITAN_AI/tools/llama.cpp/llama-mtmd-cli.exe", "-m", "modelo.gguf",
+  #                     "--mmproj", "mmproj.gguf", "--image", "{input}", "-p", "{prompt}"]}
+  #  speech: {command: ["D:/TITAN_AI/tools/whisper.cpp/whisper-cli.exe", "-m", "ggml-base.bin", "-f", "{input}"]}
+
+tools: null           # null = todas las integradas; o una lista de nombres
+plugins: []           # archivos .py con register(registry), solo los que usted autorice
+mcp_servers: []       # p. ej. [{name: fs, command: ["npx", "-y", "@modelcontextprotocol/server-filesystem", "D:/TITAN_AI/app/workspace"]}]

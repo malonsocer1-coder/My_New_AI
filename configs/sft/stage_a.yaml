@@ -1,0 +1,7 @@
+# Datos SFT de la Etapa A: conversaciones sintéticas verificadas (herramientas + aritmética).
+tokenizer: data/stage_a/tokenizer
+seq_len: 768
+output_dir: data/sft_stage_a
+files: [data/sft_raw/*.jsonl]
+val_fraction: 0.05
+seed: 0
