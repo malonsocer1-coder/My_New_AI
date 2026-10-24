@@ -44,6 +44,11 @@ def cmd_sft(args) -> None:
     print(json.dumps(prepare_sft(args.config), indent=2, ensure_ascii=False))
 
 
+def cmd_dpo(args) -> None:
+    from .sft.dpo import main_from_yaml
+    print(json.dumps(main_from_yaml(args.config), indent=2, ensure_ascii=False))
+
+
 def cmd_train(args) -> None:
     from .train.trainer import main_from_yaml
     summary = main_from_yaml(args.config, _parse_overrides(args.set))
@@ -169,6 +174,10 @@ def build_parser() -> argparse.ArgumentParser:
     sf.add_argument("action", choices=["prepare"])
     sf.add_argument("--config", required=True)
     sf.set_defaults(func=cmd_sft)
+
+    dp = sub.add_parser("dpo", help="ajuste por preferencias (DPO) sobre un modelo SFT")
+    dp.add_argument("--config", required=True)
+    dp.set_defaults(func=cmd_dpo)
 
     t = sub.add_parser("train", help="preentrenar o ajustar (SFT)")
     t.add_argument("--config", required=True)

@@ -4,3 +4,7 @@ paso    100 | pérdida 7.4576 | lr 1.50e-03 | ‖g‖ 0.86 | 7,206 tok/s | ETA 8
 paso    200 | pérdida 5.4798 | lr 1.46e-03 | ‖g‖ 0.90 | 9,921 tok/s | ETA 6.5 min | $0.00
 paso    300 | pérdida 4.7722 | lr 1.34e-03 | ‖g‖ 0.71 | 10,721 tok/s | ETA 5.3 min | $0.00
 paso    400 | pérdida 4.4366 | lr 1.16e-03 | ‖g‖ 0.92 | 9,973 tok/s | ETA 4.4 min | $0.00
+paso    500 | pérdida 4.3061 | lr 9.45e-04 | ‖g‖ 0.78 | 9,696 tok/s | ETA 3.7 min | $0.00
+paso    600 | pérdida 4.2007 | lr 7.10e-04 | ‖g‖ 0.94 | 10,986 tok/s | ETA 2.9 min | $0.00
+paso    700 | pérdida 4.0363 | lr 4.90e-04 | ‖g‖ 0.88 | 11,038 tok/s | ETA 2.1 min | $0.00
+paso    800 | pérdida 3.9011 | lr 3.09e-04 | ‖g‖ 0.80 | 3,668 tok/s | ETA 1.7 min | $0.00
