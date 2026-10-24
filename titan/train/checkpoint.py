@@ -42,6 +42,25 @@ def resolve_weights_dir(path: str | Path) -> Path:
     return p
 
 
+def consolidate_dcp(step_dir: str | Path) -> Path:
+    """Convierte un checkpoint fragmentado (FSDP/DCP) en ``model.safetensors`` completo, sin GPUs."""
+    from torch.distributed.checkpoint.format_utils import dcp_to_torch_save
+    step_dir = Path(step_dir)
+    out = step_dir / "model.safetensors"
+    if out.exists():
+        return out
+    tmp = step_dir / "_consolidated.pt"
+    dcp_to_torch_save(str(step_dir / "dcp"), str(tmp))
+    full = torch.load(tmp, map_location="cpu", weights_only=False)
+    tmp.unlink()
+    sd = {k: v.detach().contiguous() for k, v in full["model"].items()}
+    cfg = json.loads((step_dir / "model_config.json").read_text())
+    if cfg.get("tie_embeddings"):
+        sd.pop("output.weight", None)
+    save_file(sd, str(out))
+    return out
+
+
 def model_state_for_save(model: torch.nn.Module) -> dict[str, torch.Tensor]:
     sd = model.state_dict()
     tied = getattr(getattr(model, "cfg", None), "tie_embeddings", False)
@@ -56,6 +75,8 @@ def model_state_for_save(model: torch.nn.Module) -> dict[str, torch.Tensor]:
 def load_model_weights(model: torch.nn.Module, path: str | Path, strict: bool = True) -> None:
     path = resolve_weights_dir(path)
     if path.is_dir():
+        if not (path / "model.safetensors").exists() and (path / "dcp").is_dir():
+            consolidate_dcp(path)
         path = path / "model.safetensors"
     sd = load_file(str(path))
     tied = getattr(getattr(model, "cfg", None), "tie_embeddings", False)

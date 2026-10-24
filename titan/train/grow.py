@@ -37,7 +37,7 @@ import torch
 from safetensors.torch import load_file, save_file
 
 from ..model import ModelConfig
-from .checkpoint import resolve_weights_dir
+from .checkpoint import consolidate_dcp, resolve_weights_dir
 from ..utils.io import read_json, sha256_file, write_json
 
 _LAYER = re.compile(r"^layers\.(\d+)\.(.+)$")
@@ -46,6 +46,8 @@ _LAYER = re.compile(r"^layers\.(\d+)\.(.+)$")
 def load_model_dir(path: str | Path) -> tuple[ModelConfig, dict[str, torch.Tensor]]:
     """Carga (config, pesos) de un checkpoint, una ejecución o un modelo exportado."""
     p = resolve_weights_dir(path)
+    if not (p / "model.safetensors").exists() and (p / "dcp").is_dir():
+        consolidate_dcp(p)
     cfg_file = p / "model_config.json" if (p / "model_config.json").exists() else p / "config.json"
     data = read_json(cfg_file)
     data = data.get("titan_config", data)

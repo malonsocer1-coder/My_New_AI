@@ -220,7 +220,9 @@ class Transformer(nn.Module):
         resid_std = std / math.sqrt(2 * self.cfg.n_layers)
 
         def normal_(t: torch.Tensor, s: float) -> None:
-            if gen is None or t.device.type == "meta":
+            # Parámetros fragmentados (DTensor de FSDP2): inicialización aleatoria
+            # distribuida de PyTorch, coherente entre procesos con la misma semilla.
+            if gen is None or t.device.type == "meta" or hasattr(t, "device_mesh"):
                 nn.init.normal_(t, 0.0, s)
             else:
                 t.copy_(torch.empty(t.shape, dtype=torch.float32).normal_(0.0, s, generator=gen).to(t))

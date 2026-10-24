@@ -91,7 +91,13 @@ def build_loaders(cfg: TrainConfig, dinfo: DistInfo):
 
 
 @torch.no_grad()
-def evaluate(model, val_loader, cfg: TrainConfig, dinfo: DistInfo, autocast_ctx) -> dict:
+def evaluate(model, val_loader, cfg: TrainConfig, dinfo: DistInfo, autocast_ctx, split: bool = True) -> dict:
+    """Pérdida de validación por dominio.
+
+    Con ``split`` cada rango evalúa un subconjunto de lotes y se suman. Con FSDP
+    (``split=False``) todos los rangos deben ejecutar los mismos forwards,
+    porque cada uno implica comunicación colectiva: repartirlos bloquearía.
+    """
     if val_loader is None:
         return {}
     was_training = model.training
@@ -101,14 +107,14 @@ def evaluate(model, val_loader, cfg: TrainConfig, dinfo: DistInfo, autocast_ctx)
     for dom in val_loader.domains():
         tot = torch.zeros(2, device=dinfo.device, dtype=torch.float64)
         for i, (x, y) in enumerate(val_loader.batches(dom, cfg.eval_windows, bs)):
-            if i % dinfo.world_size != dinfo.rank:
+            if split and i % dinfo.world_size != dinfo.rank:
                 continue
             with autocast_ctx():
                 out = model(x, targets=y)
             n = (y != -100).sum()
             tot[0] += out.ce_loss.double() * n
             tot[1] += n
-        if dinfo.distributed:
+        if dinfo.distributed and split:
             dist.all_reduce(tot)
         if tot[1] == 0:
             continue
@@ -368,7 +374,8 @@ def train(model_cfg: ModelConfig, cfg: TrainConfig, log=None) -> dict:
 
         do_eval = cfg.eval_interval and (state["step"] % cfg.eval_interval == 0 or state["step"] == cfg.max_steps)
         if do_eval:
-            ev = evaluate(fwd_model if parallel == "fsdp" else raw_model, val_loader, cfg, dinfo, autocast_ctx)
+            ev = evaluate(fwd_model if parallel == "fsdp" else raw_model, val_loader, cfg, dinfo, autocast_ctx,
+                          split=parallel != "fsdp")
             if ev:
                 mean = ev["_mean"]["loss"]
                 if state["best_val"] is None or mean < state["best_val"]:
