@@ -247,3 +247,14 @@ def test_session_hours_are_shared_by_all_phases(tmp_path, monkeypatch):
     plan = Plan(tmp_path / "p.yaml")
     plan.run(session_max_hours=1.0, log=lambda *_: None)  # sin tiempo restante: no empieza la fase
     assert plan.status()[0]["status"] == "pending"
+
+
+def test_gguf_phase_is_skipped_without_llama_cpp(tmp_path, monkeypatch):
+    import importlib.util as iu
+    real = iu.find_spec
+    monkeypatch.setattr(iu, "find_spec", lambda name, *a, **k: None if name == "llama_cpp" else real(name, *a, **k))
+    (tmp_path / "p.yaml").write_text(yaml.safe_dump({"name": "t", "workdir": str(tmp_path / "w"), "phases": [
+        {"id": "gguf", "type": "gguf_quantize", "model": "@export/gguf", "types": ["Q8_0"]}]}))
+    state = Plan(tmp_path / "p.yaml").run(log=lambda *_: None)
+    assert state["phases"]["gguf"]["status"] == "done"
+    assert "llama-cpp-python" in state["phases"]["gguf"]["result"]["skipped"]

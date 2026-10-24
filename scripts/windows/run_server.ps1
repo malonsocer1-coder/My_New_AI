@@ -25,7 +25,9 @@ if (-not $Model) {
     $planGguf = Join-Path $App "runs\pc_120m\gguf\titan-120m-Q8_0.gguf"
     $planExport = Join-Path $App "runs\pc_120m\export"
     $gguf = Get-ChildItem (Join-Path $Root "models\quantized") -Filter *.gguf -ErrorAction SilentlyContinue | Select-Object -First 1
-    if (Test-Path $planGguf) { $Model = $planGguf }
+    & $VPy -c "import llama_cpp" 2>$null
+    $hasLlama = ($LASTEXITCODE -eq 0)
+    if ((Test-Path $planGguf) -and $hasLlama) { $Model = $planGguf }
     elseif (Test-Path (Join-Path $planExport "model_config.json")) { $Model = $planExport }
     elseif ($gguf) { $Model = $gguf.FullName }
     else { $Model = Join-Path $Root "models\base\titan" }

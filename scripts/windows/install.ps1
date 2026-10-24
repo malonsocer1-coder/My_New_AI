@@ -91,6 +91,16 @@ if (-not $SkipTorch) {
 Step "Instalando TITAN AI"
 & $VPy -m pip install -e "$($App)[cloud,export,docs,dev]"
 
+# llama.cpp (cuantización GGUF e inferencia rápida). Solo ruedas precompiladas: compilarlo en
+# Windows exige Visual Studio; si no hay rueda, se sigue sin él (todo lo demás funciona).
+Step "Instalando llama-cpp-python (precompilado)"
+$ErrorActionPreference = "Continue"
+& $VPy -m pip install llama-cpp-python --only-binary=:all: --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+if ($LASTEXITCODE -ne 0) {
+    Write-Warning "No hay rueda precompilada de llama-cpp-python para este Python; se omite (la cuantización GGUF del plan se saltará)."
+}
+$ErrorActionPreference = "Stop"
+
 if ($Triton) {
     Step "Instalando triton-windows para torch.compile"
     # triton-windows 3.N corresponde a PyTorch 2.(N+4): 2.8 -> 3.4, 2.9 -> 3.5, ...

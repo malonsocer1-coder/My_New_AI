@@ -226,6 +226,13 @@ class Plan:
             return {"stop_reason": "completed", "out": info["out"], "files": info["files"]}
 
         if kind == "gguf_quantize":
+            import importlib.util
+            if importlib.util.find_spec("llama_cpp") is None:
+                # No es motivo para perder el resto del plan: el GGUF sin cuantizar ya está exportado.
+                msg = ("llama-cpp-python no está instalado; se omite la cuantización GGUF "
+                       "(instálelo y ejecute: titan plan run --plan <plan> --only " + phase["id"] + ")")
+                log(f"[plan] aviso: {msg}")
+                return {"stop_reason": "completed", "skipped": msg}
             from ..export.gguf_tools import quantize_gguf
             src = Path(r(phase["model"]))
             if src.is_dir():
