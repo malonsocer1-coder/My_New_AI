@@ -24,11 +24,12 @@ nube con límites de gasto.
 | Entrenamiento por partes | tres planes por fases; prueba real a igual cómputo: denso continuado 1,338 bpb, crecimiento 1,343 (sin pérdida al crecer), expertos unidos 1,355 |
 | Exportación | logits idénticos a `transformers` (Llama/Mixtral) y a llama.cpp; tokenización y generación idénticas en llama.cpp |
 | Cuantización | Q8_0 +0,02 %, Q4_K_M +0,39 % de perplejidad; int8 propia +0,09 % |
-| SFT de uso de herramientas | 100 % de llamadas válidas y 82,8 % de respuestas correctas en 64 tareas reservadas (dentro de la distribución de las plantillas) |
-| DPO | pares verificados contra inventar resultados y falsa seguridad; margen de preferencia creciente (test) |
+| SFT de uso de herramientas | 100 % de llamadas válidas y ~80 % de respuestas correctas en 64 tareas reservadas (dentro de la distribución de las plantillas) |
+| SFT v2 + DPO v2 | fallo detectado (inventar el contenido de archivos inexistentes) y corregido con datos: preferencia por la respuesta honesta 0 % → 100 %; ver [EVALUACION](docs/EVALUACION.md) |
 | Español de México | clasificador de variante y dominio `es_mx` con peso propio en la mezcla |
 | Agente | 15 herramientas (incluye crear Word/Excel/PowerPoint), sandbox sin red ni secretos, permisos con aprobación obligatoria para acciones sensibles, rutas confinadas, protección contra inyección, MCP |
-| Servidor web | token anti-CSRF, validación de `Host`, streaming y diálogos de permisos |
+| Servidor web | token anti-CSRF, validación de `Host`, streaming y diálogos de permisos ([captura](reports/ui_agente.png)) |
+| Tests | 83 tests automáticos (`python -m pytest`), todos en verde |
 | Nube | planes con presupuesto, `--approve` obligatorio, guardián de gasto probado con un proceso real |
 
 ## Inicio rápido
@@ -63,11 +64,12 @@ Probarlos sin entrenar nada:
 | [ARQUITECTURA](docs/ARQUITECTURA.md) | modelo, tokenizador, formatos y flujo completo |
 | [DATOS](docs/DATOS.md) | pipeline, fuentes, licencias, descontaminación |
 | [ENTRENAMIENTO](docs/ENTRENAMIENTO.md) | etapas A–F, comandos, hiperparámetros |
-| [PC_ENTRENAMIENTO_POR_PARTES](docs/PC_ENTRENAMIENTO_POR_PARTES.md) | plan para la RTX 5070: base → expertos → MoE |
+| [PC_ENTRENAMIENTO_POR_PARTES](docs/PC_ENTRENAMIENTO_POR_PARTES.md) | planes para la RTX 5070 (denso por sesiones recomendado, crecimiento, expertos) con evidencia real |
 | [ESCALADO_Y_PRESUPUESTO](docs/ESCALADO_Y_PRESUPUESTO.md) | tabla de 100 M a 100 B: tiempo, coste, memoria, cabe o no en 8 GB |
 | [NUBE](docs/NUBE.md) | proveedores comparados, flujo de lanzamiento, guardián de gasto |
 | [AGENTE_Y_HERRAMIENTAS](docs/AGENTE_Y_HERRAMIENTAS.md) | protocolo, herramientas, MCP, multimodal |
 | [EVALUACION](docs/EVALUACION.md) | benchmarks, metodología y resultados reales |
+| [INFORME_ETAPA_A](reports/INFORME_ETAPA_A.md) · [RENDIMIENTO_Y_COSTES](reports/RENDIMIENTO_Y_COSTES.md) | resultados medidos, experimentos, velocidades y costes |
 | [DESPLIEGUE_WINDOWS](docs/DESPLIEGUE_WINDOWS.md) | exportar, cuantizar, ejecutar en D:\TITAN_AI |
 | [SEGURIDAD](docs/SEGURIDAD.md) | permisos, sandbox, credenciales, gasto |
 | [RECUPERACION](docs/RECUPERACION.md) | guía ante fallos |
