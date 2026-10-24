@@ -113,7 +113,16 @@ herramienta correcta 100 %, llamadas válidas 100 %, respuesta correcta 82,8 %
 interfaz web funciona de extremo a extremo con este modelo
 (`reports/ui_agente.png`).
 
-## 8. Siguiente paso viable
+## 8. Experimentos adicionales sobre la Etapa A
+
+| Experimento | Resultado | Detalle |
+|---|---|---|
+| Escalado con 4,1 M tokens fijos (2,9 / 8,6 / 18,9 M) | 3,813 / **3,668** / 3,711 (3,704 con LR menor) | más parámetros sin más datos no mejoran; `reports/scaling_sweep*.json` |
+| Entrenamiento por partes a igual cómputo | denso continuado **1,338** < crecimiento 1,343 < base 1,346 < BTX 1,355 (bpb medio) | el crecimiento preserva la calidad exacta; BTX no gana a esta escala; `reports/btx_stage_a.json` |
+| DPO sobre el SFT | 94,5 % de preferencia en pares reservados | mueve todas las preferencias, no crea conductas ausentes; `reports/dpo_stage_a*.json` |
+| SFT v2 con el escenario «archivo inexistente» | respuestas honestas 0/3 → **3/3** | ver `docs/EVALUACION.md` |
+
+## 9. Siguiente paso viable
 
 Etapa B en el PC (RTX 5070): `configs/plans/pc_btx_100m.yaml`, ~2 500 M tokens en
 español y otros dominios, 100 M parámetros y entrenamiento por partes. No

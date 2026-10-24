@@ -1,0 +1,18 @@
+# Demostración real del crecimiento progresivo sobre la Etapa A:
+#   base (6 capas, 8,6 M) -> 12 capas (copia con salida a cero, 13,1 M) -> continuar
+# con el mismo cómputo que el control denso de stage_a_btx (≈1100 pasos del modelo base).
+name: stage_a_grow
+workdir: runs/stage_a_grow
+phases:
+  - id: grow
+    type: grow_depth
+    source: runs/stage_a
+    new_n_layers: 12
+    method: copy_zero
+    tokenizer: data/stage_a/tokenizer
+  - id: continue
+    type: train
+    config: configs/train/stage_a_branch.yaml
+    init_from: "@grow"
+    model_from: "@grow"
+    set: {max_steps: 650}

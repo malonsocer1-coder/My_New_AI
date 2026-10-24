@@ -9,11 +9,11 @@
 
 .EXAMPLE
   powershell -File scripts\windows\train_plan.ps1 -Hours 4
-  powershell -File scripts\windows\train_plan.ps1 -Plan configs\plans\pc_grow_100m.yaml
+  powershell -File scripts\windows\train_plan.ps1 -Plan configs\plans\pc_btx_100m.yaml
   powershell -File scripts\windows\train_plan.ps1 -Status
 #>
 param(
-    [string]$Plan = "configs\plans\pc_btx_100m.yaml",
+    [string]$Plan = "configs\plans\pc_dense_100m.yaml",
     [double]$Hours = 0,
     [switch]$Status
 )

@@ -18,7 +18,7 @@
 1. **Modelo propio desde cero:** arquitectura Llama/Mixtral-compatible, inicialización aleatoria propia, tokenizador BPE propio.
 2. **Datos:** pipeline con licencias, PII, calidad, deduplicación, descontaminación (0 contaminados), fichas de datos y **dominio propio para el español de México** (`es_mx`, con más peso en la mezcla).
 3. **Entrenamiento:** checkpoints atómicos con SHA-256, reanudación exacta tras SIGTERM real, DDP y FSDP2, límites de gasto y tiempo, métricas y ETA, entropía cruzada por fragmentos para ahorrar VRAM.
-4. **Entrenamiento por partes:** agrandar el modelo y unir expertos preservando lo aprendido; planes por fases reanudables.
+4. **Entrenamiento por partes:** tres planes por fases reanudables (denso por sesiones, crecimiento y expertos), comparados con datos reales a igual cómputo ([resultados](../reports/btx_stage_a.json)).
 5. **Evaluación:** 8 suites reproducibles sin jueces externos.
 6. **Exportación:** formatos TITAN, Hugging Face y GGUF con equivalencia numérica probada contra `transformers` y llama.cpp.
 7. **Cuantización:** Q8_0 a Q4_K_M con pérdida medida (< 0,4 % de perplejidad en la Etapa A).
@@ -58,8 +58,11 @@
 
 ## Preguntas concretas para tu retroalimentación
 
-* ¿El plan por partes (base de 100 M → 3 expertos → MoE de 214 M) es lo que
-  imaginabas, o prefieres la alternativa de agrandar el modelo de 100 M a 176 M?
+* La prueba real a pequeña escala mostró que, a igual cómputo, **seguir
+  entrenando el modelo denso por sesiones** rindió mejor que unir expertos, y que
+  agrandar el modelo no pierde nada de lo aprendido. Por eso ahora recomiendo el
+  plan denso (`pc_dense_100m`). ¿Te parece bien, o quieres probar igualmente
+  el de expertos en tu PC? Es la misma fase base para los tres planes.
 * ¿Te parece bien que la memoria persistente del agente venga desactivada por defecto?
 * ¿Qué herramientas te importan más en el día a día (archivos, código, web, documentos, voz)?
 * ¿Cuánto tiempo seguido puede estar tu laptop entrenando (horas por día)?

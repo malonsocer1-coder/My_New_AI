@@ -1,0 +1,122 @@
+{
+  "base": {
+    "params_total": 8621312,
+    "params_active": 8621312,
+    "bpb": {
+      "code": 1.8103,
+      "en": 1.6389,
+      "es": 1.2779,
+      "math": 0.3892,
+      "multi": 1.6126
+    },
+    "bpb_mean": 1.3458
+  },
+  "expert_es": {
+    "params_total": 8621312,
+    "params_active": 8621312,
+    "bpb": {
+      "code": 1.9045,
+      "en": 1.6791,
+      "es": 1.2794,
+      "math": 0.3913,
+      "multi": 1.6461
+    },
+    "bpb_mean": 1.3801
+  },
+  "expert_en": {
+    "params_total": 8621312,
+    "params_active": 8621312,
+    "bpb": {
+      "code": 1.9015,
+      "en": 1.6055,
+      "es": 1.2978,
+      "math": 0.3912,
+      "multi": 1.6406
+    },
+    "bpb_mean": 1.3673
+  },
+  "expert_code": {
+    "params_total": 8621312,
+    "params_active": 8621312,
+    "bpb": {
+      "code": 1.7669,
+      "en": 1.682,
+      "es": 1.3032,
+      "math": 0.3916,
+      "multi": 1.647
+    },
+    "bpb_mean": 1.3581
+  },
+  "moe_unido": {
+    "params_total": 15113984,
+    "params_active": 11869952,
+    "bpb": {
+      "code": 1.8294,
+      "en": 1.6366,
+      "es": 1.2824,
+      "math": 0.3896,
+      "multi": 1.6385
+    },
+    "bpb_mean": 1.3553
+  },
+  "moe_ajustado": {
+    "params_total": 15113984,
+    "params_active": 11869952,
+    "bpb": {
+      "code": 1.8425,
+      "en": 1.6464,
+      "es": 1.2925,
+      "math": 0.3887,
+      "multi": 1.6612
+    },
+    "bpb_mean": 1.3663
+  },
+  "control_denso": {
+    "params_total": 8621312,
+    "params_active": 8621312,
+    "bpb": {
+      "code": 1.7982,
+      "en": 1.6228,
+      "es": 1.2849,
+      "math": 0.3813,
+      "multi": 1.6012
+    },
+    "bpb_mean": 1.3377
+  },
+  "moe_ajustado_lr1e-4_300pasos": {
+    "params_total": 15113984,
+    "params_active": 11869952,
+    "bpb": {
+      "code": 1.8297,
+      "en": 1.6364,
+      "es": 1.2855,
+      "math": 0.3867,
+      "multi": 1.643
+    },
+    "bpb_mean": 1.3563
+  },
+  "agrandado_12capas_sin_entrenar": {
+    "params_total": 13048064,
+    "params_active": 13048064,
+    "bpb": {
+      "code": 1.8103,
+      "en": 1.6389,
+      "es": 1.2779,
+      "math": 0.3892,
+      "multi": 1.6126
+    },
+    "bpb_mean": 1.3458
+  },
+  "agrandado_12capas_continuado": {
+    "params_total": 13048064,
+    "params_active": 13048064,
+    "bpb": {
+      "code": 1.8099,
+      "en": 1.6322,
+      "es": 1.277,
+      "math": 0.3848,
+      "multi": 1.6131
+    },
+    "bpb_mean": 1.3434
+  }
+}

@@ -1,0 +1,10 @@
+# Variante del ajuste conjunto del MoE de la demostración BTX: LR menor y más pasos.
+name: stage_a_btx_tune2
+workdir: runs/stage_a_btx_tune2
+phases:
+  - id: moe_tune_lr1e-4
+    type: train
+    config: configs/train/stage_a_branch.yaml
+    init_from: runs/stage_a_btx/merge
+    model_from: runs/stage_a_btx/merge
+    set: {max_steps: 300, lr: 1.0e-4, min_lr: 1.0e-5, warmup_steps: 20}

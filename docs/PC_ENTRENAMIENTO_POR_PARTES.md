@@ -8,8 +8,8 @@ días distintos.
 
 | | |
 |---|---|
-| Modelo final | Mixture of Experts de **214 M parámetros totales, 157 M activos** por token |
-| Datos | ~3 300 M tokens de entrenamiento, mayoritariamente español |
+| Modelo final | ~100 M parámetros densos (plan recomendado) o 176 M (crecimiento) o MoE 214 M / 157 M activos (BTX) |
+| Datos | ~3 300–3 800 M tokens de entrenamiento, mayoritariamente español (con dominio propio para el español de México) |
 | Tiempo total estimado | **32–67 h** de GPU (≈ 45 h en el caso central); mídelo con `titan bench` |
 | Calidad esperable | Texto en español con cierta fluidez, conocimientos básicos. **No** razonará como un modelo grande ni será un agente fiable: es un prototipo propio que valida todo el sistema con una GPU real |
 
@@ -18,28 +18,50 @@ de los tokens de entrenamiento. Por encima de ~350 M parámetros la VRAM de 8 GB
 ya no alcanza para entrenar y el tiempo se mide en semanas; para eso está el
 plan de nube (ver `docs/ESCALADO_Y_PRESUPUESTO.md`).
 
-## Por qué "por partes" funciona así
+## Tres formas de entrenar por partes (todas guardan cada fase en disco)
 
 Entrenar dos modelos de 100 M por separado desde cero y "pegarlos" **no**
 funciona: cada modelo organiza su conocimiento de forma distinta y sus pesos
-no encajan. Lo que sí funciona, y está implementado y probado en
-`titan/train/grow.py`:
+no encajan. Estas tres sí funcionan (implementadas en `titan/train/grow.py` y
+`titan/train/plan.py`):
 
-1. **Branch-Train-MiX (plan por defecto)**: se entrena una base común; se
-   copian sus pesos en varias ramas que se especializan **una a la vez**
-   (español, inglés, matemáticas); al final se unen en un solo modelo
-   Mixture of Experts con un enrutador que aprende a qué experto enviar cada
-   token. Como todas las ramas salen de la misma base, se pueden unir.
-2. **Crecimiento progresivo (alternativa)**: se entrena la base de 100 M y se
-   agranda a 24 capas (176 M). Las capas nuevas empiezan como copias con la
-   salida a cero, de modo que el modelo agrandado calcula **exactamente lo
-   mismo** que el original (verificado en `tests/test_grow.py`) y el
-   entrenamiento posterior aprovecha la capacidad extra.
+| Plan | Qué hace | Archivo |
+|---|---|---|
+| **Denso por sesiones (recomendado)** | base de 100 M y después se sigue entrenando el mismo modelo, por ratos | `configs/plans/pc_dense_100m.yaml` |
+| Crecimiento | base de 100 M → se agranda a 24 capas (176 M) sin perder nada → se sigue entrenando | `configs/plans/pc_grow_100m.yaml` |
+| Expertos (Branch-Train-MiX) | base → ramas especializadas una a una → unión en MoE → ajuste conjunto | `configs/plans/pc_btx_100m.yaml` |
+
+### Evidencia real (prueba a pequeña escala en esta sesión)
+
+Sobre el modelo de la Etapa A (8,6 M), con el **mismo cómputo extra** para las
+tres opciones y midiendo bits por byte en validación (menos es mejor;
+`reports/btx_stage_a.json`):
+
+| Opción | Media (5 dominios) | Español |
+|---|---|---|
+| Base de partida | 1,3458 | 1,2779 |
+| **Seguir entrenando el denso** | **1,3377** | 1,2849 |
+| Agrandar 6 → 12 capas y seguir | 1,3434 | **1,2770** |
+| Unir 3 expertos (BTX), mejor variante | 1,3553 | 1,2824 |
+
+* Los expertos **sí** se especializan (inglés 1,639 → 1,606; código 1,810 → 1,767),
+  pero al unirlos se pierde esa ventaja y el ajuste corto no la recupera.
+* El modelo agrandado sin entrenar da **exactamente** la misma calidad que el
+  original (1,3458): crecer no pierde nada, como predicen los tests.
+* Limitaciones de la prueba: modelo diminuto, datos escasos (el español ya se
+  había repetido ~8 veces) y ramas cortas. En la literatura, BTX gana a escalas
+  mucho mayores con ramas largas; a 100 M con datos nuevos podría cambiar. Por
+  eso el plan BTX se mantiene como **experimento**, y `scripts/btx_report.py`
+  permite repetir esta comparación con tus datos reales.
+
+**Recomendación:** empezar con `pc_dense_100m.yaml` (la fase `base` es común a
+los tres planes, así que no se pierde nada si después quieres probar otro a
+partir de ella).
 
 Las piezas ocupan poco disco (100 M parámetros ≈ 200 MB en bf16); lo que
 limita es la potencia y la memoria de la GPU, no el almacenamiento.
 
-## Fases del plan `configs/plans/pc_btx_100m.yaml`
+## Fases del plan de expertos `configs/plans/pc_btx_100m.yaml` (experimental)
 
 | Fase | Qué hace | Tokens | Memoria GPU estimada | Tiempo estimado* |
 |---|---|---|---|---|
@@ -107,7 +129,7 @@ los tokens reales por dominio.
 ### 4. Entrenar por ratos
 
 ```powershell
-powershell -File scripts\windows\train_plan.ps1 -Hours 4    # 4 horas y se detiene
+powershell -File scripts\windows\train_plan.ps1 -Hours 4    # 4 horas y se detiene (plan denso recomendado)
 powershell -File scripts\windows\train_plan.ps1 -Status     # ver el avance
 ```
 
@@ -116,10 +138,11 @@ con **Ctrl+C**: termina el paso en curso, guarda un checkpoint y sale. Si se
 va la luz, se pierde como máximo el trabajo desde el último checkpoint (cada
 500 pasos, ≈ 30–60 min).
 
-### Alternativa: crecimiento progresivo
+### Alternativas: crecimiento o expertos
 
 ```powershell
 powershell -File scripts\windows\train_plan.ps1 -Plan configs\plans\pc_grow_100m.yaml -Hours 4
+powershell -File scripts\windows\train_plan.ps1 -Plan configs\plans\pc_btx_100m.yaml -Hours 4
 ```
 
 ## Problemas frecuentes

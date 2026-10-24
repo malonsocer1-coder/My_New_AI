@@ -1,0 +1,15 @@
+# Plan por partes "denso" para el PC: base de 100 M y después continuar el MISMO modelo
+# con el cómputo que el plan BTX dedicaría a las ramas (3 x 498 M tokens) y al ajuste MoE.
+# Es la opción que mejor resultado dio en la prueba real a pequeña escala
+# (reports/btx_stage_a.json). También se ejecuta por ratos y cada fase queda guardada.
+name: pc_dense
+workdir: runs/pc_dense
+phases:
+  - id: base
+    type: train
+    config: configs/train/pc_base_100m.yaml
+  - id: continue
+    type: train
+    config: configs/train/pc_expert.yaml
+    init_from: "@base"
+    set: {max_steps: 13700, lr: 3.0e-4, warmup_steps: 200, seed: 77}   # ~1 800 M tokens más

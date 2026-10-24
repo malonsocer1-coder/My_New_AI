@@ -21,7 +21,7 @@ nube con límites de gasto.
 | Aprendizaje desde cero | pérdida 8,72 → 2,78; validación por dominio en [reports/INFORME_ETAPA_A.md](reports/INFORME_ETAPA_A.md) |
 | Reanudación tras interrupción | SIGTERM real en el paso 2 011 → checkpoint íntegro → continuación exacta |
 | Entrenamiento distribuido | DDP y FSDP2 con torchrun (2 procesos), checkpoint fragmentado y reanudación |
-| Entrenamiento por partes | crecimiento y unión de expertos que preservan exactamente la función; plan por fases de extremo a extremo |
+| Entrenamiento por partes | tres planes por fases; prueba real a igual cómputo: denso continuado 1,338 bpb, crecimiento 1,343 (sin pérdida al crecer), expertos unidos 1,355 |
 | Exportación | logits idénticos a `transformers` (Llama/Mixtral) y a llama.cpp; tokenización y generación idénticas en llama.cpp |
 | Cuantización | Q8_0 +0,02 %, Q4_K_M +0,39 % de perplejidad; int8 propia +0,09 % |
 | SFT de uso de herramientas | 100 % de llamadas válidas y 82,8 % de respuestas correctas en 64 tareas reservadas (dentro de la distribución de las plantillas) |
