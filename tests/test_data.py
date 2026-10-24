@@ -147,3 +147,46 @@ def test_eval_loader(tmp_path):
     assert ev.domains() == ["a", "b"]
     n = sum(x.shape[0] for x, _ in ev.batches("a", 10, 4))
     assert n == 10
+
+
+def test_dialect_classifier():
+    from titan.data.dialect import classify_dialect
+    mx = ("Ahorita voy a la alberca con mis cuates de la colonia; luego platicamos en la recámara. "
+          "En la CDMX el IMSS abrió una clínica nueva y el camión pasa por la banqueta del zócalo. ") * 3
+    es = ("Vosotros tenéis que coger el coche para ir al ayuntamiento de Madrid; el zumo y las patatas "
+          "cuestan dos euros. ¿Habéis visto mi móvil y el ordenador? Vale, tío. ") * 3
+    ar = "Vos tenés que venir, che; ¿querés mate? Sos un pibe de Buenos Aires, Argentina. " * 3
+    neutral = ("El sistema de entrenamiento procesa los datos y calcula la pérdida en cada paso del "
+               "algoritmo de optimización, que actualiza los parámetros del modelo. ") * 3
+    assert classify_dialect(mx) == "es-MX"
+    assert classify_dialect(es) == "es-ES"
+    assert classify_dialect(ar) == "es-otros"
+    assert classify_dialect(neutral) == "es-neutral"
+
+
+def test_explicit_domain_weights_exclude_missing(tmp_path):
+    man = _fake_manifest(tmp_path)
+    ld = PretrainLoader(man, "train", 16, 4, seed=1, domain_weights={"a": 1.0})
+    assert ld.domains == ["a"]
+
+
+def test_pipeline_routes_mexican_spanish(tmp_path):
+    import yaml
+    from titan.data.pipeline import prepare
+    mx = ("Ahorita salgo de la alberca y voy al tianguis de la colonia con mis cuates. En la CDMX el camión "
+          "pasa por la banqueta del zócalo y luego platicamos en la recámara sobre la chamba nueva. ")
+    neutral = ("El informe describe el proceso de evaluación y los resultados obtenidos durante el año, "
+               "con un análisis detallado de cada etapa y de las decisiones tomadas por el comité técnico. ")
+    rows = [{"text": (mx if i % 2 else neutral) * 3 + f" Documento número {i}."} for i in range(40)]
+    (tmp_path / "docs.jsonl").write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in rows), encoding="utf-8")
+    cfg = {"name": "t", "output_dir": str(tmp_path / "out"), "val_fraction": 0.0, "vocab_size": 300,
+           "minhash_dedup": False, "extra_domain_weights": {"es_mx": 0.3},
+           "sources": [{"name": "local_es", "domain": "es", "language": "es", "loader": "jsonl",
+                        "license": "propia (test)", "dialect_routing": True,
+                        "params": {"pattern": str(tmp_path / "docs.jsonl")}}]}
+    (tmp_path / "cfg.yaml").write_text(yaml.safe_dump(cfg, allow_unicode=True), encoding="utf-8")
+    man = prepare(str(tmp_path / "cfg.yaml"), log=lambda *_: None)
+    assert set(man["domains"]) == {"es", "es_mx"}
+    assert man["domain_weights"]["es_mx"] == 0.3
+    card = json.loads((tmp_path / "out" / "data_card.json").read_text())
+    assert card["dialects"]["local_es"]["es-MX"] == 20

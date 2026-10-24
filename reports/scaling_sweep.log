@@ -2,3 +2,5 @@
 [datos] 4,096 tokens/paso, 1000 pasos -> 4.1M tokens
 paso    100 | pérdida 7.4576 | lr 1.50e-03 | ‖g‖ 0.86 | 7,206 tok/s | ETA 8.5 min | $0.00
 paso    200 | pérdida 5.4798 | lr 1.46e-03 | ‖g‖ 0.90 | 9,921 tok/s | ETA 6.5 min | $0.00
+paso    300 | pérdida 4.7722 | lr 1.34e-03 | ‖g‖ 0.71 | 10,721 tok/s | ETA 5.3 min | $0.00
+paso    400 | pérdida 4.4366 | lr 1.16e-03 | ‖g‖ 0.92 | 9,973 tok/s | ETA 4.4 min | $0.00

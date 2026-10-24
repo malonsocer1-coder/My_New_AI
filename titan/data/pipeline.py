@@ -26,6 +26,7 @@ from ..tokenizer import TitanTokenizer, train_tokenizer
 from ..utils.io import read_yaml, sha256_file, stable_hash, write_json
 from .clean import FilterStats, QualityConfig, detect_language, normalize_text, quality_reason, scrub_pii
 from .decontam import ContaminationIndex
+from .dialect import classify_dialect
 from .dedup import ExactDeduper, MinHashLSH, exact_key
 from .sources import LICENSE_UNKNOWN, SourceSpec, iter_documents
 
@@ -49,6 +50,7 @@ class DataConfig:
     decontam_ngram: int = 13
     allow_unknown_license: bool = False
     quality: dict[str, Any] = field(default_factory=dict)
+    extra_domain_weights: dict[str, float] = field(default_factory=dict)  # p. ej. {"es_mx": 0.25}
 
     @classmethod
     def load(cls, path: str) -> "DataConfig":
@@ -104,6 +106,7 @@ def clean_stage(cfg: DataConfig, log=print) -> dict:
     lsh = MinHashLSH(**cfg.minhash) if cfg.minhash_dedup else None
     stats: dict[str, FilterStats] = defaultdict(FilterStats)
     langs: dict[str, Counter] = defaultdict(Counter)
+    dialects: dict[str, Counter] = defaultdict(Counter)
     counts = defaultdict(lambda: {"docs": 0, "chars": 0, "bytes": 0})
     writers: dict[tuple[str, str], Any] = {}
 
@@ -138,9 +141,15 @@ def clean_stage(cfg: DataConfig, log=print) -> dict:
                     continue
                 key = exact_key(text)
                 split = _split_of(key, cfg.val_fraction)
-                writer(spec.domain, split).write(json.dumps(
+                domain = spec.domain
+                if spec.dialect_routing:
+                    dia = classify_dialect(text)
+                    dialects[spec.name][dia] += 1
+                    if dia == "es-MX":
+                        domain = f"{spec.domain}_mx"
+                writer(domain, split).write(json.dumps(
                     {"text": text, "source": spec.name, "id": doc.doc_id}, ensure_ascii=False) + "\n")
-                c = counts[(spec.domain, split)]
+                c = counts[(domain, split)]
                 c["docs"] += 1
                 c["chars"] += len(text)
                 c["bytes"] += len(text.encode("utf-8"))
@@ -152,6 +161,7 @@ def clean_stage(cfg: DataConfig, log=print) -> dict:
     return {
         "filter_stats": {k: v.to_dict() for k, v in stats.items()},
         "language_detection": {k: dict(v) for k, v in langs.items()},
+        "dialects": {k: dict(v) for k, v in dialects.items()},
         "clean_counts": {f"{d}.{s}": v for (d, s), v in sorted(counts.items())},
     }
 
@@ -254,12 +264,14 @@ def prepare(config_path: str, log=print) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
     clean_info = clean_stage(cfg, log)
-    domains = sorted({s.domain for s in cfg.sources})
+    domains = sorted({s.domain for s in cfg.sources} | {f"{s.domain}_mx" for s in cfg.sources if s.dialect_routing})
+    domains = [d for d in domains if (out / "clean" / f"{d}.train.jsonl").exists()]
     tok = tokenizer_stage(cfg, domains, log)
     tok_info = tokenize_stage(cfg, tok, domains, log)
     weights = defaultdict(float)
     for s in cfg.sources:
         weights[s.domain] = max(weights[s.domain], s.weight)
+    weights.update(cfg.extra_domain_weights)
     manifest = {
         "name": cfg.name,
         "config_fingerprint": cfg.fingerprint(),

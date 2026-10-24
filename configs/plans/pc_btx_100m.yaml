@@ -1,5 +1,5 @@
 # Plan "entrenar por partes" para el PC (RTX 5070 Laptop, 8 GB):
-#   1. base de 100 M  ->  2. tres ramas expertas (una a la vez)  ->
+#   1. base de 100 M  ->  2. tres ramas expertas (una a la vez; la de español refuerza es_mx)  ->
 #   3. unión en Mixture of Experts (214 M totales, 157 M activos)  ->  4. ajuste conjunto.
 # Cada fase queda guardada en runs/pc_btx/<fase>. Se puede ejecutar por ratos:
 #   titan plan run --plan configs/plans/pc_btx_100m.yaml --hours 4
@@ -14,23 +14,23 @@ phases:
     type: train
     config: configs/train/pc_expert.yaml
     init_from: "@base"
-    set: {domain_weights: {es: 0.80, en: 0.10, math: 0.05, code: 0.05}}
+    set: {domain_weights: {es: 0.45, es_mx: 0.35, en: 0.10, math: 0.05, code: 0.05}}
   - id: expert_en
     type: train
     config: configs/train/pc_expert.yaml
     init_from: "@base"
-    set: {domain_weights: {en: 0.80, es: 0.10, math: 0.05, code: 0.05}}
+    set: {domain_weights: {en: 0.80, es: 0.06, es_mx: 0.04, math: 0.05, code: 0.05}}
   - id: expert_math
     type: train
     config: configs/train/pc_expert.yaml
     init_from: "@base"
-    set: {domain_weights: {math: 0.70, es: 0.15, en: 0.10, code: 0.05}}
+    set: {domain_weights: {math: 0.70, es: 0.09, es_mx: 0.06, en: 0.10, code: 0.05}}
   # Con The Stack activado en configs/data/pc_es.yaml puede añadirse una rama de código:
   # - id: expert_code
   #   type: train
   #   config: configs/train/pc_expert.yaml
   #   init_from: "@base"
-  #   set: {domain_weights: {code: 0.60, en: 0.20, es: 0.10, math: 0.10}}
+  #   set: {domain_weights: {code: 0.60, en: 0.20, es: 0.06, es_mx: 0.04, math: 0.10}}
   - id: merge
     type: merge_experts
     branches: ["@expert_es", "@expert_en", "@expert_math"]

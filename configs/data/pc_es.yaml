@@ -17,6 +17,9 @@ exact_dedup: true
 # repetirlo en Python puro tardaría horas en una laptop. Actívelo si añade fuentes crudas.
 minhash_dedup: false
 decontam_ngram: 13
+# Español de México: los textos con marcadores mexicanos (titan/data/dialect.py) van al
+# dominio "es_mx", que recibe peso propio además del español general.
+extra_domain_weights: {es_mx: 0.20}
 eval_files:
   - titan/eval/data/*.jsonl
 sources:
@@ -26,6 +29,7 @@ sources:
     loader: hf
     license: "ODC-By 1.0 (FineWeb-2, HuggingFaceFW) + términos de uso de Common Crawl"
     scrub_pii: true
+    dialect_routing: true
     max_docs: 1400000
     weight: 0.50
     params: {path: HuggingFaceFW/fineweb-2, name: spa_Latn, split: train, text_field: text}
@@ -34,6 +38,7 @@ sources:
     language: es
     loader: hf
     license: "CC BY-SA 4.0 / GFDL (Wikipedia en español): requiere atribución"
+    dialect_routing: true
     max_docs: 500000
     weight: 0.50
     params: {path: wikimedia/wikipedia, name: 20231101.es, split: train, text_field: text}

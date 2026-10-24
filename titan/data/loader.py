@@ -107,7 +107,13 @@ class PretrainLoader:
         for s in self.manifest["shards"]:
             if s["split"] == split:
                 by_domain.setdefault(s["domain"], []).append(root / s["path"])
-        weights = domain_weights or self.manifest.get("domain_weights") or {}
+        if domain_weights:
+            missing = sorted(set(by_domain) - set(domain_weights))
+            if missing:
+                print(f"[datos] aviso: dominios sin peso explícito, se excluyen: {missing}", flush=True)
+            weights = {d: domain_weights.get(d, 0.0) for d in by_domain}
+        else:
+            weights = self.manifest.get("domain_weights") or {}
         self.domains = [d for d in sorted(by_domain) if weights.get(d, 1.0) > 0]
         if not self.domains:
             raise ValueError(f"No hay shards para split={split}")

@@ -48,6 +48,7 @@ class SourceSpec:
     weight: float = 1.0  # peso de muestreo del dominio en el entrenamiento
     scrub_pii: bool = False
     enabled: bool = True
+    dialect_routing: bool = False  # español: enviar los textos de México al dominio "<domain>_mx"
 
     @classmethod
     def from_dict(cls, d: dict) -> "SourceSpec":

@@ -12,11 +12,13 @@ shard_tokens: 500000000
 exact_dedup: true
 minhash_dedup: false   # las fuentes ya están deduplicadas por sus autores
 eval_files: [titan/eval/data/*.jsonl]
+extra_domain_weights: {es_mx: 0.12}   # español de México con peso propio (ver titan/data/dialect.py)
 sources:
-  - {name: fineweb2_es, domain: es, language: es, loader: hf, scrub_pii: true, max_docs: 40000000, weight: 0.30,
+  - {name: fineweb2_es, domain: es, language: es, loader: hf, scrub_pii: true, dialect_routing: true,
+     max_docs: 40000000, weight: 0.30,
      license: "ODC-By 1.0 (FineWeb-2) + términos de Common Crawl",
      params: {path: HuggingFaceFW/fineweb-2, name: spa_Latn, split: train, text_field: text}}
-  - {name: wikipedia_es, domain: es, language: es, loader: hf, max_docs: 2000000, weight: 0.30,
+  - {name: wikipedia_es, domain: es, language: es, loader: hf, dialect_routing: true, max_docs: 2000000, weight: 0.30,
      license: "CC BY-SA 4.0 / GFDL (Wikipedia)",
      params: {path: wikimedia/wikipedia, name: 20231101.es, split: train, text_field: text}}
   - {name: fineweb_edu_en, domain: en, language: en, loader: hf, max_docs: 40000000, weight: 0.33,

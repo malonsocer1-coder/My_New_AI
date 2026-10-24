@@ -63,11 +63,20 @@ Fuentes recomendadas y sus licencias:
 | bigcode/the-stack-dedup | código con licencias por archivo | términos de BigCode: requiere aceptación |
 | CPython stdlib | código Python | PSF-2.0 |
 
-**Español de México:** FineWeb-2 no separa variantes regionales. Para reforzar
-el español de México se recomienda añadir, con su licencia verificada, fuentes
-como datos abiertos del Gobierno de México (datos.gob.mx, Licencia de Libre
-Uso MX), publicaciones oficiales de dominio público y textos con permiso
-expreso. Cada fuente se añade como un `SourceSpec` más con su licencia.
+**Español de México.** FineWeb-2 y Wikipedia no separan variantes regionales.
+`titan/data/dialect.py` clasifica cada documento en español como es-MX, es-ES,
+otras variantes o neutral, con marcadores léxicos y gramaticales ponderados:
+- vocabulario («ahorita», «alberca», «computadora» frente a «ordenador», «zumo»);
+- formas verbales (vosotros, voseo);
+- instituciones (IMSS, CURP, SEP), topónimos y moneda.
+
+Es una heurística transparente que ante la duda responde «neutral». Con
+`dialect_routing: true` en la fuente, los textos mexicanos van al dominio
+`es_mx`, que recibe su propio peso (`extra_domain_weights`, p. ej. 0,20 en el
+PC); `data_card.json` registra cuántos documentos hay de cada variante. Para
+reforzarlo más se pueden añadir fuentes mexicanas con licencia verificada:
+datos abiertos del Gobierno de México (datos.gob.mx, Licencia de Libre Uso MX),
+publicaciones oficiales de dominio público y textos con permiso expreso.
 
 **Escala:** el pipeline es de un solo proceso por diseño (reproducible y fácil
 de auditar). Para más de ~100 000 M tokens conviene ejecutarlo en una máquina
