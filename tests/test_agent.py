@@ -196,3 +196,20 @@ def test_chat_never_truncates_prompt_silently(tmp_path):
     ctx = ToolContext(workspace=str(tmp_path), permissions=allow_all())
     res = Agent(eng, default_registry(), ctx).run([{"role": "user", "content": "hola " * 200}])
     assert res.stop_reason == "context_overflow" and "contexto" in res.final
+
+
+def test_create_and_read_office_documents(ctx):
+    pytest.importorskip("docx")
+    pytest.importorskip("openpyxl")
+    pytest.importorskip("pptx")
+    reg = default_registry()
+    r = reg.call("write_document", {"path": "informe.docx", "content": "# Informe\nTexto del informe.\n- punto uno"}, ctx)
+    assert r.ok
+    assert "punto uno" in reg.call("read_file", {"path": "informe.docx"}, ctx).content
+    r = reg.call("write_document", {"path": "datos.xlsx", "content": [["nombre", "edad"], ["Ana", "30"], ["Luis", "41"]]}, ctx)
+    assert r.ok
+    xl = reg.call("read_file", {"path": "datos.xlsx"}, ctx).content
+    assert "Ana,30" in xl
+    r = reg.call("write_document", {"path": "deck.pptx", "content": "# Portada\n- TITAN AI\n# Resultados\n- 100 % llamadas válidas"}, ctx)
+    assert r.ok
+    assert "Resultados" in reg.call("read_file", {"path": "deck.pptx"}, ctx).content

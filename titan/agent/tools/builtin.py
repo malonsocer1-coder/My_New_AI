@@ -23,7 +23,7 @@ import urllib.request
 from html.parser import HTMLParser
 from pathlib import Path
 
-from ..documents import read_document, summarize_table
+from ..documents import read_document, summarize_table, write_document
 from ..knowledge import KnowledgeBase
 from ..protocol import ToolContext, ToolResult, ToolSpec
 from ..sandbox import run_python
@@ -135,6 +135,16 @@ def _write_file(args, ctx):
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(args["content"], encoding="utf-8")
     return ToolResult(True, {"path": args["path"], "bytes": p.stat().st_size})
+
+
+def _write_document(args, ctx):
+    p = safe_path(ctx, args["path"])
+    if p.exists():
+        d = ctx.permissions.check("file_delete", "write_document", f"sobrescribir {args['path']}")
+        if not d.allowed:
+            return ToolResult(False, error=f"Permiso denegado para sobrescribir: {d.reason}")
+    info = write_document(p, args["content"])
+    return ToolResult(True, {"path": args["path"], "bytes": info["bytes"]})
 
 
 def _delete_file(args, ctx):
@@ -306,6 +316,10 @@ def builtin_tools() -> list[ToolSpec]:
                  _read_file, ["file_read"], 30, untrusted_output=True),
         ToolSpec("write_file", "Crea un archivo de texto en el espacio de trabajo.",
                  _s({"path": S, "content": S, "overwrite": B}, ["path", "content"]), _write_file, ["file_write"], 10),
+        ToolSpec("write_document", "Crea un documento Word (.docx), hoja de cálculo (.xlsx), presentación (.pptx) "
+                 "o archivo de texto/Markdown/CSV/JSON. Títulos con '# ', viñetas con '- '; .xlsx acepta filas.",
+                 _s({"path": S, "content": {"type": ["string", "array"]}}, ["path", "content"]),
+                 _write_document, ["file_write"], 30),
         ToolSpec("delete_file", "Borra un archivo o carpeta del espacio de trabajo (siempre pide autorización).",
                  _s({"path": S}, ["path"]), _delete_file, ["file_delete"], 10),
         ToolSpec("table_summary", "Resume las columnas de un CSV (tipos, mínimos, máximos, medias).",

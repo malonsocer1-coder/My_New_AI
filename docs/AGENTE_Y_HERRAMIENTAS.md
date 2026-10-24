@@ -19,6 +19,7 @@ TITAN se convierte en agente mediante un **bucle explícito** (`titan/agent/loop
 | `calculator` | — | aritmética exacta con un evaluador de AST (sin `eval`) |
 | `list_dir`, `read_file` | file_read | archivos del espacio de trabajo; texto, CSV, JSON, PDF, Word, Excel, PowerPoint |
 | `write_file` | file_write (+ file_delete para sobrescribir) | crear archivos de texto |
+| `write_document` | file_write (+ file_delete para sobrescribir) | crear Word (.docx), Excel (.xlsx), PowerPoint (.pptx), Markdown, CSV o JSON |
 | `delete_file` | file_delete (siempre pregunta) | borrar |
 | `table_summary` | file_read | análisis de columnas de un CSV |
 | `python_exec` | code_exec | Python en el sandbox (análisis de datos, depuración, cálculos) |

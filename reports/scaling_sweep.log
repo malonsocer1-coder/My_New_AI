@@ -8,3 +8,10 @@ paso    500 | pérdida 4.3061 | lr 9.45e-04 | ‖g‖ 0.78 | 9,696 tok/s | ETA 3
 paso    600 | pérdida 4.2007 | lr 7.10e-04 | ‖g‖ 0.94 | 10,986 tok/s | ETA 2.9 min | $0.00
 paso    700 | pérdida 4.0363 | lr 4.90e-04 | ‖g‖ 0.88 | 11,038 tok/s | ETA 2.1 min | $0.00
 paso    800 | pérdida 3.9011 | lr 3.09e-04 | ‖g‖ 0.80 | 3,668 tok/s | ETA 1.7 min | $0.00
+paso    900 | pérdida 3.8844 | lr 1.92e-04 | ‖g‖ 0.86 | 8,015 tok/s | ETA 0.8 min | $0.00
+paso   1000 | pérdida 3.8982 | lr 1.50e-04 | ‖g‖ 0.88 | 9,686 tok/s | ETA 0.0 min | $0.00
+[eval] paso 1000 | code: 4.0490 (2.162 bpb) | en: 4.6375 (2.002 bpb) | es: 3.9298 (1.480 bpb) | math: 0.9983 (0.553 bpb) | multi: 5.4523 (2.085 bpb) | _mean: 3.8134
+[checkpoint] runs/sweep_xs/checkpoints/step_00001000
+{'size': 'xs', 'params': 2884736, 'non_embedding_params': 787584, 'tokens': 4096000, 'hours': 0.139, 'val_mean_loss': 3.8134, 'val_bpb': {'code': 2.1618, 'en': 2.0015, 'es': 1.4804, 'math': 0.5529, 'multi': 2.0849}, 'tokens_per_step': 4096}
+[modelo] 8.62M parámetros (8.62M activos), paralelismo=none, mundo=1, dispositivo=cpu, dtype=fp32
+[datos] 4,096 tokens/paso, 1000 pasos -> 4.1M tokens

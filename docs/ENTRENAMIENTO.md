@@ -21,6 +21,7 @@ titan train --config configs/train/stage_a.yaml --set max_steps=100 lr=1e-3   # 
 torchrun --nproc_per_node=8 -m titan.cli train --config configs/train/titan_1b.yaml   # 8 GPUs
 python scripts/make_sft_data.py && titan sft prepare --config configs/sft/stage_a.yaml
 titan train --config configs/train/sft_stage_a.yaml            # SFT desde el modelo base
+python scripts/make_pref_data.py && titan dpo --config configs/train/dpo_stage_a.yaml   # preferencias
 titan plan run --plan configs/plans/pc_btx_100m.yaml --hours 4 # entrenamiento por partes
 titan bench --config configs/train/pc_base_100m.yaml           # medir el hardware
 ```
@@ -32,10 +33,11 @@ titan bench --config configs/train/pc_base_100m.yaml           # medir el hardwa
 2. **SFT (ajuste supervisado)** — necesario para conversar, seguir
    instrucciones y emitir llamadas a herramientas con el formato del protocolo.
    Barato (decenas a cientos de millones de tokens). Pérdida solo en los turnos del asistente.
-3. **Ajuste de preferencias (DPO u otros)** — útil a partir de ~1 B parámetros,
-   cuando el modelo ya produce respuestas competentes entre las que elegir; en
-   modelos pequeños aporta poco. Pendiente: se añadirá sobre el mismo
-   formato de chat cuando haya un modelo base de ese tamaño.
+3. **Ajuste de preferencias (DPO)** — implementado (`titan dpo`, `titan/sft/dpo.py`)
+   con pares verificados por programa que castigan los fallos observados
+   (inventar resultados tras un error, números falsos, afirmar acciones
+   denegadas, falsa seguridad). Rinde de verdad a partir de ~1 B parámetros;
+   en la Etapa A se ejecutó como demostración del circuito.
 4. **Evaluación de seguridad y fiabilidad** — en cada etapa (`titan eval`), y
    con más peso antes de exponer el agente a herramientas con efectos.
 5. **Optimización para inferencia** — al final, sin tocar los pesos originales.

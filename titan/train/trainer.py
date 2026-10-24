@@ -198,6 +198,9 @@ def train(model_cfg: ModelConfig, cfg: TrainConfig, log=None) -> dict:
         if parallel == "fsdp":
             from safetensors.torch import load_file
             from torch.distributed.checkpoint.state_dict import StateDictOptions, set_model_state_dict
+            if is_main and src.is_dir() and not (src / "model.safetensors").exists() and (src / "dcp").is_dir():
+                from .checkpoint import consolidate_dcp
+                consolidate_dcp(src)  # el origen se entrenó fragmentado (FSDP)
             sd = load_file(str(src / "model.safetensors" if src.is_dir() else src)) if is_main else {}
             set_model_state_dict(model, sd, options=StateDictOptions(full_state_dict=True,
                                                                      broadcast_from_rank0=True))
