@@ -285,10 +285,15 @@ class Transformer(nn.Module):
         h = self.norm(h)
         if last_only:
             h = h[:, -1:, :]
-        logits = self.output(h)
-        if targets is None:
-            return ModelOutput(logits=logits)
-        ce = F.cross_entropy(logits.float().view(-1, logits.size(-1)), targets.reshape(-1), ignore_index=-100)
+        chunk = self.cfg.ce_chunk_size
+        if targets is not None and chunk and self.training and h.shape[0] * h.shape[1] > chunk:
+            ce = self._chunked_ce(h, targets, chunk)
+            logits = None  # no se materializan los logits completos
+        else:
+            logits = self.output(h)
+            if targets is None:
+                return ModelOutput(logits=logits)
+            ce = F.cross_entropy(logits.float().view(-1, logits.size(-1)), targets.reshape(-1), ignore_index=-100)
         loss = ce
         if self.cfg.is_moe:
             n = self.cfg.n_layers
@@ -296,6 +301,21 @@ class Transformer(nn.Module):
             z_total = z_total / n
             loss = ce + self.cfg.moe_aux_loss_coef * aux_total + self.cfg.moe_z_loss_coef * z_total
         return ModelOutput(logits=logits, loss=loss, ce_loss=ce, aux_loss=aux_total, z_loss=z_total)
+
+    def _chunked_ce(self, h: torch.Tensor, targets: torch.Tensor, chunk: int) -> torch.Tensor:
+        """Media de la entropía cruzada calculando proyección + pérdida por fragmentos con
+        recálculo en el backward: el pico de memoria pasa de N×V a chunk×V."""
+        flat_h = h.reshape(-1, h.shape[-1])
+        flat_t = targets.reshape(-1)
+
+        def piece(hc: torch.Tensor, tc: torch.Tensor) -> torch.Tensor:
+            return F.cross_entropy(self.output(hc).float(), tc, ignore_index=-100, reduction="sum")
+
+        total = flat_h.new_zeros((), dtype=torch.float32)
+        for i in range(0, flat_h.shape[0], chunk):
+            total = total + checkpoint(piece, flat_h[i:i + chunk], flat_t[i:i + chunk], use_reentrant=False)
+        n = (flat_t != -100).sum().clamp(min=1)
+        return total / n
 
     # ------------------------------------------------------------------
     def new_cache(self, batch_size: int, max_len: int | None = None, dtype=None) -> KVCache:

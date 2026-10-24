@@ -43,7 +43,7 @@ limita es la potencia y la memoria de la GPU, no el almacenamiento.
 
 | Fase | Qué hace | Tokens | Memoria GPU estimada | Tiempo estimado* |
 |---|---|---|---|---|
-| `base` | Base densa de 100,7 M, datos mezclados | 1 966 M | ~5–6 GB | 16–33 h |
+| `base` | Base densa de 100,7 M, datos mezclados | 1 966 M | ~4–5 GB (entropía cruzada por fragmentos) | 16–33 h |
 | `expert_es` | Rama: 80 % español | 498 M | ~5–6 GB | 4–8 h |
 | `expert_en` | Rama: 80 % inglés | 498 M | ~5–6 GB | 4–8 h |
 | `expert_math` | Rama: 70 % matemáticas | 498 M | ~5–6 GB | 4–8 h |

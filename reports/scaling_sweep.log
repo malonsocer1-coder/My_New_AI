@@ -15,3 +15,4 @@ paso   1000 | pérdida 3.8982 | lr 1.50e-04 | ‖g‖ 0.88 | 9,686 tok/s | ETA 0
 {'size': 'xs', 'params': 2884736, 'non_embedding_params': 787584, 'tokens': 4096000, 'hours': 0.139, 'val_mean_loss': 3.8134, 'val_bpb': {'code': 2.1618, 'en': 2.0015, 'es': 1.4804, 'math': 0.5529, 'multi': 2.0849}, 'tokens_per_step': 4096}
 [modelo] 8.62M parámetros (8.62M activos), paralelismo=none, mundo=1, dispositivo=cpu, dtype=fp32
 [datos] 4,096 tokens/paso, 1000 pasos -> 4.1M tokens
+paso    100 | pérdida 6.9083 | lr 1.50e-03 | ‖g‖ 1.00 | 1,631 tok/s | ETA 37.7 min | $0.00

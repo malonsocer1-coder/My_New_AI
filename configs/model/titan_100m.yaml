@@ -11,3 +11,4 @@ max_seq_len: 1024
 rope_theta: 10000.0
 tie_embeddings: true    # ahorra 25 M parámetros a esta escala
 activation_checkpointing: false
+ce_chunk_size: 1024     # entropía cruzada por fragmentos: ~1,2 GB menos de VRAM con vocab 32k

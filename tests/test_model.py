@@ -108,3 +108,20 @@ def test_moe_routes_to_all_experts_and_grads_flow():
         for e in layer.feed_forward.experts:
             assert e.w1.weight.grad is not None
     assert out.aux_loss.item() > 0
+
+
+def test_chunked_cross_entropy_matches_full():
+    x = torch.randint(0, 97, (3, 40))
+    y = x.clone()
+    y[0, :5] = -100  # posiciones ignoradas (SFT)
+    res = []
+    for chunk in (0, 16):
+        m = make(ce_chunk_size=chunk)
+        m.init_weights(seed=11)
+        m.train()
+        out = m(x, targets=y)
+        out.loss.backward()
+        res.append((out.loss.detach(), {n: p.grad.clone() for n, p in m.named_parameters()}))
+    torch.testing.assert_close(res[0][0], res[1][0], atol=1e-5, rtol=1e-5)
+    for n in res[0][1]:
+        torch.testing.assert_close(res[0][1][n], res[1][1][n], atol=1e-5, rtol=1e-4)

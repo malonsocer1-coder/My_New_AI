@@ -44,6 +44,9 @@ class ModelConfig:
     moe_z_loss_coef: float = 0.001
     # Recalcular activaciones en el backward para ahorrar memoria
     activation_checkpointing: bool = False
+    # Entropía cruzada por fragmentos de N tokens (0 = desactivado): no materializa
+    # todos los logits a la vez; ahorra memoria con vocabularios grandes.
+    ce_chunk_size: int = 0
 
     def __post_init__(self) -> None:
         if self.n_kv_heads is None:

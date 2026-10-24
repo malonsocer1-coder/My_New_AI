@@ -85,7 +85,8 @@ def train_memory_gb(cfg: ModelConfig, n_gpus: int, micro_tokens: int, act_ckpt: 
     states = n * bytes_per_param / n_gpus
     per_tok_layer = (2 if act_ckpt else 34) * cfg.dim
     acts = micro_tokens * cfg.n_layers * per_tok_layer + (micro_tokens * 34 * cfg.dim if act_ckpt else 0)
-    logits = micro_tokens * cfg.vocab_size * 10  # bf16 + copia fp32 + gradiente
+    ce_tokens = min(micro_tokens, cfg.ce_chunk_size) if cfg.ce_chunk_size else micro_tokens
+    logits = ce_tokens * cfg.vocab_size * 10  # bf16 + copia fp32 + gradiente (por fragmento si se trocea)
     total = states + acts + logits + 1.5e9  # contexto CUDA, buffers de comunicación, fragmentación
     return {"states_gb": states / 1e9, "activations_gb": acts / 1e9, "logits_gb": logits / 1e9, "total_gb": total / 1e9}
 
