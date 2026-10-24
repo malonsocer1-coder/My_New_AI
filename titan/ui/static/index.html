@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TITAN AI</title>
+<style>
+  :root { --bg:#f6f7f9; --panel:#fff; --text:#1d2330; --muted:#667085; --accent:#2f5bd3; --border:#dfe3ea;
+          --user:#e8eefc; --tool:#f3f4f6; --warn:#fff6e5; --danger:#b42318; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0f1218; --panel:#171b23; --text:#e6e9ef; --muted:#98a2b3; --accent:#7aa2ff; --border:#2a3140;
+            --user:#1f2a44; --tool:#1d222c; --warn:#3a2f17; --danger:#ff8a80; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.5 system-ui, "Segoe UI", sans-serif; background:var(--bg); color:var(--text);
+         display:flex; flex-direction:column; height:100vh; }
+  header { display:flex; gap:12px; align-items:center; padding:10px 16px; border-bottom:1px solid var(--border);
+           background:var(--panel); flex-wrap:wrap; }
+  header h1 { font-size:17px; margin:0; }
+  header .info { color:var(--muted); font-size:13px; flex:1; min-width:200px; }
+  select, input, button, textarea { font:inherit; color:inherit; }
+  select, input[type=number] { background:var(--panel); border:1px solid var(--border); border-radius:6px; padding:4px 6px; }
+  #log { flex:1; overflow-y:auto; padding:16px; max-width:900px; width:100%; margin:0 auto; }
+  .msg { padding:10px 12px; border-radius:10px; margin:8px 0; white-space:pre-wrap; word-wrap:break-word; }
+  .user { background:var(--user); margin-left:15%; }
+  .assistant { background:var(--panel); border:1px solid var(--border); margin-right:10%; }
+  .tool { background:var(--tool); font:13px/1.4 ui-monospace, Consolas, monospace; color:var(--muted); }
+  .error { color:var(--danger); }
+  .perm { background:var(--warn); border:1px solid var(--border); }
+  .perm button { margin:6px 6px 0 0; }
+  form { display:flex; gap:8px; padding:12px 16px; border-top:1px solid var(--border); background:var(--panel);
+         max-width:900px; width:100%; margin:0 auto; }
+  textarea { flex:1; resize:vertical; min-height:44px; max-height:200px; padding:10px; border-radius:8px;
+             border:1px solid var(--border); background:var(--bg); }
+  button { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:8px 16px; cursor:pointer; }
+  button.secondary { background:transparent; color:var(--text); border:1px solid var(--border); }
+  button:disabled { opacity:.5; cursor:default; }
+</style>
+</head>
+<body>
+<header>
+  <h1>TITAN AI</h1>
+  <span class="info" id="info">cargando…</span>
+  <label>Modo <select id="mode"><option value="chat">Chat</option><option value="agent">Agente (herramientas)</option></select></label>
+  <label>Temp. <input id="temp" type="number" min="0" max="2" step="0.1" value="0.7" style="width:64px"></label>
+  <button class="secondary" id="clear" type="button">Nueva conversación</button>
+</header>
+<div id="log"></div>
+<form id="form">
+  <textarea id="input" placeholder="Escribe tu mensaje… (Enter envía, Shift+Enter salto de línea)"></textarea>
+  <button id="send" type="submit">Enviar</button>
+</form>
+<script>
+const TOKEN = "__TITAN_TOKEN__";
+const H = {"Content-Type": "application/json", "X-Titan-Token": TOKEN};
+const log = document.getElementById("log"), input = document.getElementById("input"), send = document.getElementById("send");
+let history = [];
+
+function add(cls, text) {
+  const d = document.createElement("div");
+  d.className = "msg " + cls; d.textContent = text; log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
+}
+fetch("/api/info", {headers: H}).then(r => r.json()).then(i => {
+  document.getElementById("info").textContent =
+    `${i.model} · ${i.params ? (i.params/1e6).toFixed(1) + " M parámetros" : ""} · contexto ${i.max_seq_len} · ${i.tools.length} herramientas`;
+}).catch(() => document.getElementById("info").textContent = "sin conexión con el servidor");
+
+function permission(ev) {
+  const d = add("perm", `La herramienta «${ev.tool}» solicita: ${ev.description}\n${ev.detail}`);
+  const opts = [["Permitir una vez", "allow_once"], ["Denegar", "deny"]];
+  if (!["file_delete","credentials","cloud_resources","spend_money","publish"].includes(ev.capability))
+    opts.splice(1, 0, ["Permitir en esta sesión", "allow_session"]);
+  for (const [label, decision] of opts) {
+    const b = document.createElement("button"); b.type = "button"; b.textContent = label;
+    if (decision === "deny") b.className = "secondary";
+    b.onclick = () => { fetch("/api/approve", {method:"POST", headers:H, body: JSON.stringify({id: ev.id, decision})});
+                        d.querySelectorAll("button").forEach(x => x.disabled = true); b.textContent += " ✓"; };
+    d.appendChild(b);
+  }
+}
+
+async function submit(text) {
+  history.push({role: "user", content: text});
+  add("user", text);
+  send.disabled = true;
+  let current = null;
+  const body = {messages: history, mode: document.getElementById("mode").value,
+                temperature: parseFloat(document.getElementById("temp").value) || 0};
+  const resp = await fetch("/api/chat", {method: "POST", headers: H, body: JSON.stringify(body)});
+  const reader = resp.body.getReader(); const dec = new TextDecoder(); let buf = "";
+  while (true) {
+    const {value, done} = await reader.read(); if (done) break;
+    buf += dec.decode(value, {stream: true});
+    let idx;
+    while ((idx = buf.indexOf("\n\n")) >= 0) {
+      const line = buf.slice(0, idx); buf = buf.slice(idx + 2);
+      if (!line.startsWith("data: ")) continue;
+      const ev = JSON.parse(line.slice(6));
+      if (ev.type === "token") { current = current || add("assistant", ""); current.textContent += ev.text; }
+      else if (ev.type === "assistant") {
+        const calls = (ev.tool_calls || []).map(c => `→ ${c.name}(${JSON.stringify(c.arguments)})`).join("\n");
+        if (ev.content || calls) add("assistant", [ev.content, calls].filter(Boolean).join("\n"));
+      }
+      else if (ev.type === "tool_result") add("tool", `${ev.ok ? "✓" : "✗"} ${ev.name}: ${ev.content}`);
+      else if (ev.type === "permission_request") permission(ev);
+      else if (ev.type === "final") {
+        if (body.mode === "agent") add("assistant", ev.content);
+        history.push({role: "assistant", content: ev.content});
+      }
+      else if (ev.type === "error") add("error", ev.message);
+    }
+    log.scrollTop = log.scrollHeight;
+  }
+  send.disabled = false; input.focus();
+}
+document.getElementById("form").onsubmit = e => { e.preventDefault(); const t = input.value.trim(); if (t) { input.value = ""; submit(t); } };
+input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); document.getElementById("form").requestSubmit(); } });
+document.getElementById("clear").onclick = () => { history = []; log.innerHTML = ""; };
+</script>
+</body>
+</html>

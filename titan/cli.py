@@ -80,6 +80,15 @@ def cmd_quantize(args) -> None:
     print(json.dumps(quantize_model_dir(args.model, args.out, args.bits, args.group_size), indent=2))
 
 
+def cmd_gguf(args) -> None:
+    from .export import gguf_tools
+    if args.action == "quantize":
+        res = gguf_tools.quantize_gguf(args.model, args.out, args.type)
+    else:
+        res = gguf_tools.bench_gguf(args.model, args.prompt_tokens, args.gen_tokens, args.gpu_layers)
+    print(json.dumps(res, indent=2))
+
+
 def cmd_serve(args) -> None:
     from .ui.server import serve
     serve(args.model, host=args.host, port=args.port, device=args.device, agent_config=args.agent_config)
@@ -188,6 +197,16 @@ def build_parser() -> argparse.ArgumentParser:
     q.add_argument("--bits", type=int, default=8, choices=[4, 8])
     q.add_argument("--group-size", type=int, default=128)
     q.set_defaults(func=cmd_quantize)
+
+    gg = sub.add_parser("gguf", help="cuantizar o medir un modelo GGUF con llama.cpp")
+    gg.add_argument("action", choices=["quantize", "bench"])
+    gg.add_argument("--model", required=True, help="archivo .gguf")
+    gg.add_argument("--out", help="archivo .gguf de salida (quantize)")
+    gg.add_argument("--type", default="Q4_K_M", help="Q8_0, Q6_K, Q5_K_M, Q4_K_M, ...")
+    gg.add_argument("--prompt-tokens", type=int, default=128)
+    gg.add_argument("--gen-tokens", type=int, default=128)
+    gg.add_argument("--gpu-layers", type=int, default=-1, help="-1 = todas las capas en GPU")
+    gg.set_defaults(func=cmd_gguf)
 
     v = sub.add_parser("serve", help="servidor HTTP con interfaz web")
     v.add_argument("--model", required=True)
