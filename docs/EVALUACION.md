@@ -154,3 +154,17 @@ final (`releases/titan-stage-a-agente`, `reports/eval_dpo_stage_a_v2.json`):
 
 Con 64 tareas, las diferencias de ±4 puntos en «respuesta correcta» están
 dentro del ruido estadístico.
+
+### Límites visibles fuera de las plantillas
+
+Con una pregunta que no sigue exactamente las plantillas («agenda.txt», sin
+número), el agente final ya no inventa el contenido y pide confirmación, pero
+elige mal la herramienta (busca en la base de conocimiento), inventa la
+consulta y cita otro nombre de archivo:
+
+![Límites del agente de 8,6 M fuera de las plantillas](../reports/ui_agente_honesto.png)
+
+Es el comportamiento esperable de un modelo de 8,6 M entrenado con plantillas:
+el protocolo y la honestidad se aprenden; la comprensión general, no. Mejora
+con escala (Etapas B–D) y con datos de conversación más variados.
+
