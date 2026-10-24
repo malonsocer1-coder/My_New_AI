@@ -90,8 +90,9 @@ sistema completo de extremo a extremo con un modelo propio.
 
 ## 6. Cuantización (`reports/quantization_stage_a.json`)
 
-Perplejidad sobre 12 288 tokens de validación (es, en, code). Velocidades en
-la CPU de la sesión, compartida con otros procesos: son indicativas.
+Perplejidad sobre 12 288 tokens de validación (es, en, code). Velocidades
+medidas con la CPU libre en `reports/inference_speed_cpu.json` (llama.cpp:
+~860–1 030 tok/s de generación; motor PyTorch: 221 tok/s).
 
 | Variante | Tamaño | Perplejidad | Δ vs. original |
 |---|---|---|---|

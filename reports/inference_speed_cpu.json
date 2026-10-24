@@ -1,0 +1,35 @@
+{
+  "hardware": "4 vCPU Xeon @2.8 GHz, sin GPU, CPU sin otras cargas",
+  "model": "titan-stage-a (8,6 M)",
+  "rows": [
+    {
+      "variant": "GGUF F16 (llama.cpp)",
+      "mb": 17.52,
+      "prompt_tok_s": 6367.9,
+      "gen_tok_s": 931.2
+    },
+    {
+      "variant": "GGUF Q8_0 (llama.cpp)",
+      "mb": 9.44,
+      "prompt_tok_s": 5967.0,
+      "gen_tok_s": 1026.6
+    },
+    {
+      "variant": "GGUF Q5_K_M (llama.cpp)",
+      "mb": 6.68,
+      "prompt_tok_s": 3868.6,
+      "gen_tok_s": 855.4
+    },
+    {
+      "variant": "GGUF Q4_K_M (llama.cpp)",
+      "mb": 5.96,
+      "prompt_tok_s": 7097.0,
+      "gen_tok_s": 964.9
+    },
+    {
+      "variant": "TITAN PyTorch fp32 (KV cache)",
+      "mb": 17.25,
+      "gen_tok_s": 221.0
+    }
+  ]
+}

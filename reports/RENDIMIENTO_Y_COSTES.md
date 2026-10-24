@@ -33,17 +33,24 @@ muy por encima del tamaño óptimo según Chinchilla, ~20 tokens/parámetro). Es
 la regla que guía el plan de escalado: **subir parámetros solo junto con los
 tokens, y comprobarlo con un barrido corto antes de gastar.**
 
-## Inferencia (medido en CPU, modelo de 8,6 M)
+## Inferencia (medido en CPU sin otras cargas, modelo de 8,6 M)
 
-Ver `reports/quantization_stage_a.json`. Velocidades medidas con la CPU
-compartida con otras tareas: son indicativas y **no** representan la RTX 5070.
+`reports/inference_speed_cpu.json` (velocidad) y `reports/quantization_stage_a.json` (calidad).
 
-| Variante | Tamaño | Δ perplejidad | Generación (llama.cpp, CPU) |
-|---|---|---|---|
-| GGUF F16 | 17,5 MB | −0,01 % | 172 tok/s |
-| GGUF Q8_0 | 9,4 MB | +0,02 % | 311 tok/s |
-| GGUF Q5_K_M | 6,7 MB | +0,36 % | 631 tok/s |
-| GGUF Q4_K_M | 6,0 MB | +0,39 % | 925 tok/s |
+| Variante | Tamaño | Δ perplejidad | Prompt | Generación |
+|---|---|---|---|---|
+| TITAN PyTorch fp32 (caché KV) | 17,3 MB | — | — | 221 tok/s |
+| GGUF F16 (llama.cpp) | 17,5 MB | −0,01 % | 6 368 tok/s | 931 tok/s |
+| GGUF Q8_0 | 9,4 MB | +0,02 % | 5 967 tok/s | 1 027 tok/s |
+| GGUF Q5_K_M | 6,7 MB | +0,36 % | 3 869 tok/s | 855 tok/s |
+| GGUF Q4_K_M | 6,0 MB | +0,39 % | 7 097 tok/s | 965 tok/s |
+
+Con un modelo tan pequeño la velocidad la limita la sobrecarga fija por token,
+no la memoria: por eso la cuantización apenas la cambia aquí. En modelos de
+1–8 B, limitados por el ancho de banda de memoria, la cuantización sí acelera
+de forma casi proporcional al tamaño (ver las estimaciones para la RTX 5070 en
+`docs/DESPLIEGUE_WINDOWS.md`). llama.cpp es ~4× más rápido que el motor
+PyTorch en CPU: es el backend recomendado para el PC.
 
 ## Costes proyectados (no gastados)
 
